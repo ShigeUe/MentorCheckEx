@@ -31,4 +31,8 @@ document.addEventListener('DOMContentLoaded', function () {
       queryId('message').innerText = '保存しました';
     });
   });
+
+  queryId('close').addEventListener('click', function () {
+    window.close();
+  });
 });
