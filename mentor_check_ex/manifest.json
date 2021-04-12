@@ -1,32 +1,30 @@
 {
+   "manifest_version": 3,
    "name": "MentorCheckEx",
+   "version": "0.0.1",
+   "action": {},
    "background": {
-      "scripts": ["js/background.js"]
-   },
-   "description": "課題レビューのチェックをする拡張機能",
+      "service_worker": "background.js"
+    },
    "icons": {
-      "128": "img/icon-128.png",
       "16": "img/icon-16.png",
       "32": "img/icon-32.png",
-      "48": "img/icon-48.png"
+      "48": "img/icon-48.png",
+      "128": "img/icon-128.png"
    },
-   "manifest_version": 2,
-   "permissions": [
-      "https://techacademy.jp/mentor/all/*"
-    ],
-   "content_scripts": [{
-      "matches": ["https://techacademy.jp/mentor/all/*"],
-      "run_at": "document_end",
-      "js": [
-         "js/content.js"
-      ],
-      "css": [
-         "css/style.css"
-      ]
-   }],
+   "description": "課題レビューのチェックをする拡張機能",
+   "permissions": ["storage", "tabs"],
+   "content_scripts": [
+      {
+         "matches": ["https://techacademy.jp/mentor/all/*"],
+         "run_at": "document_end",
+         "js": ["js/content.js"],
+         "css": ["css/style.css"]
+      }
+   ],
    "options_page": "options.html",
-   "web_accessible_resources": [
-      "resources/chime.mp3"
-    ],
-   "version": "0.0.1"
+   "web_accessible_resources": [{
+      "resources": ["resources/chime.mp3"],
+      "matches": ["https://techacademy.jp/*"]
+   }]
 }

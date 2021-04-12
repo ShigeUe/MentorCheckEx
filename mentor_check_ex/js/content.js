@@ -1,8 +1,31 @@
 "use strict";
 
 (function () {
-  if (!/^https:\/\/techacademy\.jp\/mentor\/all\/reports/.test(location.href)) return;
 
+  /* ----------------------------------------------------------------------- */
+  /* Variables
+  -------------------------------------------------------------------------- */
+  // 設定
+  let interval = 15;         // リロード間隔
+  let chime = false;         // チャイム有無
+  let smartIfSimple = false; // 詳細画面割愛
+
+  // チャイムの準備
+  const audio = new Audio(chrome.runtime.getURL("resources/chime.mp3"));
+  audio.volume = 0.5; // ボリュームは半分
+
+  // タイマー用ハンドル
+  let handle = 0;
+  // 変更判断
+  let saveAr = '';
+  // もともとのタイトル
+  const title = document.title;
+  /* ----------------------------------------------------------------------- */
+
+
+  /* ----------------------------------------------------------------------- */
+  /* Utility functions
+  -------------------------------------------------------------------------- */
   const query = function (s, d) {
     if (d === undefined) {
       d = document;
@@ -21,6 +44,7 @@
   const createElement = function (p) {
     return document.createElement(p);
   }
+  /* ----------------------------------------------------------------------- */
 
   const setStyle = function (selector, styles) {
     const ele = query(selector);
@@ -55,43 +79,6 @@
             ('0' + now.getSeconds()).slice(-2);
   };
 
-  // 設定のデフォルト値
-  let interval = 15;         // リロード間隔
-  let chime = false;         // チャイム有無
-  let smartIfSimple = false; // 詳細画面割愛
-
-  // チャイムの準備
-  const audio = new Audio(chrome.extension.getURL("resources/chime.mp3"));
-  audio.volume = 0.5; // ボリュームは半分
-
-  // タイマー用ハンドル
-  let handle = 0;
-  // 変更判断
-  let saveAr = '';
-  // もともとのタイトル
-  const title = document.title;
-
-  // 設定の取得
-  chrome.runtime.sendMessage(null, function (response) {
-    if (response.chime) {
-      chime = true;
-      console.log('The chime is ON.');
-    }
-    else {
-      console.log('The chime is OFF.');
-    }
-    queryId('pluginSwitchButton4').checked = chime;
-
-    if (response.interval) {
-      interval = response.interval - 0;
-      console.log('The interval is ' + interval + 's.');
-    }
-
-    if (response.smartIfSimple) {
-      smartIfSimple = true;
-    }
-  });
-
   const checkSimple = function () {
     const ele = queryId('pluginSwitchButton2');
     if (!ele) return false;
@@ -106,7 +93,7 @@
     return queryId('pluginSwitchButton4').checked;
   };
 
-  const simplify = function (simple) {
+  const getChallengesAndSimplify = function (simple) {
     const ar = [];
     const s = '.container-fluid .row .col-lg-12 table tr td:first-of-type a';
     const t = queryAll(s);
@@ -186,7 +173,7 @@
           const target = query(s);
           target.outerHTML = element.outerHTML;
 
-          const ar = JSON.stringify(simplify(checkSimple()));
+          const ar = JSON.stringify(getChallengesAndSimplify(checkSimple()));
 
           if (saveAr != '' && ar != saveAr) {
             if (checkChime()) {
@@ -213,7 +200,7 @@
 
   /* これ以降初期化部分
   -------------------------------------------------------------------------- */
-  (function () {
+  const init = function () {
     const sidebarNavMenter = query('#sidebar-wrapper ul:last-of-type');
 
     // シンプル化が出来るのは「レビュー待ち」のみ。
@@ -222,13 +209,15 @@
       const li2 = createSwitchElement(2, 'シンプル化');
       sidebarNavMenter.appendChild(li2);
       li2.addEventListener('change', function (e) {
-        simplify(e.target.checked);
+        getChallengesAndSimplify(e.target.checked);
       });
+      console.log()
     }
 
     // 「チャイムの有無」ボタンの生成
     const li4 = createSwitchElement(4, 'チャイムの有無');
     sidebarNavMenter.appendChild(li4);
+    queryId('pluginSwitchButton4').checked = chime;
 
     // 「定期リロード」ボタンの生成
     const li1 = createSwitchElement(1, '定期リロード');
@@ -252,7 +241,22 @@
     li3.innerHTML = '<span style="color:white;" id="pluginSwitchMessage">&nbsp;</span>';
     sidebarNavMenter.appendChild(li3);
 
-    simplify(false);
+    getChallengesAndSimplify(false);
     changeTitle();
-  })();
+  };
+
+  // 設定の取得
+  chrome.storage.sync.get({
+    interval: 15,
+    chime: false,
+    smartIfSimple: false,
+  }, function (items) {
+    interval = items.interval;
+    chime = items.chime;
+    smartIfSimple = items.smartIfSimple;
+
+    // 初期化の実行
+    init();
+  });
+
 })();
