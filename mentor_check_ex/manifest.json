@@ -17,6 +17,12 @@
          "run_at": "document_end",
          "js": ["js/content.js"],
          "css": ["css/style.css"]
+      },
+      {
+         "matches": ["https://techacademy.jp/mentor/reports/*"],
+         "run_at": "document_end",
+         "js": ["js/report.js"],
+         "css": ["css/override.css"]
       }
    ],
    "options_page": "options.html",
