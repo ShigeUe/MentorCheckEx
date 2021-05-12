@@ -6,13 +6,3 @@ a[href$="memos"] {
   padding: 0 5px;
   margin:0 5px;
 }
-
-h2 a.plugin-button {
-  font-size:0.8em;
-  display:inline-block;
-  color:white;
-  background-color:#0F7378;
-  padding: 0.1em 10px;
-  margin:0 5px 0 20px;
-  cursor:pointer;
-}
