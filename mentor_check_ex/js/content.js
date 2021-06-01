@@ -236,6 +236,11 @@
       }
     });
 
+    // 固定サイドメニューの「メモ」を新規タブに変更
+    const memo = query('.sidemenu-fixed a[href$="memos"]');
+    console.log(memo);
+    memo.target = '_blank';
+
     // 更新時間表示場所生成
     const li3 = createMenuElement();
     li3.innerHTML = '<span style="color:white;" id="pluginSwitchMessage">&nbsp;</span>';

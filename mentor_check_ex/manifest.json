@@ -21,7 +21,13 @@
       {
          "matches": ["https://techacademy.jp/mentor/reports/*"],
          "run_at": "document_end",
+         "js": ["js/content-report.js"],
          "css": ["css/override.css"]
+      },
+      {
+         "matches": ["https://signin.aws.amazon.com/oauth*"],
+         "run_at": "document_end",
+         "js": ["js/aws.js"]
       }
    ],
    "options_page": "options.html",
