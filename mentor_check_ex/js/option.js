@@ -1,3 +1,5 @@
+"use strict";
+
 const queryId = function (id) {
   return document.getElementById(id);
 }
@@ -35,4 +37,21 @@ document.addEventListener('DOMContentLoaded', function () {
   queryId('close').addEventListener('click', function () {
     window.close();
   });
+
+  // バージョンチェック
+  fetch('https://raw.githubusercontent.com/ShigeUe/MentorCheckEx/main/mentor_check_ex/manifest.json')
+    .then(response => response.json())
+    .then((github) => {
+      fetch('../manifest.json')
+        .then(response => response.json())
+        .then((local) => {
+          console.log('Local version:' + local.version);
+          console.log('Repos version:' + github.version);
+          if (local.version !== github.version) {
+            const message = queryId('version-up-message');
+            message.innerHTML = '<b style="font-weight:bold;color:red;">新しいバージョンがあります</b>';
+          }
+        });
+    });
+
 });
