@@ -1,25 +1,18 @@
 "use strict";
 
-(function () {
+(() => {
 
   /* ----------------------------------------------------------------------- */
   /* Utility functions
   -------------------------------------------------------------------------- */
-  const query = function (s, d) {
-    if (d === undefined) {
-      d = document;
-    }
-    return d.querySelector(s);
-  }
+  const query = s => document.querySelector(s);
+  const queryAll = s => document.querySelectorAll(s);
+  const createElement = p => document.createElement(p);
 
-  const queryAll = function (s) {
-    return document.querySelectorAll(s);
-  }
-
-  const querySelectorAndContent = function (s, c) {
+  const querySelectorAndContent = (s, c) => {
     const elements = document.querySelectorAll(s);
     let ret = null;
-    elements.forEach(function (e) {
+    elements.forEach(e => {
       if (e.innerText.toLowerCase().search(c.toLowerCase()) >= 0) {
         ret = e;
       }
@@ -27,14 +20,16 @@
     return ret;
   }
 
-  const createElement = function (p) {
-    return document.createElement(p);
-  }
-
   /* ----------------------------------------------------------------------- */
   /* 実行部分
   -------------------------------------------------------------------------- */
-
+  let selectorBase;
+  if (location.href.indexOf('mentor/reports') > 0) {
+    selectorBase = '.sidemenu-fixed ';
+  }
+  else {
+    selectorBase = '.table.table-users:first-of-type ';
+  }
   let win_aws = 0;
 
   // 固定サイドメニューの「メモ」を新規タブに変更
@@ -81,7 +76,7 @@
           // 少し遅れてCloud9のリンクを開く
           setTimeout(function () {
             cloud9.click();
-          }, 500);
+          }, 1000);
         }
       }
     });
@@ -94,7 +89,7 @@
     button.id = 'auto-open-the-cloud9';
     aws_title.append(button);
     // ボタンの動作
-    button.addEventListener('click', function (event) {
+    button.addEventListener('click', (event) => {
       event.preventDefault();
       win_aws = window.open(aws.href);
       return false;
