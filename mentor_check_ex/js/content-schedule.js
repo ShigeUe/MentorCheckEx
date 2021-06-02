@@ -87,7 +87,7 @@
     if (times[0] == '15:00' || times[1] == '19:00') {
       e.append(AM);
     }
-    else if (times[0] == '19:00' || times[1] == '23:00') {
+    if (times[0] == '19:00' || times[1] == '23:00') {
       e.append(PM);
     }
   });
