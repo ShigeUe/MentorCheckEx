@@ -36,20 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.close();
   });
 
-  // バージョンチェック
-  fetch('https://raw.githubusercontent.com/ShigeUe/MentorCheckEx/main/mentor_check_ex/manifest.json')
-    .then(response => response.json())
-    .then((github) => {
-      fetch('../manifest.json')
-        .then(response => response.json())
-        .then((local) => {
-          console.log('Local version:' + local.version);
-          console.log('Repos version:' + github.version);
-          if (local.version !== github.version) {
-            const message = queryId('version-up-message');
-            message.innerHTML = '<b style="font-weight:bold;color:red;">新しいバージョンがあります</b>';
-          }
-        });
-    });
-
+  chrome.storage.sync.get('new_version', new_version => {
+    if (new_version) {
+      const message = queryId('version-up-message');
+      message.innerHTML = '<b style="font-weight:bold;color:red;">新しいバージョンがあります</b>';
+    }
+  });
 });

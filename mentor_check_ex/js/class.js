@@ -2,9 +2,13 @@
 
 class MentorCheckEx
 {
-  doc = document;
+  doc        = document;
   cloud9_url = '#';
-  win_aws = '';
+  win_aws    = '';
+
+  constructor() {
+    this.version_check();
+  }
 
   set_document(doc) {
     this.doc = doc;
@@ -82,6 +86,24 @@ class MentorCheckEx
         self.win_aws = window.open(aws.href, 'AWSOpenedFromMentorCheckEx');
         return false;
       });      
+    });
+  }
+
+  version_check() {
+    chrome.storage.sync.get('version', version => {
+      // バージョンチェック
+      fetch('https://raw.githubusercontent.com/ShigeUe/MentorCheckEx/main/mentor_check_ex/manifest.json')
+        .then(response => response.json())
+        .then((github) => {
+          if (version !== github.version) {
+            chrome.storage.sync.set({ new_version: true }, () => {
+              console.log('New version detected.');
+            });
+          }
+          else {
+            chrome.storage.sync.set({ new_version: false });
+          }
+        });
     });
   }
 }

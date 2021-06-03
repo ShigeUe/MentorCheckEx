@@ -12,6 +12,7 @@
   let interval = 15;         // リロード間隔
   let chime = false;         // チャイム有無
   let smartIfSimple = false; // 詳細画面割愛
+  let new_version = false;   // 新しいバージョンの有無
 
   // チャイムの準備
   const audio = new Audio(chrome.runtime.getURL("resources/chime.mp3"));
@@ -231,6 +232,12 @@
     li3.innerHTML = '<span style="color:white;" id="pluginSwitchMessage">&nbsp;</span>';
     sidebarNavMenter.appendChild(li3);
 
+    if (new_version) {
+      const li5 = createMenuElement();
+      li5.innerHTML = '<span id="pluginVersionUpMessage">MentorCheckExの<br>新バージョンあり</span>';
+      sidebarNavMenter.appendChild(li5);
+    }
+
     getChallengesAndSimplify(false);
     changeTitle();
   };
@@ -240,10 +247,12 @@
     interval: 15,
     chime: false,
     smartIfSimple: false,
+    new_version: false,
   }, items => {
-    interval = items.interval;
-    chime = items.chime;
+    interval      = items.interval;
+    chime         = items.chime;
     smartIfSimple = items.smartIfSimple;
+    new_version   = items.new_version;
 
     // 初期化の実行
     init();
