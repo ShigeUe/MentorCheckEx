@@ -1,10 +1,13 @@
 "use strict";
 
-(function () {
+(() => {
 
   /* ----------------------------------------------------------------------- */
   /* Variables
   -------------------------------------------------------------------------- */
+  // クラス
+  const ME = new MentorCheckEx();
+
   // 設定
   let interval = 15;         // リロード間隔
   let chime = false;         // チャイム有無
@@ -26,41 +29,33 @@
   /* ----------------------------------------------------------------------- */
   /* Utility functions
   -------------------------------------------------------------------------- */
-  const query = function (s, d) {
-    if (d === undefined) {
-      d = document;
-    }
-    return d.querySelector(s);
-  }
+  // const query = (s, d) => {
+  //   if (d === undefined) {
+  //     d = document;
+  //   }
+  //   return d.querySelector(s);
+  // }
 
-  const queryAll = function (s) {
-    return document.querySelectorAll(s);
-  }
-
-  const queryId = function (id) {
-    return document.getElementById(id);
-  }
-
-  const createElement = function (p) {
-    return document.createElement(p);
-  }
+  // const queryAll = s => document.querySelectorAll(s);
+  // const queryId = id => document.getElementById(id);
+  // const createElement = p => document.createElement(p);
   /* ----------------------------------------------------------------------- */
 
-  const setStyle = function (selector, styles) {
-    const ele = query(selector);
-    Object.keys(styles).forEach(function (key) {
+  const setStyle = (selector, styles) => {
+    const ele = ME.query(selector);
+    Object.keys(styles).forEach(key => {
       ele.style[key] = styles[key];
     });
   }
 
-  const createMenuElement = function () {
-    const li = createElement('li');
+  const createMenuElement = () => {
+    const li = ME.create('li');
     li.classList.add('sidemenu-li');
     li.classList.add('mentorChangeEx');
     return li;
   }
 
-  const createSwitchElement = function (num, text) {
+  const createSwitchElement = (num, text) => {
     const li = createMenuElement();
     li.innerHTML =
       '<div class="pluginSwitchArea">' +
@@ -72,38 +67,33 @@
     return li;
   }
 
-  const formatedTime = function () {
+  const formatedTime = () => {
     const now = new Date;
     return  ('0' + now.getHours()).slice(-2) + ':' +
             ('0' + now.getMinutes()).slice(-2) + ':' +
             ('0' + now.getSeconds()).slice(-2);
   };
 
-  const checkSimple = function () {
-    const ele = queryId('pluginSwitchButton2');
+  const checkSimple = () => {
+    const ele = ME.queryId('pluginSwitchButton2');
     if (!ele) return false;
     return ele.checked;
   };
 
-  const checkReload = function () {
-    return queryId('pluginSwitchButton1').checked;
-  };
+  const checkReload = () => ME.queryId('pluginSwitchButton1').checked;
+  const checkChime  = () => ME.queryId('pluginSwitchButton4').checked;
 
-  const checkChime = function () {
-    return queryId('pluginSwitchButton4').checked;
-  };
-
-  const getChallengesAndSimplify = function (simple) {
+  const getChallengesAndSimplify = simple => {
     const ar = [];
     const s = '.container-fluid .row .col-lg-12 table tr td:first-of-type a';
-    const t = queryAll(s);
+    const t = ME.queryAll(s);
 
     // パンくず非表示＆ナビゲーションタブ＆タイトル部分のマージン削除
     setStyle('ol.breadcrumb', { display: simple ? 'none' : '' });
     setStyle('ul.nav-tabs', { display: simple ? 'none' : '' });
     setStyle('#page-content-wrapper h2', { padding: simple ? '0' : '' });
 
-    t.forEach(function (e) {
+    t.forEach(e => {
       let h = e.href;
       e.target = '_blank';
 
@@ -123,9 +113,9 @@
       ar.push(h);
     });
 
-    [3, 4, 6, 7, 9].forEach(function (i) {
-      queryAll('table tr th:nth-of-type(' + i + '),table tr td:nth-of-type(' + i + ')')
-        .forEach(function (e) {
+    [3, 4, 6, 7, 9].forEach(i => {
+      ME.queryAll('table tr th:nth-of-type(' + i + '),table tr td:nth-of-type(' + i + ')')
+        .forEach(e => {
           e.style.display = simple ? 'none' : '';
         });
     });
@@ -133,44 +123,44 @@
     return ar;
   };
 
-  const emphasisBlink = function () {
-    const style = query('#page-content-wrapper h2').style;
+  const emphasisBlink = () => {
+    const style = ME.query('#page-content-wrapper h2').style;
     style.backgroundColor = (style.backgroundColor) ? "" : "#0f7378";
     style.color = (style.color) ? "" : "white";
 
-    return new Promise(function (resolve) {
-      setTimeout(function () {
+    return new Promise(resolve => {
+      setTimeout(() => {
         resolve('timeout');
       }, 500);
     });
   }
 
-  const notify = async function () {
+  const notify = async () => {
     for (let i = 0; i < 6; i++) {
       await emphasisBlink();
     }
   };
 
-  const changeTitle = function () {
-    query('.container-fluid h2').innerText = query('#courseDropdown').innerText + 'レビュー一覧';
+  const changeTitle = () => {
+    ME.query('.container-fluid h2').innerText = ME.query('#courseDropdown').innerText + 'レビュー一覧';
   };
   
-  const reloadFunc = async function () {
+  const reloadFunc = async () => {
     if (checkReload()) {
       fetch(location.href, { method: 'GET', mode: 'same-origin', credentials: 'include' })
-        .then(function (response) {
+        .then(response => {
           if (!response.ok) {
             throw new Error("HTTP error! status: " + response.status);
           }
           return response.text();
         })
-        .then(function (text) {
+        .then(text => {
           const doc = document.implementation.createHTMLDocument("").documentElement;
           doc.innerHTML = text;
 
           var s = '#page-content-wrapper';
-          const element = query(s, doc);
-          const target = query(s);
+          const element = ME.query(s, doc);
+          const target = ME.query(s);
           target.outerHTML = element.outerHTML;
 
           const ar = JSON.stringify(getChallengesAndSimplify(checkSimple()));
@@ -188,11 +178,11 @@
           }
 
           saveAr = ar;
-          queryId('pluginSwitchMessage').innerText = '更新：' + formatedTime();
+          ME.queryId('pluginSwitchMessage').innerText = '更新：' + formatedTime();
           
           changeTitle();
         })
-        .catch(function (err) {
+        .catch(err => {
           throw err;
         });
     }
@@ -200,15 +190,15 @@
 
   /* これ以降初期化部分
   -------------------------------------------------------------------------- */
-  const init = function () {
-    const sidebarNavMenter = query('#sidebar-wrapper ul:last-of-type');
+  const init = () => {
+    const sidebarNavMenter = ME.query('#sidebar-wrapper ul:last-of-type');
 
     // シンプル化が出来るのは「レビュー待ち」のみ。
     if (location.pathname == '/mentor/all/reports') {
       // 「シンプル化」ボタンの生成
       const li2 = createSwitchElement(2, 'シンプル化');
       sidebarNavMenter.appendChild(li2);
-      li2.addEventListener('change', function (e) {
+      li2.addEventListener('change', e => {
         getChallengesAndSimplify(e.target.checked);
       });
       console.log()
@@ -217,29 +207,24 @@
     // 「チャイムの有無」ボタンの生成
     const li4 = createSwitchElement(4, 'チャイムの有無');
     sidebarNavMenter.appendChild(li4);
-    queryId('pluginSwitchButton4').checked = chime;
+    ME.queryId('pluginSwitchButton4').checked = chime;
 
     // 「定期リロード」ボタンの生成
     const li1 = createSwitchElement(1, '定期リロード');
     sidebarNavMenter.appendChild(li1);
     // 「定期リロード」の変更イベント
-    li1.addEventListener('change', function (e) {
+    li1.addEventListener('change', e => {
       if (e.target.checked) {
         reloadFunc();
         handle = setInterval(reloadFunc, interval * 1000);
       }
       else {
-        queryId('pluginSwitchMessage').innerText = '';
+        ME.queryId('pluginSwitchMessage').innerText = '';
         clearInterval(handle);
         handle = 0;
         document.title = title;
       }
     });
-
-    // 固定サイドメニューの「メモ」を新規タブに変更
-    const memo = query('.sidemenu-fixed a[href$="memos"]');
-    console.log(memo);
-    memo.target = '_blank';
 
     // 更新時間表示場所生成
     const li3 = createMenuElement();
@@ -255,7 +240,7 @@
     interval: 15,
     chime: false,
     smartIfSimple: false,
-  }, function (items) {
+  }, items => {
     interval = items.interval;
     chime = items.chime;
     smartIfSimple = items.smartIfSimple;
