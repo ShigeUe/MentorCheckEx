@@ -1,10 +1,10 @@
 "use strict";
 
 (function () {
-  if (window.opener) {
+  if (window.opener && window.name == 'AWSOpenedFromMentorCheckEx') {
     window.opener.postMessage('loaded', 'https://techacademy.jp');
 
-    window.addEventListener('message', function (event) {
+    window.addEventListener('message', event => {
       if (event.origin === 'https://techacademy.jp' && event.data.username) {
         // usernameに値を入れる
         const username = document.getElementById('username');
@@ -20,7 +20,7 @@
         // 次にCloud9を開かせるために、メッセージを送信
         window.opener.postMessage('processed', event.origin);
         // 遅れてサインインボタンを押す
-        setTimeout(function () {
+        setTimeout(() => {
           document.getElementById('signin_button').click();
         }, 100);
       }

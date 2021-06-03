@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.0.4",
+   "version": "0.0.5",
    "action": {},
    "icons": {
       "16": "img/icon-16.png",
@@ -15,23 +15,32 @@
       {
          "matches": ["https://techacademy.jp/mentor/all/*"],
          "run_at": "document_end",
-         "js": ["js/content.js"],
+         "js": ["js/class.js", "js/content.js"],
          "css": ["css/style.css"]
       },
       {
          "matches": ["https://techacademy.jp/mentor/reports/*"],
          "run_at": "document_end",
-         "js": ["js/content-report.js"],
+         "js": ["js/class.js", "js/content-report.js"],
          "css": ["css/override.css"]
       },
       {
          "matches": ["https://techacademy.jp/mentor/schedule/*"],
          "run_at": "document_end",
-         "js": ["js/content-schedule.js"],
+         "js": ["js/class.js", "js/content-schedule.js"],
          "css": ["css/schedule.css"]
       },
       {
-         "matches": ["https://signin.aws.amazon.com/oauth*"],
+         "matches": ["https://techacademy.jp/mentor/users/*"],
+         "run_at": "document_end",
+         "js": ["js/class.js", "js/content-users.js"],
+         "css": ["css/override.css"]
+      },
+      {
+         "matches": [
+            "https://signin.aws.amazon.com/oauth*",
+            "https://*.console.aws.amazon.com/console/home*"
+         ],
          "run_at": "document_end",
          "js": ["js/aws.js"]
       }
