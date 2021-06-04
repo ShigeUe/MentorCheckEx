@@ -7,6 +7,7 @@
   -------------------------------------------------------------------------- */
   // クラス
   const ME = new MentorCheckEx();
+  const ME2 = new MentorCheckEx();
 
   // 設定
   let interval = 15;         // リロード間隔
@@ -160,7 +161,7 @@
           doc.innerHTML = text;
 
           var s = '#page-content-wrapper';
-          const element = ME.query(s, doc);
+          const element = ME2.set_document(doc).query(s);
           const target = ME.query(s);
           target.outerHTML = element.outerHTML;
 

@@ -12,6 +12,7 @@ class MentorCheckEx
 
   set_document(doc) {
     this.doc = doc;
+    return this;
   }
   query(s) {
     return this.doc.querySelector(s);

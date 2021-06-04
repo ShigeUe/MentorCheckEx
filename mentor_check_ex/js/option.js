@@ -36,8 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.close();
   });
 
-  chrome.storage.sync.get('new_version', new_version => {
-    if (new_version) {
+  chrome.storage.sync.get('new_version', local => {
+    if (local.new_version) {
       const message = queryId('version-up-message');
       message.innerHTML = '<b style="font-weight:bold;color:red;">新しいバージョンがあります</b>';
     }
