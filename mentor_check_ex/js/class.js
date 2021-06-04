@@ -90,12 +90,12 @@ class MentorCheckEx
   }
 
   version_check() {
-    chrome.storage.sync.get('version', version => {
+    chrome.storage.sync.get('version', local => {
       // バージョンチェック
       fetch('https://raw.githubusercontent.com/ShigeUe/MentorCheckEx/main/mentor_check_ex/manifest.json')
         .then(response => response.json())
         .then((github) => {
-          if (version !== github.version) {
+          if (local.version !== github.version) {
             chrome.storage.sync.set({ new_version: true }, () => {
               console.log('New version detected.');
             });
