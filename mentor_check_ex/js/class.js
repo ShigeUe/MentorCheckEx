@@ -7,7 +7,8 @@ class MentorCheckEx
   win_aws    = '';
 
   constructor() {
-    this.version_check();
+    // 空のメッセージを送ることで、Service Workerを起こしてバージョンアップの確認をさせる
+    chrome.runtime.sendMessage({});
   }
 
   set_document(doc) {
@@ -90,21 +91,7 @@ class MentorCheckEx
     });
   }
 
-  version_check() {
-    chrome.storage.sync.get('version', local => {
-      // バージョンチェック
-      fetch('https://raw.githubusercontent.com/ShigeUe/MentorCheckEx/main/mentor_check_ex/manifest.json')
-        .then(response => response.json())
-        .then((github) => {
-          if (local.version !== github.version) {
-            chrome.storage.sync.set({ new_version: true }, () => {
-              console.log('New version detected.');
-            });
-          }
-          else {
-            chrome.storage.sync.set({ new_version: false });
-          }
-        });
-    });
+  static notify(title, body) {
+    chrome.runtime.sendMessage({ type: 'notification', title: title, body: body });
   }
 }

@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.0.8",
+   "version": "0.0.9",
 
    "action": {},
    "description": "課題レビューのチェックをする拡張機能",
@@ -12,7 +12,7 @@
       "128": "img/icon-128.png"
    },
 
-   "permissions": ["storage", "tabs"],
+   "permissions": ["storage", "tabs", "notifications"],
    "content_scripts": [
       {
          "matches": ["https://techacademy.jp/mentor/all/*"],

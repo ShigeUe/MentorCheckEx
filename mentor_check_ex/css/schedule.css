@@ -28,3 +28,26 @@
   border: 1px solid #333;
   color: white;
 }
+
+#otherShift #plugin-time-am,
+#otherShift #plugin-time-pm {
+  width: 80px;
+  background-color: rgba(0,0,0,0);
+}
+
+#otherShift #plugin-time-am{
+  border: 1px solid #cc0;
+}
+#otherShift #plugin-time-pm {
+  border: 1px solid #888;
+}
+#otherShift #plugin-time-am:hover,
+#otherShift #plugin-time-am.selected {
+  background-color: #ff0;
+  color: #333;
+}
+#otherShift #plugin-time-pm:hover,
+#otherShift #plugin-time-pm.selected {
+    background-color: #888;
+  color: white;
+}

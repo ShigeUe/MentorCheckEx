@@ -9,10 +9,12 @@
   -------------------------------------------------------------------------- */
 
   // メンターの担当コースの入ったtd一覧
-  const TDs = ME.queryAll('#otherShift table tr td:nth-of-type(4)');
+  const COURSE_TD = ME.queryAll('#otherShift table tr td:nth-of-type(4)');
+  const TIME_TD   = ME.queryAll('#otherShift table tr td:nth-of-type(3)');
+
   // コース文字列を取得
   const tmp_courses = {};
-  TDs.forEach(e => {
+  COURSE_TD.forEach(e => {
     const course_array = e.innerText.split(', ');
     course_array.forEach(course => {
       tmp_courses[course] = 1;
@@ -20,13 +22,38 @@
   });
   const courses = Object.keys(tmp_courses);
   // すべてを最後に追加
-  courses.push('すべて');
+  courses.sort().push('すべて');
 
-
-
+  // スケジュールの表示・非表示
+  const showOrHiddenSchedule = (type, value) => {
+    if (type === 'course') {
+      ME.queryId('plugin-time-am').classList.remove('selected');
+      ME.queryId('plugin-time-pm').classList.remove('selected');
+      COURSE_TD.forEach(ele => {
+        ele.parentElement.dataset.ampm = '';
+        ele.parentElement.dataset.course = '';
+        ele.parentElement.style.display = '';
+        if (ele.innerText.indexOf(value) < 0 && value != 'すべて') {
+          ele.parentElement.style.display = 'none';
+          ele.parentElement.dataset.course = 'on';
+        }
+      });
+    }
+    else if (type === 'ampm') {
+      TIME_TD.forEach(ele => {
+        if (ele.parentElement.dataset.ampm) {
+          ele.parentElement.style.display = '';
+          ele.parentElement.dataset.course = '';
+        }
+        if (ele.innerText.indexOf(value) < 0 && !ele.parentElement.dataset.course) {
+          ele.parentElement.style.display = 'none';
+          ele.parentElement.dataset.ampm = 'on';
+        }          
+      });
+    }
+  };
   // ボタンが押されたときの動作
   const button_click = e => {
-    e.preventDefault();
     // 選択ボタンのスタイルを削除
     const b = ME.query('#plugin-button-area button.selected');
     if (b) {
@@ -35,36 +62,61 @@
     // クリックしたボタンを選択
     e.target.classList.add('selected');
     // 行を表示・非表示を操作する
-    TDs.forEach(ele => {
-      const course = e.target.dataset.course;
-      ele.parentElement.style.display = '';
-      if (ele.innerText.indexOf(course) < 0 && course != 'すべて') {
-        ele.parentElement.style.display = 'none';
-      }
-    });
+    const course = e.target.dataset.course;
+    showOrHiddenSchedule('course', course);
     return false;
   };
 
   // ボタンを挿入する目標
   const table = ME.query('#otherShift table');
   // ボタンを包むdiv
-  const div = ME.create('div');
+  let div = ME.create('div');
   div.id = 'plugin-button-area';
 
   // すべてのコースのボタンの生成
   let button;
   courses.forEach(e => {
     button = ME.create('button');
+    button.type = 'button';
     button.dataset.course = e;
     button.innerText = e;
     if (e == 'すべて') {
       button.classList.add('selected');
     }
     button.addEventListener('click', button_click);
-    div.append(button);
+    div.appendChild(button);
   });
+
+  const br = ME.create('br');
+  div.appendChild(br);
+
+  // 時間帯絞り込みボタンAM
+  button = ME.create('button');
+  button.type = 'button';
+  button.innerText = "AM";
+  button.id = 'plugin-time-am';
+  button.addEventListener('click', e => {
+    e.target.classList.add('selected');
+    ME.queryId('plugin-time-pm').classList.remove('selected');
+    showOrHiddenSchedule('ampm', 'AM');
+  });
+  div.appendChild(button);
+
+  // 時間帯絞り込みボタンPM
+  button = ME.create('button');
+  button.type = 'button';
+  button.innerText = "PM";
+  button.id = 'plugin-time-pm';
+  button.addEventListener('click', e => {
+    e.target.classList.add('selected');
+    ME.queryId('plugin-time-am').classList.remove('selected');
+    showOrHiddenSchedule('ampm', 'PM');
+  });
+  div.appendChild(button);
+
   // シフトのテーブルの直前に追加
   table.before(div);
+
 
   // メンターの担当コースの入ったtd一覧
   const TimeZones = ME.queryAll('#otherShift table tr td:nth-of-type(3)');
@@ -77,13 +129,13 @@
       const AM = ME.create('span');
       AM.innerText = 'AM';
       AM.classList.add('plugin-time-am');
-      e.append(AM);
+      e.appendChild(AM);
     }
     if (times[0] == '19:00' || times[1] == '23:00') {
       const PM = ME.create('span');
       PM.innerText = 'PM';
       PM.classList.add('plugin-time-pm');
-      e.append(PM);
+      e.appendChild(PM);
     }
   });
 })();

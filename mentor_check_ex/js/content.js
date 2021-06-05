@@ -14,7 +14,7 @@
   let chime = false;         // チャイム有無
   let smartIfSimple = false; // 詳細画面割愛
   let new_version = false;   // 新しいバージョンの有無
-
+  
   // チャイムの準備
   const audio = new Audio(chrome.runtime.getURL("resources/chime.mp3"));
   audio.volume = 0.5; // ボリュームは半分
@@ -22,7 +22,7 @@
   // タイマー用ハンドル
   let handle = 0;
   // 変更判断
-  let saveAr = '';
+  let save_time = '9999/99/99 99:99:99';
   // もともとのタイトル
   const title = document.title;
   /* ----------------------------------------------------------------------- */
@@ -163,12 +163,21 @@
           var s = '#page-content-wrapper';
           const element = ME2.set_document(doc).query(s);
           const target = ME.query(s);
-          target.outerHTML = element.outerHTML;
+          if (element) {
+            target.outerHTML = element.outerHTML;
+          }
+          // 最新のレビュー提出時間を取得する
+          // 「すべてのレビュー」と「レビュー待ち」でレビューの順序が違うので、最大を取得する。
+          let time = "";
+          ME2.queryAll('#page-content-wrapper table tr td:nth-of-type(8)').forEach(el => {
+            time = time < el.innerText ? el.innerText : time;
+          });
 
-          const ar = JSON.stringify(getChallengesAndSimplify(checkSimple()));
+          getChallengesAndSimplify(checkSimple())
 
-          if (saveAr != '' && ar != saveAr) {
+          if ((!save_time && time) || save_time && time && save_time < time) {
             if (checkChime()) {
+              MentorCheckEx.notify('課題レビュー', '更新があります。');
               audio.play();
             }
             document.title = '!!変更あり!! ' + title;
@@ -179,7 +188,7 @@
             document.title = '監視中... ' + title;
           }
 
-          saveAr = ar;
+          save_time = time;
           ME.queryId('pluginSwitchMessage').innerText = '更新：' + formatedTime();
           
           changeTitle();
@@ -203,7 +212,6 @@
       li2.addEventListener('change', e => {
         getChallengesAndSimplify(e.target.checked);
       });
-      console.log()
     }
 
     // 「チャイムの有無」ボタンの生成
@@ -221,7 +229,7 @@
         handle = setInterval(reloadFunc, interval * 1000);
       }
       else {
-        ME.queryId('pluginSwitchMessage').innerText = '';
+        ME.queryId('pluginSwitchMessage').innerHTML = '&nbsp;';
         clearInterval(handle);
         handle = 0;
         document.title = title;
