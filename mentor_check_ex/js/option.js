@@ -3,8 +3,8 @@
 const queryId = id=> document.getElementById(id);
 
 document.addEventListener('DOMContentLoaded', () => {
-  chrome.storage.sync.get({
-    interval: 15,
+  chrome.storage.local.get({
+    interval: 30,
     chime: false,
     smartIfSimple: false,
   }, items => {
@@ -18,12 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const chime = queryId('chime').checked;
     const smartIfSimple = queryId('smartIfSimple').checked;
 
-    if (isNaN(interval) || interval < 15 || interval > 300) {
+    if (isNaN(interval) || interval < 30 || interval > 300) {
       alert('リロード間隔が範囲外です');
       return;
     }
 
-    chrome.storage.sync.set({
+    chrome.storage.local.set({
       interval: interval,
       chime: chime,
       smartIfSimple: smartIfSimple,
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.close();
   });
 
-  chrome.storage.sync.get('new_version', local => {
+  chrome.storage.local.get('new_version', local => {
     if (local.new_version) {
       const message = queryId('version-up-message');
       message.innerHTML = '<b style="font-weight:bold;color:red;">新しいバージョンがあります</b>';

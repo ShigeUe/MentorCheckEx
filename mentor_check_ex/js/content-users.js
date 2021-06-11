@@ -1,7 +1,5 @@
 'use strict';
 
-(() => {
-  const ME = new MentorCheckEx();
+const ME = new MentorCheckEx();
 
-  ME.setting_cloud9();
-})();
+ME.setting_cloud9();
