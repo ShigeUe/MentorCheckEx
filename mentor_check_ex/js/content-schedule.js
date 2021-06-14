@@ -92,24 +92,24 @@ div.appendChild(br);
 // 時間帯絞り込みボタンAM
 button = ME.create('button');
 button.type = 'button';
-button.innerText = "AM";
+button.innerText = "前半";
 button.id = 'plugin-time-am';
 button.addEventListener('click', e => {
   e.target.classList.add('selected');
   ME.queryId('plugin-time-pm').classList.remove('selected');
-  showOrHiddenSchedule('ampm', 'AM');
+  showOrHiddenSchedule('ampm', '前半');
 });
 div.appendChild(button);
 
 // 時間帯絞り込みボタンPM
 button = ME.create('button');
 button.type = 'button';
-button.innerText = "PM";
+button.innerText = "後半";
 button.id = 'plugin-time-pm';
 button.addEventListener('click', e => {
   e.target.classList.add('selected');
   ME.queryId('plugin-time-am').classList.remove('selected');
-  showOrHiddenSchedule('ampm', 'PM');
+  showOrHiddenSchedule('ampm', '後半');
 });
 div.appendChild(button);
 
@@ -126,13 +126,13 @@ TimeZones.forEach(e => {
 
   if (times[0] == '15:00' || times[1] == '19:00') {
     const AM = ME.create('span');
-    AM.innerText = 'AM';
+    AM.innerText = '前半';
     AM.classList.add('plugin-time-am');
     e.appendChild(AM);
   }
   if (times[0] == '19:00' || times[1] == '23:00') {
     const PM = ME.create('span');
-    PM.innerText = 'PM';
+    PM.innerText = '後半';
     PM.classList.add('plugin-time-pm');
     e.appendChild(PM);
   }
