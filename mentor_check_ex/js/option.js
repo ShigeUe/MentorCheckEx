@@ -6,16 +6,19 @@ document.addEventListener('DOMContentLoaded', () => {
   chrome.storage.local.get({
     interval: 30,
     chime: false,
+    notify: false,
     smartIfSimple: false,
   }, items => {
     queryId('interval').value = items.interval;
     queryId('chime').checked = !!(items.chime);
+    queryId('notify').checked = !!(items.notify);
     queryId('smartIfSimple').checked = !!(items.smartIfSimple);
   });
 
   queryId('save').addEventListener('click', () => {
     const interval = queryId('interval').value - 0;
     const chime = queryId('chime').checked;
+    const notify = queryId('notify').checked;
     const smartIfSimple = queryId('smartIfSimple').checked;
 
     if (isNaN(interval) || interval < 30 || interval > 300) {
@@ -26,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     chrome.storage.local.set({
       interval: interval,
       chime: chime,
+      notify: notify,
       smartIfSimple: smartIfSimple,
     }, () => {
       queryId('message').innerText = '保存しました';
@@ -34,6 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   queryId('close').addEventListener('click', () => {
     window.close();
+  });
+
+  queryId('notify_test').addEventListener('click', (e) => {
+    e.preventDefault();
+    chrome.runtime.sendMessage({ type: 'notification', title: '通知テスト', body: '通知のテストです。' });
   });
 
   chrome.storage.local.get('new_version', local => {

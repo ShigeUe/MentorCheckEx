@@ -10,6 +10,7 @@ const ME2 = new MentorCheckEx();
 // 設定
 let interval = 30;         // リロード間隔
 let chime = false;         // チャイム有無
+let isNotify = false;         // 通知有無
 let smartIfSimple = false; // 詳細画面割愛
 let new_version = false;   // 新しいバージョンの有無
 
@@ -25,21 +26,6 @@ let save_time = '9999/99/99 99:99:99';
 const title = document.title;
 /* ----------------------------------------------------------------------- */
 
-
-/* ----------------------------------------------------------------------- */
-/* Utility functions
--------------------------------------------------------------------------- */
-// const query = (s, d) => {
-//   if (d === undefined) {
-//     d = document;
-//   }
-//   return d.querySelector(s);
-// }
-
-// const queryAll = s => document.querySelectorAll(s);
-// const queryId = id => document.getElementById(id);
-// const createElement = p => document.createElement(p);
-/* ----------------------------------------------------------------------- */
 
 const setStyle = (selector, styles) => {
   const ele = ME.query(selector);
@@ -79,9 +65,6 @@ const checkSimple = () => {
   if (!ele) return false;
   return ele.checked;
 };
-
-const checkReload = () => ME.queryId('pluginSwitchButton1').checked;
-const checkChime  = () => ME.queryId('pluginSwitchButton4').checked;
 
 const getChallengesAndSimplify = simple => {
   const ar = [];
@@ -146,7 +129,8 @@ const changeTitle = () => {
 };
 
 const reloadFunc = async () => {
-  if (checkReload()) {
+  // リロードスイッチがONなら
+  if (ME.queryId('pluginSwitchButton1').checked) {
     fetch(location.href, { method: 'GET', mode: 'same-origin', credentials: 'include' })
       .then(response => {
         if (!response.ok) {
@@ -174,12 +158,16 @@ const reloadFunc = async () => {
         getChallengesAndSimplify(checkSimple())
 
         if ((!save_time && time) || save_time && time && save_time < time) {
-          if (checkChime()) {
-            MentorCheckEx.notify('課題レビュー', '更新があります。');
+          // チャイムの有無スイッチがONなら
+          if (ME.queryId('pluginSwitchButton4').checked) {
             audio.play();
           }
-          document.title = '!!変更あり!! ' + title;
-          notify();
+          // 通知の有無スイッチがONなら
+          if (ME.queryId('pluginSwitchButton5').checked) {
+            MentorCheckEx.notify('課題レビュー', '更新があります。');
+            document.title = '!!変更あり!! ' + title;
+            notify();
+          }
           console.info('A change has been detected. ' + formatedTime());
         }
         else {
@@ -204,7 +192,7 @@ const init = () => {
 
   // シンプル化が出来るのは「レビュー待ち」のみ。
   if (location.pathname == '/mentor/all/reports') {
-    // 「シンプル化」ボタンの生成
+    // 「シンプル化」スイッチの生成
     const li2 = createSwitchElement(2, 'シンプル化');
     sidebarNavMenter.appendChild(li2);
     li2.addEventListener('change', e => {
@@ -212,12 +200,17 @@ const init = () => {
     });
   }
 
-  // 「チャイムの有無」ボタンの生成
-  const li4 = createSwitchElement(4, 'チャイムの有無');
+  // 「チャイム」スイッチの生成
+  const li4 = createSwitchElement(4, 'チャイム');
   sidebarNavMenter.appendChild(li4);
   ME.queryId('pluginSwitchButton4').checked = chime;
 
-  // 「定期リロード」ボタンの生成
+  // 「通知」スイッチの生成
+  const li5 = createSwitchElement(5, '通知');
+  sidebarNavMenter.appendChild(li5);
+  ME.queryId('pluginSwitchButton5').checked = isNotify;
+  
+  // 「定期リロード」スイッチの生成
   const li1 = createSwitchElement(1, '定期リロード');
   sidebarNavMenter.appendChild(li1);
   // 「定期リロード」の変更イベント
@@ -253,11 +246,13 @@ const init = () => {
 chrome.storage.local.get({
   interval: 30,
   chime: false,
+  notify: false,
   smartIfSimple: false,
   new_version: false,
 }, items => {
   interval      = items.interval <= 30 ? 30 : items.interval;
   chime         = items.chime;
+  isNotify      = items.notify;
   smartIfSimple = items.smartIfSimple;
   new_version   = items.new_version;
 
