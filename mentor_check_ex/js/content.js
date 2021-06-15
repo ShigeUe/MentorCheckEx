@@ -34,22 +34,24 @@ const setStyle = (selector, styles) => {
   });
 }
 
-const createMenuElement = () => {
-  const li = ME.create('li');
-  li.classList.add('sidemenu-li');
-  li.classList.add('mentorChangeEx');
-  return li;
-}
+const createMenuElement = () =>
+  MCEElement.create('li').addClass('sidemenu-li').addClass('mentorChangeEx');
 
 const createSwitchElement = (num, text) => {
-  const li = createMenuElement();
-  li.innerHTML =
-    '<div class="pluginSwitchArea">' +
-      '<input type="checkbox" id="pluginSwitchButton' + num + '">' +
-      '<label for="pluginSwitchButton' + num + '"><span></span></label>' +
-      '<div class="swImg"></div>' +
-    '</div>' +
-    '<span style="color:white;">　' + text + '</span>';
+  const li = createMenuElement().appendChild(
+    MCEElement.create('div').addClass('pluginSwitchArea').appendChild(
+      MCEElement.create('input').prop({ id: 'pluginSwitchButton' + num, type: 'checkbox', })
+    ).appendChild(
+      MCEElement.create('label').prop({ htmlFor: 'pluginSwitchButton' + num }).appendChild(
+        MCEElement.create('span')
+      )
+    )
+    .appendChild(
+      MCEElement.create('div').addClass('swImg'))
+    )
+    .appendChild(
+      MCEElement.create('span').prop({ style: { color: 'white' } }).text(text)
+    );
   return li;
 }
 
@@ -62,12 +64,10 @@ const formatedTime = () => {
 
 const checkSimple = () => {
   const ele = ME.queryId('pluginSwitchButton2');
-  if (!ele) return false;
-  return ele.checked;
+  return ele ? ele.checked : false;
 };
 
 const getChallengesAndSimplify = simple => {
-  const ar = [];
   const s = '.container-fluid .row .col-lg-12 table tr td:first-of-type a';
   const t = ME.queryAll(s);
 
@@ -77,23 +77,27 @@ const getChallengesAndSimplify = simple => {
   setStyle('#page-content-wrapper h2', { padding: simple ? '0' : '' });
 
   t.forEach(e => {
-    let h = e.href;
-    e.target = '_blank';
+    const el = MCEElement.create(e);
+    let h = el.prop('href');
+    el.prop('target', '_blank');
 
     if (simple && smartIfSimple) {
-      e.dataset.method = 'post';
-      e.href = h + '/start_review';
-      e.innerText = '開始';
+      el.prop({
+        dataset: { method: 'post' },
+        href: h + '/start_review',
+      })
+      .text('開始')
     }
     else {
       if (h.indexOf('/start_review') > 0) {
         h = h.replace('/start_review', '');
-        e.dataset.method = '';
-        e.href = h;
-        e.innerText = '詳細';
+        el.prop({
+          dataset: { method: '' },
+          href: h,
+        })
+        .text('詳細')
       }
     }
-    ar.push(h);
   });
 
   [3, 4, 6, 7, 9].forEach(i => {
@@ -102,8 +106,6 @@ const getChallengesAndSimplify = simple => {
         e.style.display = simple ? 'none' : '';
       });
   });
-
-  return ar;
 };
 
 const emphasisBlink = () => {
@@ -188,30 +190,30 @@ const reloadFunc = async () => {
 /* これ以降初期化部分
 -------------------------------------------------------------------------- */
 const init = () => {
-  const sidebarNavMenter = ME.query('#sidebar-wrapper ul:last-of-type');
+  const sidebarNavMenter = MCEElement.create(ME.query('#sidebar-wrapper ul:last-of-type'));
 
   // シンプル化が出来るのは「レビュー待ち」のみ。
   if (location.pathname == '/mentor/all/reports') {
     // 「シンプル化」スイッチの生成
-    const li2 = createSwitchElement(2, 'シンプル化');
-    sidebarNavMenter.appendChild(li2);
+    const li2 = createSwitchElement(2, '　シンプル化');
     li2.addEventListener('change', e => {
       getChallengesAndSimplify(e.target.checked);
     });
+    sidebarNavMenter.appendChild(li2);
   }
 
   // 「チャイム」スイッチの生成
-  const li4 = createSwitchElement(4, 'チャイム');
+  const li4 = createSwitchElement(4, '　チャイム');
   sidebarNavMenter.appendChild(li4);
   ME.queryId('pluginSwitchButton4').checked = chime;
 
   // 「通知」スイッチの生成
-  const li5 = createSwitchElement(5, '通知');
+  const li5 = createSwitchElement(5, '　通知');
   sidebarNavMenter.appendChild(li5);
   ME.queryId('pluginSwitchButton5').checked = isNotify;
   
   // 「定期リロード」スイッチの生成
-  const li1 = createSwitchElement(1, '定期リロード');
+  const li1 = createSwitchElement(1, '　定期リロード');
   sidebarNavMenter.appendChild(li1);
   // 「定期リロード」の変更イベント
   li1.addEventListener('change', e => {
@@ -228,13 +230,19 @@ const init = () => {
   });
 
   // 更新時間表示場所生成
-  const li3 = createMenuElement();
-  li3.innerHTML = '<span style="color:white;" id="pluginSwitchMessage">&nbsp;</span>';
+  const li3 = createMenuElement().appendChild(
+    MCEElement.create('span')
+      .prop({ id: 'pluginSwitchMessage', style: { color: 'white' } })
+      .text('　')
+  )
   sidebarNavMenter.appendChild(li3);
 
   if (new_version) {
-    const li5 = createMenuElement();
-    li5.innerHTML = '<span id="pluginVersionUpMessage">MentorCheckExの<br>新バージョンあり</span>';
+    const li5 = createMenuElement().appendChild(
+      MCEElement.create('span')
+      .prop({ id: 'pluginVersionUpMessage' })
+      .text('MentorCheckExの\n新バージョンあり')
+    )
     sidebarNavMenter.appendChild(li5);
   }
 
@@ -244,11 +252,11 @@ const init = () => {
 
 // 設定の取得
 chrome.storage.local.get({
-  interval: 30,
-  chime: false,
-  notify: false,
+  interval:      30,
+  chime:         false,
+  notify:        false,
   smartIfSimple: false,
-  new_version: false,
+  new_version:   false,
 }, items => {
   interval      = items.interval <= 30 ? 30 : items.interval;
   chime         = items.chime;

@@ -77,21 +77,112 @@ class MentorCheckEx
 
     // 「自動でCloud9を開く」ボタンの設置
     self.queryAll('a[href*="aws.amazon.com/cloud9"]').forEach(e => {
-      const button = self.create('button');
-      button.innerText = '自動でCloud9を開く';
-      button.classList.add('auto-open-the-cloud9');
-      e.after(button);
-      // ボタンの動作
-      button.addEventListener('click', (event) => {
-        self.cloud9_url = e.href;
-        event.preventDefault();
-        self.win_aws = window.open(aws.href, 'AWSOpenedFromMentorCheckEx');
-        return false;
-      });      
+      const button = new MCEElement('button')
+        .text('自動でCloud9を開く')
+        .addClass('auto-open-the-cloud9')
+        // ボタンの動作
+        .addEventListener('click', (event) => {
+          self.cloud9_url = e.href;
+          event.preventDefault();
+          self.win_aws = window.open(aws.href, 'AWSOpenedFromMentorCheckEx');
+          return false;
+        });
+      e.after(button.get());
     });
   }
 
   static notify(title, body) {
     chrome.runtime.sendMessage({ type: 'notification', title: title, body: body });
+  }
+}
+
+class MCEElement // MentorCheckExElement
+{
+  #element = null;
+
+  constructor(tagName) {
+    if (typeof tagName === 'string') {
+      this.#element = document.createElement(tagName);
+    }
+    else if (typeof tagName === 'object') {
+      this.#element = tagName;
+    }
+  }
+
+  static create(obj) {
+    return new MCEElement(obj);
+  }
+
+  addClass(className) {
+    if (typeof className === 'string') {
+      this.#element.classList.add(className);
+    }
+    return this;
+  }
+
+  removeClass(className) {
+    if (typeof className === 'string') {
+      this.#element.classList.remove(className);
+    }
+    return this;
+  }
+
+  addEventListener(type, func) {
+    this.#element.addEventListener(type, func);
+    return this;
+  }
+
+  prop(property, value) {
+    if (typeof property === 'object') {
+      this.#setObjectProp(this.#element, property);
+    }
+    else {
+      if (typeof value === 'undefined') {
+        return this.#element[property];
+      }
+      else {
+        this.#element[property] = value;
+      }
+    }
+    return this;
+  }
+
+  #setObjectProp(target, obj) {
+    Object.keys(obj).forEach(key => {
+      const value = obj[key];
+      if (typeof value === 'object') {
+        this.#setObjectProp(target[key], value);
+      }
+      else {
+        target[key] = value;
+      }
+    }, this);
+  }
+
+  get() {
+    return this.#element;
+  }
+
+  set(tagName) {
+    this.constructor(tagName);
+    return this;
+  }
+
+  appendChild(child) {
+    this.#element.appendChild(
+      child.constructor.name === 'MCEElement' ?
+        child.get() : child
+    );
+    return this;
+  }
+
+  text(text) {
+    if (typeof text === 'undefined') {
+      return this.#element.innerText;
+    }
+    else {
+      this.#element.innerText = text;
+      return this;
+    }
   }
 }

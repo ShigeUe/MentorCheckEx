@@ -1,15 +1,11 @@
 "use strict";
 
-// クラス
+// MentorCheckExクラスのインスタンス
 const ME = new MentorCheckEx();
-
-/* ----------------------------------------------------------------------- */
-/* 実行部分
--------------------------------------------------------------------------- */
-
+// 担当時間のtd一覧
+const TIME_TD   = ME.queryAll('#otherShift table tr td:nth-of-type(3)');
 // メンターの担当コースの入ったtd一覧
 const COURSE_TD = ME.queryAll('#otherShift table tr td:nth-of-type(4)');
-const TIME_TD   = ME.queryAll('#otherShift table tr td:nth-of-type(3)');
 
 // コース文字列を取得
 const tmp_courses = {};
@@ -29,24 +25,31 @@ const showOrHiddenSchedule = (type, value) => {
     ME.queryId('plugin-time-am').classList.remove('selected');
     ME.queryId('plugin-time-pm').classList.remove('selected');
     COURSE_TD.forEach(ele => {
-      ele.parentElement.dataset.ampm = '';
-      ele.parentElement.dataset.course = '';
-      ele.parentElement.style.display = '';
+      const parent = MCEElement
+        .create(ele.parentElement)
+        .prop({
+          dataset: {ampm: ''},
+          dataset: {course: ''},
+          style: {display: ''},
+        })
       if (ele.innerText.indexOf(value) < 0 && value != 'すべて') {
-        ele.parentElement.style.display = 'none';
-        ele.parentElement.dataset.course = 'on';
+        parent.prop({
+          style: { display: 'none' },
+          dataset: { course: 'on' },
+        });
       }
     });
   }
   else if (type === 'ampm') {
     TIME_TD.forEach(ele => {
-      if (ele.parentElement.dataset.ampm) {
-        ele.parentElement.style.display = '';
-        ele.parentElement.dataset.course = '';
+      const parent = ele.parentElement;
+      if (parent.dataset.ampm) {
+        parent.style.display = '';
+        parent.dataset.course = '';
       }
-      if (ele.innerText.indexOf(value) < 0 && !ele.parentElement.dataset.course) {
-        ele.parentElement.style.display = 'none';
-        ele.parentElement.dataset.ampm = 'on';
+      if (ele.innerText.indexOf(value) < 0 && !parent.dataset.course) {
+        parent.style.display = 'none';
+        parent.dataset.ampm = 'on';
       }          
     });
   }
@@ -69,52 +72,58 @@ const button_click = e => {
 // ボタンを挿入する目標
 const table = ME.query('#otherShift table');
 // ボタンを包むdiv
-let div = ME.create('div');
-div.id = 'plugin-button-area';
+let div = MCEElement.create('div').prop({ id: 'plugin-button-area' });
 
 // すべてのコースのボタンの生成
 let button;
 courses.forEach(e => {
-  button = ME.create('button');
-  button.type = 'button';
-  button.dataset.course = e;
-  button.innerText = e;
-  if (e == 'すべて') {
-    button.classList.add('selected');
-  }
-  button.addEventListener('click', button_click);
+  button = MCEElement
+    .create('button')
+    .prop({
+      type: 'button',
+      dataset: { course: e },
+      innerText: e
+    })
+    .addClass(e === 'すべて' ? 'selected' : null)
+    .addEventListener('click', button_click);
   div.appendChild(button);
 });
 
 const br = ME.create('br');
 div.appendChild(br);
 
-// 時間帯絞り込みボタンAM
-button = ME.create('button');
-button.type = 'button';
-button.innerText = "前半";
-button.id = 'plugin-time-am';
-button.addEventListener('click', e => {
-  e.target.classList.add('selected');
-  ME.queryId('plugin-time-pm').classList.remove('selected');
-  showOrHiddenSchedule('ampm', '前半');
-});
+// 時間帯絞り込みボタン前半
+button = MCEElement
+  .create('button')
+  .prop({
+    id: 'plugin-time-am',
+    type: 'button',
+    innerText: "前半",
+  })
+  .addEventListener('click', e => {
+    e.target.classList.add('selected');
+    ME.queryId('plugin-time-pm').classList.remove('selected');
+    showOrHiddenSchedule('ampm', '前半');
+  });
 div.appendChild(button);
 
-// 時間帯絞り込みボタンPM
-button = ME.create('button');
-button.type = 'button';
-button.innerText = "後半";
-button.id = 'plugin-time-pm';
-button.addEventListener('click', e => {
-  e.target.classList.add('selected');
-  ME.queryId('plugin-time-am').classList.remove('selected');
-  showOrHiddenSchedule('ampm', '後半');
-});
+// 時間帯絞り込みボタン後半
+button = MCEElement
+  .create('button')
+  .prop({
+    id: 'plugin-time-pm',    
+    type: 'button',
+    innerText: "後半",
+  })
+  .addEventListener('click', e => {
+    e.target.classList.add('selected');
+    ME.queryId('plugin-time-am').classList.remove('selected');
+    showOrHiddenSchedule('ampm', '後半');
+  });
 div.appendChild(button);
 
 // シフトのテーブルの直前に追加
-table.before(div);
+table.before(div.get());
 
 
 // メンターの担当コースの入ったtd一覧
@@ -125,15 +134,17 @@ TimeZones.forEach(e => {
   const times = e.innerText.split('〜');
 
   if (times[0] == '15:00' || times[1] == '19:00') {
-    const AM = ME.create('span');
-    AM.innerText = '前半';
-    AM.classList.add('plugin-time-am');
-    e.appendChild(AM);
+    const AM = MCEElement
+      .create('span')
+      .prop({ innerText: '前半' })
+      .addClass('plugin-time-am');
+    e.appendChild(AM.get());
   }
   if (times[0] == '19:00' || times[1] == '23:00') {
-    const PM = ME.create('span');
-    PM.innerText = '後半';
-    PM.classList.add('plugin-time-pm');
-    e.appendChild(PM);
+    const PM = MCEElement
+      .create('span')
+      .prop({ innerText: '後半' })
+      .addClass('plugin-time-pm');
+    e.appendChild(PM.get());
   }
 });
