@@ -25,9 +25,8 @@ if (memo) {
   memo.target = '_blank';
 }
 
-// AWSへのリンク取得
+// AWSへのリンク取得の有無によって、ボタンの有無を決定
 const aws = ME.query('#page-content-wrapper a[href*="signin.aws.amazon.com/console"]');
 if (aws) {
   ME.setting_cloud9();
 }
-// Cloud9の自動ボタンを設定

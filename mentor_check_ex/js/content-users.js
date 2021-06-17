@@ -2,4 +2,8 @@
 
 const ME = new MentorCheckEx();
 
-ME.setting_cloud9();
+// 設定を同期的に読み込み
+(async () => {
+  await ME.getSettings();
+  ME.setting_cloud9();
+})();

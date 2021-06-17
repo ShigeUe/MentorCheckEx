@@ -8,11 +8,15 @@ document.addEventListener('DOMContentLoaded', () => {
     chime: false,
     notify: false,
     smartIfSimple: false,
+    username: '',
+    password: '',
   }, items => {
     queryId('interval').value = items.interval;
     queryId('chime').checked = !!(items.chime);
     queryId('notify').checked = !!(items.notify);
     queryId('smartIfSimple').checked = !!(items.smartIfSimple);
+    queryId('username').value = items.username;
+    queryId('password').value = items.password;
   });
 
   queryId('save').addEventListener('click', () => {
@@ -20,6 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const chime = queryId('chime').checked;
     const notify = queryId('notify').checked;
     const smartIfSimple = queryId('smartIfSimple').checked;
+    const username = queryId('username').value;
+    const password = queryId('password').value;
 
     if (isNaN(interval) || interval < 30 || interval > 300) {
       alert('リロード間隔が範囲外です');
@@ -31,6 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
       chime: chime,
       notify: notify,
       smartIfSimple: smartIfSimple,
+      username: username,
+      password: password,
     }, () => {
       queryId('message').innerText = '保存しました';
     });

@@ -251,19 +251,14 @@ const init = () => {
 };
 
 // 設定の取得
-chrome.storage.local.get({
-  interval:      30,
-  chime:         false,
-  notify:        false,
-  smartIfSimple: false,
-  new_version:   false,
-}, items => {
-  interval      = items.interval <= 30 ? 30 : items.interval;
-  chime         = items.chime;
-  isNotify      = items.notify;
-  smartIfSimple = items.smartIfSimple;
-  new_version   = items.new_version;
+(async () => {
+  await ME.getSettings();
+  interval      = ME.settings.interval <= 30 ? 30 : ME.settings.interval;
+  chime         = ME.settings.chime;
+  isNotify      = ME.settings.notify;
+  smartIfSimple = ME.settings.smartIfSimple;
+  new_version   = ME.settings.new_version;
 
   // 初期化の実行
   init();
-});
+})();

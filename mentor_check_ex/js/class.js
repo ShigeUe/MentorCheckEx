@@ -5,10 +5,41 @@ class MentorCheckEx
   doc        = document;
   cloud9_url = '#';
   win_aws    = '';
+  settings   = {};
+  // デフォルト
+  #_settings = {
+    interval:      30,
+    chime:         false,
+    notify:        false,
+    smartIfSimple: false,
+    new_version:   false,
+    username:      '',
+    password:      '',
+  };
 
   constructor() {
     // 空のメッセージを送ることで、Service Workerを起こしてバージョンアップの確認をさせる
     chrome.runtime.sendMessage({});
+  }
+
+  async getSettings() {
+    this.settings = await this.#_getSettings();
+  }
+
+  async #_getSettings() {
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.get(this.#_settings, resolve);
+    });
+  }
+
+  async setSettings() {
+    await this.#_setSettings();
+  }
+
+  async #_setSettings() {
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.set(this.settings, resolve);
+    });
   }
 
   set_document(doc) {
@@ -50,9 +81,15 @@ class MentorCheckEx
       return;
     }
 
-    const aws_info = self.query('a[href*="signin.aws.amazon.com/console"] + div').innerText.split('\n');
-    const aws_username = aws_info[1].split(' ')[1];
-    const aws_password = aws_info[2].split(' ')[1];
+
+    if (this.settings && (!'username' in this.settings || !this.settings.username)) {
+      const aws_info = self.query('a[href*="signin.aws.amazon.com/console"] + div').innerText.split('\n');
+      this.settings.username = aws_info[1].split(' ')[1];
+      this.settings.password = aws_info[2].split(' ')[1];
+      (async () => {
+        await this.setSettings();
+      })();
+    }
 
     // AWSログインからのメッセージの受信
     window.addEventListener('message', event => {
@@ -64,8 +101,8 @@ class MentorCheckEx
         // サインイン画面
         if (event.data === 'loaded' && event.origin === 'https://signin.aws.amazon.com') {
           self.win_aws.postMessage({
-            username: aws_username,
-            password: aws_password
+            username: this.settings.username,
+            password: this.settings.password
           }, event.origin);
         }
         // サインインが完了しダッシュボードが開いた

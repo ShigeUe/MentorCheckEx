@@ -25,18 +25,13 @@ const showOrHiddenSchedule = (type, value) => {
     ME.queryId('plugin-time-am').classList.remove('selected');
     ME.queryId('plugin-time-pm').classList.remove('selected');
     COURSE_TD.forEach(ele => {
-      const parent = MCEElement
-        .create(ele.parentElement)
-        .prop({
-          dataset: {ampm: ''},
-          dataset: {course: ''},
-          style: {display: ''},
-        })
+      const parent = ele.parentElement;
+      parent.style.display = '';
+      parent.dataset.course = '';
+      parent.dataset.ampm = '';
       if (ele.innerText.indexOf(value) < 0 && value != 'すべて') {
-        parent.prop({
-          style: { display: 'none' },
-          dataset: { course: 'on' },
-        });
+        parent.style.display = 'none';
+        parent.dataset.course = 'hide';
       }
     });
   }
@@ -49,7 +44,7 @@ const showOrHiddenSchedule = (type, value) => {
       }
       if (ele.innerText.indexOf(value) < 0 && !parent.dataset.course) {
         parent.style.display = 'none';
-        parent.dataset.ampm = 'on';
+        parent.dataset.ampm = 'hide';
       }          
     });
   }
