@@ -16,9 +16,6 @@ if (window.opener && window.name == 'AWSOpenedFromMentorCheckEx') {
       password.value = event.data.password;
       password.dispatchEvent(new Event('change'));
 
-      // 次にCloud9を開かせるために、メッセージを送信
-      window.opener.postMessage('processed', event.origin);
-      // 遅れてサインインボタンを押す
       setTimeout(() => {
         document.getElementById('signin_button').click();
       }, 100);

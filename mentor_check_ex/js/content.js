@@ -26,14 +26,6 @@ let save_time = '9999/99/99 99:99:99';
 const title = document.title;
 /* ----------------------------------------------------------------------- */
 
-
-const setStyle = (selector, styles) => {
-  const ele = ME.query(selector);
-  Object.keys(styles).forEach(key => {
-    ele.style[key] = styles[key];
-  });
-}
-
 const createMenuElement = () =>
   MCEElement.create('li').addClass('sidemenu-li').addClass('mentorChangeEx');
 
@@ -66,19 +58,18 @@ const checkSimple = () => {
   const ele = ME.queryId('pluginSwitchButton2');
   return ele ? ele.checked : false;
 };
-
+// シンプル化する
 const getChallengesAndSimplify = simple => {
-  const s = '.container-fluid .row .col-lg-12 table tr td:first-of-type a';
-  const t = ME.queryAll(s);
+  const t = ME.queryAll('.container-fluid .row .col-lg-12 table tr td:first-of-type a');
 
   // パンくず非表示＆ナビゲーションタブ＆タイトル部分のマージン削除
-  setStyle('ol.breadcrumb', { display: simple ? 'none' : '' });
-  setStyle('ul.nav-tabs', { display: simple ? 'none' : '' });
-  setStyle('#page-content-wrapper h2', { padding: simple ? '0' : '' });
-
+  MCEElement.create(ME.query('ol.breadcrumb'           )).style({display: simple ? 'none' : ''});
+  MCEElement.create(ME.query('ul.nav-tabs'             )).style({display: simple ? 'none' : ''});
+  MCEElement.create(ME.query('#page-content-wrapper h2')).style({padding: simple ? '0' : ''});
+  
   t.forEach(e => {
     const el = MCEElement.create(e);
-    let h = el.prop('href');
+    const h = el.prop('href');
     el.prop('target', '_blank');
 
     if (simple && smartIfSimple) {
@@ -90,16 +81,16 @@ const getChallengesAndSimplify = simple => {
     }
     else {
       if (h.indexOf('/start_review') > 0) {
-        h = h.replace('/start_review', '');
+        const hh = h.replace('/start_review', '');
         el.prop({
           dataset: { method: '' },
-          href: h,
+          href: hh,
         })
         .text('詳細')
       }
     }
   });
-
+  // 課題レビュー待ち受けに必要なさそうなカラムを非表示する
   [3, 4, 6, 7, 9].forEach(i => {
     ME.queryAll('table tr th:nth-of-type(' + i + '),table tr td:nth-of-type(' + i + ')')
       .forEach(e => {
@@ -107,11 +98,11 @@ const getChallengesAndSimplify = simple => {
       });
   });
 };
-
+// navバーを反転させる0.5秒後にPromiseを返す
 const emphasisBlink = () => {
-  const style = ME.query('#page-content-wrapper h2').style;
-  style.backgroundColor = (style.backgroundColor) ? "" : "#0f7378";
-  style.color = (style.color) ? "" : "white";
+  const style = ME.query('.navbar.navbar-fixed-top').style;
+  style.backgroundColor = (style.backgroundColor) ? "" : "#cb3333";
+  style.borderColor = (style.borderColor) ? "" : "#cb3333";
 
   return new Promise(resolve => {
     setTimeout(() => {
@@ -119,7 +110,7 @@ const emphasisBlink = () => {
     }, 500);
   });
 }
-
+// navバーを点滅させる
 const notify = async () => {
   for (let i = 0; i < 6; i++) {
     await emphasisBlink();

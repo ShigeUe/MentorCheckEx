@@ -21,6 +21,7 @@ courses.sort().push('すべて');
 
 // スケジュールの表示・非表示
 const showOrHiddenSchedule = (type, value) => {
+  // コースボタンが押された場合
   if (type === 'course') {
     ME.queryId('plugin-time-am').classList.remove('selected');
     ME.queryId('plugin-time-pm').classList.remove('selected');
@@ -35,6 +36,7 @@ const showOrHiddenSchedule = (type, value) => {
       }
     });
   }
+  // 前半・後半ボタンが押された場合
   else if (type === 'ampm') {
     TIME_TD.forEach(ele => {
       const parent = ele.parentElement;

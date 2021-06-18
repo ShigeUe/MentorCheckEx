@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.1.3",
+   "version": "0.1.4",
 
    "action": {},
    "description": "課題レビューのチェックをする拡張機能",
@@ -26,7 +26,7 @@
             "https://techacademy.jp/mentor/training/reports/*"
          ],
          "run_at": "document_end",
-         "js": ["js/class.js", "js/content-report.js"],
+         "js": ["js/class.js", "js/open-cloud9.js", "js/content-report.js"],
          "css": ["css/override.css"]
       },
       {
@@ -38,13 +38,13 @@
       {
          "matches": ["https://techacademy.jp/mentor/users/*"],
          "run_at": "document_end",
-         "js": ["js/class.js", "js/content-users.js"],
+         "js": ["js/class.js", "js/open-cloud9.js"],
          "css": ["css/override.css"]
       },
       {
          "matches": ["https://techacademy.jp/mentor/appointments/*/mentoring_notes/new"],
          "run_at": "document_end",
-         "js": ["js/class.js", "js/content-users.js"],
+         "js": ["js/class.js", "js/open-cloud9.js"],
          "css": ["css/override.css"]
       },
       {
