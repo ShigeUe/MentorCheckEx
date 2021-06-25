@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>classテストページ</title>
+  <style>
+    .error{color:red;font-weight:bold;}
+    .info{color:blue;}
+    .mt1{margin-top:0.5rem;}
+    pre{font-size:1rem;margin:0;}
+  </style>
+  <script src="../mentor_check_ex/js/class.js"></script>
+</head>
+<body>
+  <div id="page-content-wrapper">
+    <h1>classテストページ</h1>
+    <hr>
+    <h2>テスト結果</h2>
+    <div id="resultArea"></div>
+    <hr>
+    <h2>テスト用要素</h2>
+    <div id="testElement">
+      <div class="testRow">
+        <div class="testCol1">&nbsp;</div>
+        <div class="testCol2">&nbsp;</div>
+
+        <div class="testCol3">
+          <div class="testRow11">
+            <div class="testCol11">&nbsp;</div>
+            <div class="testCol12">&nbsp;</div>
+            <div class="testCol13">&nbsp;</div>
+          </div>
+        </div>
+        <div class="testCol4">abcde</div>
+        <div class="testCol5"></div>
+      </div>
+    </div>
+    <hr>
+    <h2>受講生画面のダミー</h2>
+    <table class="table table-users"><tbody>
+      <tr>
+        <th class="col-md-4">AWS Cloud9 共有アカウント</th>
+        <td class="col-md-8"><a target="_blank" href="https://123456789012.signin.aws.amazon.com/console"><i class="fa fa-cloud fa-l"></i>123456789012</a>
+          <div class="flex-layout-row add-margin-top-5">
+            <div class="display-inline-block"><b>メンターアカウントのIDとパスワード</b><br>user: test_user_name<br>pass: PaSsWoRd</div>
+            <div class="display-inline-block add-padding-left-15 add-margin-left-15 border-left"><i class="fa fa-l fa-info-circle"></i>左記のID/パスワードでログイiできない場合<br>代替共有アカウントが作成された可能性があります。<br>タブメニュー内の<a href="/mentor/users/00000/memos">メモ</a>をご確認ください。</div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>AWS Cloud9 ワークスペース</th>
+        <td>
+          <a target="_blank" href="https://ap-northeast-1.console.aws.amazon.com/cloud9/ide/123456789abcdefghijklmnopqrstuvw"><i class="fa fa-cloud fa-l"></i>PHP/Laravelコース</a><br>
+          <a target="_blank" href="https://console.aws.amazon.com/cloud9/ide/abcdefghijklmnopqrstuvw123456789"><i class="fa fa-cloud fa-l"></i>フロントエンドコース</a><br>
+        </td>
+      </tr>
+    </tbody></table>
+  </div>
+  <script src="./common.js"></script>
+  <script src="./class_test.js"></script>
+</body>
+</html>

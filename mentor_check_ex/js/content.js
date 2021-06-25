@@ -14,8 +14,12 @@ let isNotify = false;         // 通知有無
 let smartIfSimple = false; // 詳細画面割愛
 let new_version = false;   // 新しいバージョンの有無
 
+// テスト用にプラグイン環境に依存する部分をなくす
+const $chrome = (typeof _chrome === 'undefined') ? chrome : _chrome;
+const $review = (typeof review  === 'undefined') ? '/mentor/all/reports' : review;
+
 // チャイムの準備
-const audio = new Audio(chrome.runtime.getURL("resources/chime.mp3"));
+const audio = new Audio($chrome.runtime.getURL("resources/chime.mp3"));
 audio.volume = 0.5; // ボリュームは半分
 
 // タイマー用ハンドル
@@ -184,7 +188,7 @@ const init = () => {
   const sidebarNavMenter = MCEElement.create(ME.query('#sidebar-wrapper ul:last-of-type'));
 
   // シンプル化が出来るのは「レビュー待ち」のみ。
-  if (location.pathname == '/mentor/all/reports') {
+  if (location.pathname == $review) {
     // 「シンプル化」スイッチの生成
     const li2 = createSwitchElement(2, '　シンプル化');
     li2.addEventListener('change', e => {

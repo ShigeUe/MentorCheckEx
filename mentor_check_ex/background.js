@@ -80,7 +80,8 @@ chrome.tabs.onUpdated.addListener((tabId, info, tab) => {
 
 // バージョン文字列を数字に変換
 const version2num = ver => {
-  return ver.replaceAll('.', '') - 0;
+  const vers = ver.split('.');
+  return vers[0] * 65536 + vers[1] * 256 + (vers[2] - 0);
 };
 
 (async () => {

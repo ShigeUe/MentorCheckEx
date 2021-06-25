@@ -2,10 +2,17 @@
 
 class MentorCheckEx
 {
-  doc        = document;
   cloud9_url = '#';
   win_aws    = '';
   settings   = {};
+
+  // 依存性注入用
+  static _chrome = chrome;
+  static _window = window;
+  #chrome = null;
+  #window = null;
+
+  #doc = document;
   // デフォルト
   #_settings = {
     interval:      30,
@@ -19,9 +26,11 @@ class MentorCheckEx
 
   constructor() {
     // 空のメッセージを送ることで、Service Workerを起こしてバージョンアップの確認をさせる
-    chrome.runtime.sendMessage({});
-  }
 
+    this.#chrome = MentorCheckEx._chrome;
+    this.#window = MentorCheckEx._window;
+    MentorCheckEx._chrome.runtime.sendMessage({});
+  }
   // 設定をクラスに読み込む
   async getSettings() {
     this.settings = await this.#_getSettings();
@@ -31,7 +40,7 @@ class MentorCheckEx
   async #_getSettings() {
     return new Promise((resolve, reject) => {
       // デフォルト値を付けて設定を所得する
-      chrome.storage.local.get(this.#_settings, resolve);
+      MentorCheckEx._chrome.storage.local.get(this.#_settings, resolve);
     });
   }
 
@@ -43,30 +52,41 @@ class MentorCheckEx
   // クラス内の設定を書き込むためのプライベートメソッド
   async #_setSettings() {
     return new Promise((resolve, reject) => {
-      chrome.storage.local.set(this.settings, resolve);
+      this.#chrome.storage.local.set(this.settings, resolve);
     });
   }
-
   // query系のメソッドの検索元を設定する（通常はdocument）
   set_document(doc) {
-    this.doc = doc;
+    this.#doc = doc;
     return this;
   }
   // querySelector
   query(s) {
-    return this.doc.querySelector(s);
+    return this.#doc.querySelector(s);
   }
   // querySelectorAll
   queryAll(s) {
-    return this.doc.querySelectorAll(s);
+    return this.#doc.querySelectorAll(s);
   }
   // getElementById
   queryId(i) {
-    return this.doc.getElementById(i);
+    return this.#doc.getElementById(i);
   }
   // createElement
   create(e) {
     return document.createElement(e);
+  }
+  // 共通のウィンドウ名で開く
+  w_open(url) {
+    return this.#window.open(url, 'AWSOpenedFromMentorCheckEx');
+  }
+
+  // 画面からusernameとpasswordを取得する
+  getUsernameAndPassword() {
+    // AWSのリンクの直後のDIVの中にユーザー名とパスワードが入っている
+    const aws_info = this.query('a[href*="signin.aws.amazon.com/console"] + div').innerText.split('\n');
+    this.settings.username = aws_info[1].split(' ')[1];
+    this.settings.password = aws_info[2].split(' ')[1];
   }
   // 「自動でCloud9を開く」ボタンを設置するための設定をする
   setting_cloud9() {
@@ -77,10 +97,7 @@ class MentorCheckEx
     }
     // 設定に username が無ければ、画面から取得する
     if (this.settings && (!'username' in this.settings || !this.settings.username)) {
-      // AWSのリンクの直後のDIVの中にユーザー名とパスワードが入っている
-      const aws_info = this.query('a[href*="signin.aws.amazon.com/console"] + div').innerText.split('\n');
-      this.settings.username = aws_info[1].split(' ')[1];
-      this.settings.password = aws_info[2].split(' ')[1];
+      this.getUsernameAndPassword();
       (async () => {
         await this.setSettings();
       })();
@@ -104,7 +121,7 @@ class MentorCheckEx
         // サインインが完了しダッシュボードが開いた
         if (event.data === 'loaded' && event.origin.indexOf('console.aws.amazon.com') > 0) {
           // Cloud9のリンクを同じwindowで開く
-          window.open(this.cloud9_url, 'AWSOpenedFromMentorCheckEx');
+          this.w_open(this.cloud9_url);
         }
       }
     });
@@ -119,7 +136,7 @@ class MentorCheckEx
           this.cloud9_url = e.href;
           event.preventDefault();
           // window.name を指定して、リンクを開く
-          this.win_aws = window.open(aws.href, 'AWSOpenedFromMentorCheckEx');
+          this.win_aws = this.w_open(aws.href);
           return false;
         });
       e.after(button.get());
@@ -127,7 +144,7 @@ class MentorCheckEx
   }
 
   static notify(title, body) {
-    chrome.runtime.sendMessage({ type: 'notification', title: title, body: body });
+    MentorCheckEx._chrome.runtime.sendMessage({ type: 'notification', title: title, body: body });
   }
 }
 
@@ -136,12 +153,12 @@ class MCEElement // MentorCheckExElement
 {
   #element = null;
 
-  constructor(tagName) {
-    if (typeof tagName === 'string') {
-      this.#element = document.createElement(tagName);
+  constructor(tagNameOrElement) {
+    if (typeof tagNameOrElement === 'string') {
+      this.#element = document.createElement(tagNameOrElement);
     }
-    else if (typeof tagName === 'object') {
-      this.#element = tagName;
+    else if (typeof tagNameOrElement === 'object') {
+      this.#element = tagNameOrElement;
     }
   }
   // 新しいインスタンスを作る
@@ -201,8 +218,8 @@ class MCEElement // MentorCheckExElement
     return this.#element;
   }
   // 指定のタグで作り直すか、エレメントをセットする
-  set(tagName) {
-    this.constructor(tagName);
+  set(tagNameOrElement) {
+    this.constructor(tagNameOrElement);
     return this;
   }
   // appendChildのラップ
@@ -224,9 +241,9 @@ class MCEElement // MentorCheckExElement
     }
   }
   // スタイルを設定する
-  style(obj) {
-    Object.keys(obj).forEach(key => {
-      this.#element.style[key] = obj[key];
+  style(styles) {
+    Object.keys(styles).forEach(key => {
+      this.#element.style[key] = styles[key];
     }, this);
   }
 }
