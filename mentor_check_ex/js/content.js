@@ -95,7 +95,7 @@ const getChallengesAndSimplify = simple => {
     }
   });
   // 課題レビュー待ち受けに必要なさそうなカラムを非表示する
-  [3, 4, 6, 7, 9].forEach(i => {
+  [4, 6, 7, 9].forEach(i => {
     ME.queryAll('table tr th:nth-of-type(' + i + '),table tr td:nth-of-type(' + i + ')')
       .forEach(e => {
         e.style.display = simple ? 'none' : '';
