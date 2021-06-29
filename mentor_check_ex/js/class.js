@@ -37,7 +37,7 @@ class MentorCheckEx
   }
 
   // 設定をクラスに読み込むためのプライベートメソッド
-  async #_getSettings() {
+  #_getSettings() {
     return new Promise((resolve, reject) => {
       // デフォルト値を付けて設定を所得する
       MentorCheckEx._chrome.storage.local.get(this.#_settings, resolve);
@@ -50,7 +50,7 @@ class MentorCheckEx
   }
 
   // クラス内の設定を書き込むためのプライベートメソッド
-  async #_setSettings() {
+  #_setSettings() {
     return new Promise((resolve, reject) => {
       this.#chrome.storage.local.set(this.settings, resolve);
     });
@@ -227,6 +227,15 @@ class MCEElement // MentorCheckExElement
     this.#element.appendChild(
       child.constructor.name === 'MCEElement' ?
         child.get() : child
+    );
+    return this;
+  }
+  // insertBeforeのラップで一番前に挿入する
+  insertFirst(child) {
+    this.#element.insertBefore(
+      child.constructor.name === 'MCEElement' ?
+        child.get() : child,
+      this.#element.firstChild
     );
     return this;
   }

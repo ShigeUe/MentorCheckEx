@@ -199,5 +199,13 @@ else {
   debug.err('MCEElement.style(object) ... NG');
 }
 
+EL3.insertFirst(MCEElement.create('span').text('最初に挿入される'));
+if (result.innerText === '最初に挿入されるxxxx') {
+  debug.log('MCEElement.insertFirst ... OK');
+}
+else {
+  debug.err('MCEElement.insertFirst ... NG');
+}
+
 debug.info('上記の操作で出来上がった要素のHTML', true);
 debug.text(EL3.get().outerHTML);

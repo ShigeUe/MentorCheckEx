@@ -19,11 +19,6 @@ chrome.runtime.onMessage.addListener((message) => {
 });
 
 
-// 機能拡張のアイコンをクリックした
-chrome.action.onClicked.addListener(tab => {
-  // 今のところ処理なし
-});
-
 // アイコンを有効・無効で変化させる
 const iconChange = isEnabled => {
   if (isEnabled) {
@@ -87,7 +82,7 @@ const version2num = ver => {
 (async () => {
 
   // 同期的にプラグインの設定を取得する
-  const config = await (async () => {
+  const config = await (() => {
     return new Promise((resolve, reject) => {
       chrome.storage.local.get('new_version', resolve);
     });

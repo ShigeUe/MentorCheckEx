@@ -121,8 +121,15 @@ const notify = async () => {
   }
 };
 
+// HTML中のタイトルを変更
 const changeTitle = () => {
-  ME.query('.container-fluid h2').innerText = ME.query('#courseDropdown').innerText + 'レビュー一覧';
+  if (location.href.indexOf('[]') > 0) {
+    ME.query('.container-fluid h2').innerText = '複数コースのレビュー一覧';
+    ME.queryId('courseDropdown').innerText = '複数コース選択中';
+  }
+  else {
+    ME.query('.container-fluid h2').innerText = ME.query('#courseDropdown').innerText + 'レビュー一覧';
+  }
 };
 
 const reloadFunc = async () => {
@@ -182,9 +189,21 @@ const reloadFunc = async () => {
   }
 };
 
+// プルダウンリストから自分の受け持ちコースを取得する
+const makeCourseList = () => {
+  const a_list = ME.queryAll('#page-content-wrapper .dropdown .dropdown-menu li a');
+  const course_list = [];
+  for (let i = 1; i < a_list.length; i++) {
+    let search;
+    [, search] = a_list[i].search.split('=');
+    course_list.push({ id: search, name: a_list[i].innerText });
+  }
+  $chrome.storage.local.set({ course_list: course_list });
+};
+
 /* これ以降初期化部分
 -------------------------------------------------------------------------- */
-const init = () => {
+const init = async () => {
   const sidebarNavMenter = MCEElement.create(ME.query('#sidebar-wrapper ul:last-of-type'));
 
   // シンプル化が出来るのは「レビュー待ち」のみ。
@@ -196,6 +215,9 @@ const init = () => {
     });
     sidebarNavMenter.appendChild(li2);
   }
+
+  // プルダウンリストから自分の受け持ちコースを取得する
+  makeCourseList();
 
   // 「チャイム」スイッチの生成
   const li4 = createSwitchElement(4, '　チャイム');
@@ -255,5 +277,5 @@ const init = () => {
   new_version   = ME.settings.new_version;
 
   // 初期化の実行
-  init();
+  await init();
 })();
