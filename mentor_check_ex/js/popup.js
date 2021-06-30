@@ -39,7 +39,7 @@ class PopupClass
   // 現在のタブを取得する  
   getCurrentTab() {
     return new Promise((resolve, reject) => {
-      this.#chrome.tabs.query({ active: true }, resolve);
+      this.#chrome.tabs.query({ active: true, currentWindow: true }, resolve);
     });
   };
   // 絞り込み可能のURLか
