@@ -45,12 +45,7 @@ class MentorCheckEx
   }
 
   // クラス内の設定を書き込む
-  async setSettings() {
-    await this.#_setSettings();
-  }
-
-  // クラス内の設定を書き込むためのプライベートメソッド
-  #_setSettings() {
+  setSettings() {
     return new Promise((resolve, reject) => {
       this.#chrome.storage.local.set(this.settings, resolve);
     });
@@ -97,8 +92,8 @@ class MentorCheckEx
     }
     // 設定に username が無ければ、画面から取得する
     if (this.settings && (!'username' in this.settings || !this.settings.username)) {
-      this.getUsernameAndPassword();
       (async () => {
+        this.getUsernameAndPassword();
         await this.setSettings();
       })();
     }
