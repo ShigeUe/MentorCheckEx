@@ -16,6 +16,14 @@ input[type="text"]{padding:4px;border:1px solid #888;border-radius: 5px;}
 a:focus-visible, button:focus-visible,
 input:focus-visible{outline:none;box-shadow: 0 0 8px #1A7378;}
 input[type="checkbox"]{width:16px;height:16px;margin:8px 0;vertical-align:top;}
+#version{position:fixed;right:10px;bottom:10px;user-select:none;font-weight:bold;color:#888;}
+
+@media (prefers-color-scheme: dark){
+  body {background-color: #222;color:#eee;}
+  a:link{color:#55f}
+  a:visited{color:#f5f}
+  a:active{color:#99f}
+}
 </style>
 <script src="js/option.js"></script>
 </head>
@@ -43,5 +51,6 @@ input[type="checkbox"]{width:16px;height:16px;margin:8px 0;vertical-align:top;}
     Stripe：<a href="https://buy.stripe.com/3cs0269AO0E4gX63cc" target="_blank" rel="noopener noreferrer">https://buy.stripe.com/3cs0269AO0E4gX63cc</a>
   </p>
 </div>
+<div id="version">-</div>
 </body>
 </html>

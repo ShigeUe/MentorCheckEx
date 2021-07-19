@@ -59,4 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
       message.innerHTML = '<b style="font-weight:bold;color:red;">新しいバージョンがあります</b>';
     }
   });
+
+  const manifest = chrome.runtime.getManifest();
+  queryId('version').innerText = manifest.version;
 });
