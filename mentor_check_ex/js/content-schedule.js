@@ -2,10 +2,23 @@
 
 // MentorCheckExクラスのインスタンス
 const ME = new MentorCheckEx();
+// メンターの並び替え
+const COURSE_TR = Array.from(ME.queryAll('#otherShift table tbody tr'));
+const COURSE_TBODY = ME.query('#otherShift table tbody');
+COURSE_TR.sort((a, b) => {
+  const aa = a.children[1].innerText;
+  const bb = b.children[1].innerText;
+  if (aa == bb) {
+    return a.children[2].innerText > b.children[2].innerText ? 1 : -1;
+  }
+  return aa > bb ? 1 : -1;
+});
+COURSE_TR.forEach(e => COURSE_TBODY.appendChild(e));
+
 // 担当時間のtd一覧
-const TIME_TD   = ME.queryAll('#otherShift table tr td:nth-of-type(3)');
+const TIME_TD   = ME.queryAll('#otherShift table tbody tr td:nth-of-type(3)');
 // メンターの担当コースの入ったtd一覧
-const COURSE_TD = ME.queryAll('#otherShift table tr td:nth-of-type(4)');
+const COURSE_TD = ME.queryAll('#otherShift table tbody tr td:nth-of-type(4)');
 
 // コース文字列を取得
 const tmp_courses = {};
