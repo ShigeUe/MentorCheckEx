@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     chime: false,
     notify: false,
     smartIfSimple: false,
+    curriculumSubMenu: false,
     username: '',
     password: '',
   }, items => {
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     queryId('chime').checked = !!(items.chime);
     queryId('notify').checked = !!(items.notify);
     queryId('smartIfSimple').checked = !!(items.smartIfSimple);
+    queryId('curriculumSubMenu').checked = !!(items.curriculumSubMenu);
     queryId('username').value = items.username;
     queryId('password').value = items.password;
   });
@@ -24,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const chime = queryId('chime').checked;
     const notify = queryId('notify').checked;
     const smartIfSimple = queryId('smartIfSimple').checked;
+    const curriculumSubMenu = queryId('curriculumSubMenu').checked;
     const username = queryId('username').value;
     const password = queryId('password').value;
 
@@ -37,6 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
       chime: chime,
       notify: notify,
       smartIfSimple: smartIfSimple,
+      curriculumSubMenu: curriculumSubMenu,
+      curriculums: {time: false},
       username: username,
       password: password,
     }, () => {

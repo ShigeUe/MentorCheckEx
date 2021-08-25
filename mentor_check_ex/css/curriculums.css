@@ -1,0 +1,23 @@
+#MentorCheckExCurriculums {
+  position: fixed;
+  top: 300px;
+  left: -300px;
+  width: 300px;
+  height: 400px;
+  overflow-y: scroll;
+  padding: 0.5em 1em 0 0;
+  background-color: #0f7378;
+  color: white;
+  transition: left .3s;
+}
+#MentorCheckExCurriculums.open {
+  left: 250px;
+}
+
+#MentorCheckExCurriculums ul li a {
+  color: white;
+}
+
+#wrapper.closeSidebar-wrapper #MentorCheckExCurriculums.open {
+  left: 2.8rem;
+}

@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.1.8",
+   "version": "0.1.9",
 
    "action": {
       "default_popup": "popup.html"
@@ -17,13 +17,24 @@
    "permissions": ["storage", "tabs", "notifications"],
    "content_scripts": [
       {
+         "matches": ["https://techacademy.jp/mentor/*"],
+         "run_at": "document_start",
+         "js": ["js/class.js"]
+      },
+      {
+         "matches": ["https://techacademy.jp/mentor/*"],
+         "run_at": "document_end",
+         "js": ["js/curriculums.js"],
+         "css": ["css/curriculums.css"]
+      },
+      {
          "matches": ["https://techacademy.jp/mentor/all/*"],
          "exclude_matches": [
             "https://techacademy.jp/mentor/all/reports/reviewed*",
             "https://techacademy.jp/mentor/all/reports/reviewing*"
          ],
          "run_at": "document_end",
-         "js": ["js/class.js", "js/content.js"],
+         "js": ["js/content.js"],
          "css": ["css/style.css"]
       },
       {
@@ -32,25 +43,25 @@
             "https://techacademy.jp/mentor/training/reports/*"
          ],
          "run_at": "document_end",
-         "js": ["js/class.js", "js/open-cloud9.js"],
+         "js": ["js/open-cloud9.js"],
          "css": ["css/override.css"]
       },
       {
          "matches": ["https://techacademy.jp/mentor/schedule/*"],
          "run_at": "document_end",
-         "js": ["js/class.js", "js/content-schedule.js"],
+         "js": ["js/content-schedule.js"],
          "css": ["css/schedule.css"]
       },
       {
          "matches": ["https://techacademy.jp/mentor/users/*"],
          "run_at": "document_end",
-         "js": ["js/class.js", "js/open-cloud9.js"],
+         "js": ["js/open-cloud9.js"],
          "css": ["css/override.css"]
       },
       {
          "matches": ["https://techacademy.jp/mentor/appointments/*/mentoring_notes/new"],
          "run_at": "document_end",
-         "js": ["js/class.js", "js/open-cloud9.js"],
+         "js": ["js/open-cloud9.js"],
          "css": ["css/override.css"]
       },
       {

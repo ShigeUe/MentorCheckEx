@@ -13,6 +13,7 @@ COURSE_TR.sort((a, b) => {
   }
   return aa > bb ? 1 : -1;
 });
+COURSE_TBODY.innerHTML = '';
 COURSE_TR.forEach(e => COURSE_TBODY.appendChild(e));
 
 // 担当時間のtd一覧
