@@ -91,11 +91,12 @@ class Curriculums
 
   #menuClick() {
     const target = document.getElementById('MentorCheckExCurriculums');
-    document.querySelectorAll('[href="/mentor/curriculums"]').forEach((el) => {
+    document.querySelectorAll('.sidebar-nav-mentor [href="/mentor/curriculums"]').forEach((el) => {
       el.addEventListener('click', (ev) => {
         ev.preventDefault();
         ev.stopPropagation();
         target.classList.toggle('open');
+        el.dispatchEvent(new Event('blur'));
       });
     });
     target.addEventListener('click', (ev) => {
@@ -107,7 +108,11 @@ class Curriculums
       }
     });
   }
+
+  #injectScript() {
+    const script = MCEElement.create('script');
+  }
 }
 
 const cur = new Curriculums;
-cur.run();
+cur.run();  
