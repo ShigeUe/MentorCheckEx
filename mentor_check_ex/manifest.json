@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.2.0",
+   "version": "0.2.1",
 
    "action": {
       "default_popup": "popup.html"
@@ -56,6 +56,10 @@
       },
       {
          "matches": ["https://techacademy.jp/mentor/schedule/*"],
+         "exclude_matches": [
+            "https://techacademy.jp/mentor/schedule/appointments/*",
+            "https://techacademy.jp/mentor/schedule/work_shifts/*"
+         ],
          "run_at": "document_end",
          "js": ["js/content-schedule.js"],
          "css": ["css/schedule.css"]
@@ -71,6 +75,17 @@
          "run_at": "document_end",
          "js": ["js/open-cloud9.js"],
          "css": ["css/override.css"]
+      },
+      {
+         "matches": ["https://techacademy.jp/mentor/schedule/appointments/*"],
+         "run_at": "document_end",
+         "js": ["js/appointments.js"],
+         "css": ["css/appointments.css"]
+      },
+      {
+         "matches": ["https://techacademy.jp/mentor/schedule/work_shifts/*"],
+         "run_at": "document_end",
+         "js": ["js/work_shifts.js"]
       },
       {
          "matches": [
