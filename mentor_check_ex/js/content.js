@@ -275,7 +275,7 @@ const init = async () => {
   isNotify      = ME.settings.notify;
   smartIfSimple = ME.settings.smartIfSimple;
   new_version   = ME.settings.new_version;
-
+  audio.volume  = ME.settings.volume * 0.01;
   // 初期化の実行
   await init();
 })();

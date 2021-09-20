@@ -1,6 +1,10 @@
 "use strict";
 
 const queryId = id=> document.getElementById(id);
+const audio = new Audio(chrome.runtime.getURL("resources/chime.mp3"));
+audio.addEventListener('ended', () => {
+  queryId('volume').disabled = false;
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   chrome.storage.local.get({
@@ -11,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     curriculumSubMenu: false,
     username: '',
     password: '',
+    volume: 50,
   }, items => {
     queryId('interval').value = items.interval;
     queryId('chime').checked = !!(items.chime);
@@ -19,6 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
     queryId('curriculumSubMenu').checked = !!(items.curriculumSubMenu);
     queryId('username').value = items.username;
     queryId('password').value = items.password;
+    queryId('volume').value = items.volume;
+    queryId('volume-text').innerText = items.volume;
+    audio.volume = items.volume * 0.01;
   });
 
   queryId('save').addEventListener('click', () => {
@@ -29,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const curriculumSubMenu = queryId('curriculumSubMenu').checked;
     const username = queryId('username').value;
     const password = queryId('password').value;
+    const volume = queryId('volume').value;
 
     if (isNaN(interval) || interval < 30 || interval > 300) {
       alert('リロード間隔が範囲外です');
@@ -36,14 +45,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     chrome.storage.local.set({
-      interval: interval,
-      chime: chime,
-      notify: notify,
-      smartIfSimple: smartIfSimple,
-      curriculumSubMenu: curriculumSubMenu,
+      interval,
+      chime,
+      notify,
+      smartIfSimple,
+      curriculumSubMenu,
       curriculums: {time: false},
-      username: username,
-      password: password,
+      username,
+      password,
+      volume,
     }, () => {
       queryId('message').innerText = '保存しました';
     });
@@ -67,4 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const manifest = chrome.runtime.getManifest();
   queryId('version').innerText = manifest.version;
+
+  queryId('volume').addEventListener('change', (e) => {
+    const volume = e.target.value;
+    queryId('volume-text').innerText = volume;
+    e.target.disabled = true;
+    audio.volume = volume * 0.01;
+    audio.play();
+  });
 });

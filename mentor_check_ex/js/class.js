@@ -22,6 +22,7 @@ class MentorCheckEx
     new_version:   false,
     username:      '',
     password:      '',
+    volume:        50,
   };
 
   constructor() {
