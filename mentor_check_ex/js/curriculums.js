@@ -8,34 +8,24 @@ class Curriculums
   #chrome = null;
   #window = null;
 
-  #curriculums = {
-    time: 0,
-    curriculums: [],
-  }
-  
-  #menuOpened = false;
+  #curriculums = [];
+  #curriculumSubMenu = false;
 
   constructor() {
     this.#chrome = Curriculums._chrome;
     this.#window = Curriculums._window;
   }
 
-  async getStorage() {
+  async getCurriculums() {
     const settings = await (new Promise((resolve) => {
-      this.#chrome.storage.local.get(null, resolve);
+      this.#chrome.storage.local.get({curriculumSubMenu: false, curriculums: []}, resolve);
     }));
+    this.#curriculums = settings.curriculums;
+    this.#curriculumSubMenu = settings.curriculumSubMenu;
 
-    if (!settings.curriculumSubMenu) {
-      return false;
-    }
-
-    if (!settings.curriculums || settings.curriculums.time < Date.now() - 24 * 60 * 60 * 1000) {
+    if (window.location.pathname.match(/\/mentor\/courses\/[^\/]+\/curriculums\/[^\/]+\/lessons$/)) {
       await this.#getCurriculums();
     }
-    else {
-      this.#curriculums = settings.curriculums;
-    }
-    return true;
   }
 
   async setStorage() {
@@ -55,16 +45,22 @@ class Curriculums
 
     const aTags = doc.querySelectorAll('#page-content-wrapper .nav li a');
     const curriculums = [];
-    aTags.forEach((el) => curriculums.push({ name: el.innerText, url: el.href }));
-    this.#curriculums = {
-      time: Date.now(),
-      curriculums: curriculums,
-    };
+    aTags.forEach((el) => {
+      const setting = this.#curriculums.find(e => e.name == el.innerText);
+      const visible = !!(!setting || !('visible' in setting) || setting.visible);
+      curriculums.push({
+        name: el.innerText,
+        url: el.href,
+        visible
+      })
+    }, this);
+    this.#curriculums = curriculums;
     this.setStorage();
   }
 
   async run() {
-    if (await this.getStorage()) {
+    await this.getCurriculums();
+    if (this.#curriculumSubMenu) {
       this.#insertHTML();
       this.#menuClick();
     }
@@ -76,7 +72,10 @@ class Curriculums
     const ul = MCEElement.create('ul');
     div.appendChild(ul);
 
-    this.#curriculums.curriculums.forEach((el) => {
+    this.#curriculums.forEach((el) => {
+      if (!el.visible) {
+        return;
+      }
       const li = MCEElement.create('li');
       const atag = MCEElement.create('a');
       atag.prop('href', el.url);

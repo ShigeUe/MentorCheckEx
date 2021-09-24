@@ -1,10 +1,35 @@
 "use strict";
 
-const queryId = id=> document.getElementById(id);
+const queryId = id => document.getElementById(id);
+const query = q => document.querySelector(q);
 const audio = new Audio(chrome.runtime.getURL("resources/chime.mp3"));
 audio.addEventListener('ended', () => {
   queryId('volume').disabled = false;
 });
+let curriculums = [];
+
+const makeCurriculumsList = () => {
+  const base = queryId('curriculums');
+  curriculums.forEach(el => {
+    const label = document.createElement('label');
+    const text  = document.createTextNode(el.name);
+    const input = document.createElement('input');
+    input.type = "checkbox";
+    input.name = el.name;
+    input.value = 1;
+    input.checked = el.visible;
+    label.appendChild(input);
+    label.appendChild(text);
+    base.appendChild(label);
+  });
+};
+
+const getCurriculumsFromScreen = () => {
+  curriculums.forEach(el => {
+    const input = query(`input[name="${el.name}"]`);
+    el.visible = (!input) ? true : input.checked;
+  });
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   chrome.storage.local.get({
@@ -13,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     notify: false,
     smartIfSimple: false,
     curriculumSubMenu: false,
+    curriculums: [],
     username: '',
     password: '',
     volume: 50,
@@ -27,6 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
     queryId('volume').value = items.volume;
     queryId('volume-text').innerText = items.volume;
     audio.volume = items.volume * 0.01;
+    curriculums = items.curriculums;
+    makeCurriculumsList();
   });
 
   queryId('save').addEventListener('click', () => {
@@ -38,7 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const username = queryId('username').value;
     const password = queryId('password').value;
     const volume = queryId('volume').value;
-
+    getCurriculumsFromScreen();
+    
     if (isNaN(interval) || interval < 30 || interval > 300) {
       alert('リロード間隔が範囲外です');
       return;
@@ -50,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
       notify,
       smartIfSimple,
       curriculumSubMenu,
-      curriculums: {time: false},
+      curriculums,
       username,
       password,
       volume,

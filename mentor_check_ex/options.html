@@ -19,6 +19,8 @@ input[type="checkbox"]{width:16px;height:16px;margin:8px 0;vertical-align:top;}
 #version{position:fixed;right:10px;bottom:10px;user-select:none;font-weight:bold;color:#888;}
 input[type="range"]{width:200px;}
 #volume-label{margin-left:2em;}
+#curriculums label{display:block;text-align:left;}
+#curriculums label input{margin-right:0.5em;}
 
 @media (prefers-color-scheme: dark){
   body {background-color: #222;color:#eee;}
@@ -40,6 +42,9 @@ input[type="range"]{width:200px;}
   <p><input type="checkbox" id="notify" value="1"> <label for="notify">通知</label>　<a href="#" id="notify_test">デスクトップ通知テスト</a></p>
   <p><input type="checkbox" id="smartIfSimple" value="1"> <label for="smartIfSimple">シンプル化時に課題レビューをすぐに開始する</label></p>
   <p><input type="checkbox" id="curriculumSubMenu" value="1"> <label for="curriculumSubMenu">カリキュラムのサブメニューを表示する</label></p>
+  <hr>
+  <p>カリキュラムのサブメニューの表示・非表示</p>
+  <p id="curriculums"></p>
   <hr>
   <p>AWSのログイン情報</p>
   <div><label for="username">ユーザー名</label>：<input type="text" id="username" size="20" value=""></div>
