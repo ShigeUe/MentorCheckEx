@@ -23,6 +23,7 @@ class MentorCheckEx
     username:      '',
     password:      '',
     volume:        50,
+    course_list:   [],
   };
 
   constructor() {

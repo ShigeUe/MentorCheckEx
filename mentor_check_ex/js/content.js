@@ -196,7 +196,11 @@ const makeCourseList = () => {
   for (let i = 1; i < a_list.length; i++) {
     let search;
     [, search] = a_list[i].search.split('=');
-    course_list.push({ id: search, name: a_list[i].innerText });
+
+    const setting = ME.settings.course_list.find(e => e.id == search);
+    const visible = !!(!setting || !('visible' in setting) || setting.visible);
+
+    course_list.push({ id: search, name: a_list[i].innerText, visible });
   }
   $chrome.storage.local.set({ course_list: course_list });
 };

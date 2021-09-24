@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <title>MentorCheckExの設定</title>
 <style>
-body{font-size:16px;line-height:2;margin: 1em 50px;}
-#config{width:600px;}
-button{width:100px;}
+body{font-size:16px;line-height:2;margin: 1em 0;}
+button{width:100px;border:0;background-color:#eee;border-radius:4px;padding:5px;cursor:pointer;}
+button:hover{opacity:0.7;}
 hr{height:1px;border:0;background-color:#ccc;}
 #message{color:#3333ff;font-weight:bold;}
 label{user-select:none;display:inline-block;text-align:right;}
@@ -19,8 +19,20 @@ input[type="checkbox"]{width:16px;height:16px;margin:8px 0;vertical-align:top;}
 #version{position:fixed;right:10px;bottom:10px;user-select:none;font-weight:bold;color:#888;}
 input[type="range"]{width:200px;}
 #volume-label{margin-left:2em;}
-#curriculums label{display:block;text-align:left;}
-#curriculums label input{margin-right:0.5em;}
+#curriculums label,
+#courseList label{display:block;text-align:left;}
+#curriculums label input,
+#courseList label input{margin-right:0.5em;}
+
+#config{display:flex;max-width:1200px;}
+#config > div{width:500px;padding: 0 50px;}
+
+#all-reset{background-color:red;color:white;font-weight:bold;}
+#save{background-color:#0003bb;color:white;font-weight:bold;}
+
+@media screen and (max-width:1199px) {
+  #config{display:block;}
+}
 
 @media (prefers-color-scheme: dark){
   body {background-color: #222;color:#eee;}
@@ -33,33 +45,41 @@ input[type="range"]{width:200px;}
 </head>
 <body>
 <div id="config">
-  <h2>MentorCheckExの設定</h2>
-  <h3 id="version-up-message"></h3>
-  <p><label for="interval">リロード間隔：</label><input type="text" id="interval" size="3" value=""> 秒（30～300）</p>
-  <p><input type="checkbox" id="chime" value="1"> <label for="chime">チャイム</label>
-    <label id="volume-label">音量：<input type="range" id="volume" min="10" max="100" step="10" value="50">
-    <span id="volume-text">50</span></span></label></p>
-  <p><input type="checkbox" id="notify" value="1"> <label for="notify">通知</label>　<a href="#" id="notify_test">デスクトップ通知テスト</a></p>
-  <p><input type="checkbox" id="smartIfSimple" value="1"> <label for="smartIfSimple">シンプル化時に課題レビューをすぐに開始する</label></p>
-  <p><input type="checkbox" id="curriculumSubMenu" value="1"> <label for="curriculumSubMenu">カリキュラムのサブメニューを表示する</label></p>
-  <hr>
-  <p>カリキュラムのサブメニューの表示・非表示</p>
-  <p id="curriculums"></p>
-  <hr>
-  <p>AWSのログイン情報</p>
-  <div><label for="username">ユーザー名</label>：<input type="text" id="username" size="20" value=""></div>
-  <div><label for="password">パスワード</label>：<input type="text" id="password" size="20" value=""></div>
-  <p><button type="button" id="save">保存</button>　<button type="button" id="close">閉じる</button>　</p>
-  <p id="message">&nbsp;</p>
-  <p>新しいバージョンは以下のURLから確認してください。<br>
-  <a href="https://github.com/ShigeUe/MentorCheckEx" target="_blank" rel="noopener noreferrer">https://github.com/ShigeUe/MentorCheckEx</a>
-  </p>
-  <p>&nbsp;</p>
-  <p style="font-size:80%">
-    「こりゃ使える！」と思っていただけましたか？<br>
-    寄付をお願いします。さらにやる気になります。<br>
-    Stripe：<a href="https://buy.stripe.com/3cs0269AO0E4gX63cc" target="_blank" rel="noopener noreferrer">https://buy.stripe.com/3cs0269AO0E4gX63cc</a>
-  </p>
+  <div id="area01">
+    <h2>MentorCheckExの設定</h2>
+    <h3 id="version-up-message"></h3>
+    <p><label for="interval">リロード間隔：</label><input type="text" id="interval" size="3" value=""> 秒（30～300）</p>
+    <p><input type="checkbox" id="chime" value="1"> <label for="chime">チャイム</label>
+      <label id="volume-label">音量：<input type="range" id="volume" min="10" max="100" step="10" value="50">
+      <span id="volume-text">50</span></label></p>
+    <p><input type="checkbox" id="notify" value="1"> <label for="notify">通知</label>　<a href="#" id="notify_test">デスクトップ通知テスト</a></p>
+    <p><input type="checkbox" id="smartIfSimple" value="1"> <label for="smartIfSimple">シンプル化時に課題レビューをすぐに開始する</label></p>
+    <p><input type="checkbox" id="curriculumSubMenu" value="1"> <label for="curriculumSubMenu">カリキュラムのサブメニューを表示する</label></p>
+    <hr>
+    <p>AWSのログイン情報</p>
+    <div><label for="username">ユーザー名</label>：<input type="text" id="username" size="20" value=""></div>
+    <div><label for="password">パスワード</label>：<input type="text" id="password" size="20" value=""></div>
+    <p><button type="button" id="save">保存</button>　<button type="button" id="close">閉じる</button>　<button type="button" id="all-reset">設定全削除</button></p>
+    <p id="message">&nbsp;</p>
+    <p>新しいバージョンは以下のURLから確認してください。<br>
+    <a href="https://github.com/ShigeUe/MentorCheckEx" target="_blank" rel="noopener noreferrer">https://github.com/ShigeUe/MentorCheckEx</a>
+    </p>
+    <p>&nbsp;</p>
+    <p style="font-size:80%">
+      「こりゃ使える！」と思っていただけましたか？<br>
+      寄付をお願いします。さらにやる気になります。<br>
+      Stripe：<a href="https://buy.stripe.com/3cs0269AO0E4gX63cc" target="_blank" rel="noopener noreferrer">https://buy.stripe.com/3cs0269AO0E4gX63cc</a>
+    </p>
+    <hr>
+  </div>
+  <div id="area02">
+    <p>カリキュラムのサブメニューの表示・非表示</p>
+    <p id="curriculums"></p>
+    <hr>
+    <p>課題レビュー基準の表示・非表示</p>
+    <p id="courseList"></p>
+    <hr>
+  </div>
 </div>
 <div id="version">-</div>
 </body>

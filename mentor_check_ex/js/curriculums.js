@@ -60,7 +60,7 @@ class Curriculums
 
   async run() {
     await this.getCurriculums();
-    if (this.#curriculumSubMenu) {
+    if (this.#curriculumSubMenu && this.#curriculums.length > 0) {
       this.#insertHTML();
       this.#menuClick();
     }
@@ -106,10 +106,6 @@ class Curriculums
         target.classList.remove('open');
       }
     });
-  }
-
-  #injectScript() {
-    const script = MCEElement.create('script');
   }
 }
 

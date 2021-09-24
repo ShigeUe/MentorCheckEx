@@ -7,20 +7,25 @@ audio.addEventListener('ended', () => {
   queryId('volume').disabled = false;
 });
 let curriculums = [];
+let course_list = [];
+
+const makeListElement = (el) => {
+  const label = document.createElement('label');
+  const text  = document.createTextNode(el.name);
+  const input = document.createElement('input');
+  input.type = "checkbox";
+  input.name = el.name;
+  input.value = 1;
+  input.checked = (!('visible' in el)) ? true : el.visible;
+  label.appendChild(input);
+  label.appendChild(text);
+  return label;
+};
 
 const makeCurriculumsList = () => {
   const base = queryId('curriculums');
   curriculums.forEach(el => {
-    const label = document.createElement('label');
-    const text  = document.createTextNode(el.name);
-    const input = document.createElement('input');
-    input.type = "checkbox";
-    input.name = el.name;
-    input.value = 1;
-    input.checked = el.visible;
-    label.appendChild(input);
-    label.appendChild(text);
-    base.appendChild(label);
+    base.appendChild(makeListElement(el));
   });
 };
 
@@ -31,6 +36,21 @@ const getCurriculumsFromScreen = () => {
   });
 };
 
+const makeCourseList = () => {
+  const base = queryId('courseList');
+  course_list.forEach(el => {
+    base.appendChild(makeListElement(el));
+  });
+};
+
+const getCourseListFromScreen = () => {
+  course_list.forEach(el => {
+    const input = query(`input[name="${el.name}"]`);
+    el.visible = (!input) ? true : input.checked;
+  });
+};
+
+
 document.addEventListener('DOMContentLoaded', () => {
   chrome.storage.local.get({
     interval: 30,
@@ -39,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     smartIfSimple: false,
     curriculumSubMenu: false,
     curriculums: [],
+    course_list: [],
     username: '',
     password: '',
     volume: 50,
@@ -54,7 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
     queryId('volume-text').innerText = items.volume;
     audio.volume = items.volume * 0.01;
     curriculums = items.curriculums;
+    course_list = items.course_list;
     makeCurriculumsList();
+    makeCourseList();
   });
 
   queryId('save').addEventListener('click', () => {
@@ -67,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = queryId('password').value;
     const volume = queryId('volume').value;
     getCurriculumsFromScreen();
+    getCourseListFromScreen();
     
     if (isNaN(interval) || interval < 30 || interval > 300) {
       alert('リロード間隔が範囲外です');
@@ -80,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
       smartIfSimple,
       curriculumSubMenu,
       curriculums,
+      course_list,
       username,
       password,
       volume,
@@ -90,6 +115,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   queryId('close').addEventListener('click', () => {
     window.close();
+  });
+
+  queryId('all-reset').addEventListener('click', () => {
+    if (window.confirm('設定をすべて消去します。')) {
+      chrome.storage.local.clear();
+      window.close();
+    }
   });
 
   queryId('notify_test').addEventListener('click', (e) => {

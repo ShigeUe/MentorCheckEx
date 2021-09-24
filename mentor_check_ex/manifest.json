@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.2.3",
+   "version": "0.2.4",
 
    "action": {
       "default_popup": "popup.html"
@@ -86,6 +86,12 @@
          "matches": ["https://techacademy.jp/mentor/schedule/work_shifts/*"],
          "run_at": "document_end",
          "js": ["js/work_shifts.js"]
+      },
+      {
+         "matches": ["https://techacademy.jp/mentor/courses/*/review_guide"],
+         "run_at": "document_end",
+         "js": ["js/review_criteria.js"],
+         "css": ["css/review_criteria.css"]
       },
       {
          "matches": [
