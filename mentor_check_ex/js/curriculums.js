@@ -46,7 +46,7 @@ class Curriculums
     const aTags = doc.querySelectorAll('#page-content-wrapper .nav li a');
     const curriculums = [];
     aTags.forEach((el) => {
-      const setting = this.#curriculums.find(e => e.name == el.innerText);
+      const setting = this.#curriculums.constructor.name == 'Array' ? this.#curriculums.find(e => e.name == el.innerText) : null;
       const visible = !!(!setting || !('visible' in setting) || setting.visible);
       curriculums.push({
         name: el.innerText,
