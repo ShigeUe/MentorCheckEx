@@ -260,8 +260,8 @@ const init = async () => {
 
   if (new_version) {
     const li5 = createMenuElement().appendChild(
-      MCEElement.create('span')
-      .prop({ id: 'pluginVersionUpMessage' })
+      MCEElement.create('a')
+      .prop({ id: 'pluginVersionUpMessage', href: 'https://github.com/ShigeUe/MentorCheckEx' })
       .text('MentorCheckExの\n新バージョンあり')
     )
     sidebarNavMenter.appendChild(li5);
