@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.2.4",
+   "version": "0.2.5",
 
    "action": {
       "default_popup": "popup.html"
@@ -14,7 +14,7 @@
       "128": "img/icon-128.png"
    },
 
-   "permissions": ["storage", "tabs", "notifications"],
+   "permissions": ["storage", "tabs", "notifications", "scripting"],
    "content_scripts": [
       {
          "matches": ["https://techacademy.jp/mentor/*"],
@@ -94,20 +94,39 @@
          "css": ["css/review_criteria.css"]
       },
       {
+         "matches": ["https://techacademy.jp/mentor/reports/*"],
+         "run_at": "document_end",
+         "js": ["js/review_start.js"]
+      },
+      {
          "matches": [
             "https://signin.aws.amazon.com/oauth*",
             "https://*.console.aws.amazon.com/console/home*"
          ],
          "run_at": "document_end",
          "js": ["js/aws.js"]
+      },
+      {
+         "matches": [
+            "https://app.slack.com/client/*"
+         ],
+         "run_at": "document_start",
+         "js": ["js/slack_receiver.js"]
       }
    ],
    "background": {
       "service_worker": "background.js"
    },
    "options_page": "options.html",
-   "web_accessible_resources": [{
-      "resources": ["resources/chime.mp3"],
-      "matches": ["https://techacademy.jp/*"]
-   }]
+   "host_permissions": ["https://app.slack.com/client/*"],
+   "web_accessible_resources": [
+      {
+         "resources": ["resources/chime.mp3"],
+         "matches": ["https://techacademy.jp/*"]
+      },
+      {
+         "resources": ["js/slack.js"],
+         "matches": ["https://app.slack.com/*"]
+      }
+   ]
 }

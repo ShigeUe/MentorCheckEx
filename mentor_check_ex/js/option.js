@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     username: '',
     password: '',
     volume: 50,
+    watchSlack: false,
   }, items => {
     queryId('interval').value = items.interval;
     queryId('chime').checked = !!(items.chime);
@@ -73,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     queryId('password').value = items.password;
     queryId('volume').value = items.volume;
     queryId('volume-text').innerText = items.volume;
+    queryId('watchSlack').checked = !!(items.watchSlack);
     audio.volume = items.volume * 0.01;
     curriculums = items.curriculums;
     course_list = items.course_list;
@@ -89,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const username = queryId('username').value;
     const password = queryId('password').value;
     const volume = queryId('volume').value;
+    const watchSlack = queryId('watchSlack').checked;
     getCurriculumsFromScreen();
     getCourseListFromScreen();
     
@@ -108,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
       username,
       password,
       volume,
+      watchSlack
     }, () => {
       queryId('message').innerText = '保存しました';
     });
@@ -126,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   queryId('notify_test').addEventListener('click', (e) => {
     e.preventDefault();
-    chrome.runtime.sendMessage({ type: 'notification', title: '通知テスト', body: '通知のテストです。' });
+    chrome.runtime.sendMessage('', { type: 'notification', title: '通知テスト', body: '通知のテストです。' });
   });
 
   chrome.storage.local.get('new_version', local => {
