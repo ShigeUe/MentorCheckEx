@@ -8,9 +8,8 @@
     });
   })();
 
-
   // 「更新あり」などの通知を表示する
-  chrome.runtime.onMessage.addListener((message) => {
+  chrome.runtime.onMessage.addListener((message, sender) => {
     if (message.type === 'notification') {
       chrome.notifications.create({
         title: message.title,
@@ -29,7 +28,17 @@
       const data = message.data;
       let [desc, url] = data.text.split('\n\n');
       url = url.replace('URL: <', '').replace('>\n', '');
+      const title = message.title;
 
+      // Slackで受けた課題レビューを通知一覧ページに送信する
+      chrome.tabs.query({ url: 'https://techacademy.jp/mentor/all/reports?custom=1' }, (tabs) => {
+        if (tabs.length) {
+          chrome.tabs.sendMessage(tabs[0].id, { type: 'addReview', desc, url, title });
+        }
+      });
+      if (desc.match(/課題.*レビュー中/)) {
+        return;
+      }
       // 通知の作成
       chrome.notifications.create(
         {

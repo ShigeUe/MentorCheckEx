@@ -4,10 +4,6 @@
  */
 
 (() => {
-  if (document.title.split(' | ').pop().toLowerCase() == 'techacademy mentor') {
-    return;
-  }
-
   console.debug(Date.now() + ' Override WebSocket.onmessage.');
   window.onmessagegetter = Object.getOwnPropertyDescriptor(window.WebSocket.prototype, 'onmessage').get;
   window.onmessagesetter = Object.getOwnPropertyDescriptor(window.WebSocket.prototype, 'onmessage').set;

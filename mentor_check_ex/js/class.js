@@ -24,6 +24,7 @@ class MentorCheckEx
     password:      '',
     volume:        50,
     course_list:   [],
+    watchSlack:    false,
   };
 
   constructor() {
@@ -56,6 +57,10 @@ class MentorCheckEx
   set_document(doc) {
     this.#doc = doc;
     return this;
+  }
+  // 設定されている#docを返す
+  get_document() {
+    return this.#doc;
   }
   // querySelector
   query(s) {
@@ -167,6 +172,9 @@ class MCEElement // MentorCheckExElement
     if (typeof className === 'string') {
       this.#element.classList.add(className);
     }
+    else if (className.constructor.name === 'Array') {
+      className.forEach((c) => this.addClass(c), this);
+    }
     return this;
   }
   // クラスの削除
@@ -251,5 +259,6 @@ class MCEElement // MentorCheckExElement
     Object.keys(styles).forEach(key => {
       this.#element.style[key] = styles[key];
     }, this);
+    return this;
   }
 }

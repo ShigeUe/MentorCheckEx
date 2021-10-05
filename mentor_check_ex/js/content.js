@@ -208,7 +208,31 @@ const makeCourseList = () => {
 /* これ以降初期化部分
 -------------------------------------------------------------------------- */
 const init = async () => {
-  const sidebarNavMenter = MCEElement.create(ME.query('#sidebar-wrapper ul:last-of-type'));
+  // サイドバーの最後の要素の下に線を引く
+  MCEElement.create(ME.query('#sidebar-wrapper ul:last-child')).addClass('u-border');
+  // 新たにサイドバーの要素を追加する
+  const sidebarNavMenter = MCEElement.create('ul').addClass('sidebar-nav-mentor');
+  MCEElement.create(ME.query('#sidebar-wrapper')).appendChild(sidebarNavMenter);
+  sidebarNavMenter.appendChild(
+    MCEElement.create('h5').text('Plugin').addClass(['font-size-x-small', 'add-margin-0', 'add-padding-10', 'font-color-gray-lighter'])
+  );
+
+  if (ME.settings.watchSlack) {
+    // Slack通知用ページのリンク
+    sidebarNavMenter.appendChild(
+      createMenuElement().appendChild(
+        MCEElement.create('a')
+          .prop({ href: '/mentor/all/reports?custom=1', target: '_blank' }).addClass(['side-link', 'sidebar-icon'])
+          .appendChild(
+            MCEElement.create('i')
+              .addClass(['fa', 'fa-external-link', 'font-color-white', 'add-padding-right-15'])
+              .appendChild(
+                MCEElement.create('span').addClass(['add-padding-left-15', 'display-inline-block']).text('Slack通知用ページ')
+              )
+          )
+      )
+    );
+  }
 
   // シンプル化が出来るのは「レビュー待ち」のみ。
   if (location.pathname == $review) {
@@ -259,12 +283,12 @@ const init = async () => {
   sidebarNavMenter.appendChild(li3);
 
   if (new_version) {
-    const li5 = createMenuElement().appendChild(
+    const li6 = createMenuElement().appendChild(
       MCEElement.create('a')
       .prop({ id: 'pluginVersionUpMessage', href: 'https://github.com/ShigeUe/MentorCheckEx' })
       .text('MentorCheckExの\n新バージョンあり')
     )
-    sidebarNavMenter.appendChild(li5);
+    sidebarNavMenter.appendChild(li6);
   }
 
   getChallengesAndSimplify(false);

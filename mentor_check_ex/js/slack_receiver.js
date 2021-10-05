@@ -1,6 +1,10 @@
 "use strict";
 
 (async () => {
+  // Techacademy Mentorは除外する
+  if (window.location.href.match(/https:\/\/app.slack.com\/client\/T06LC7QNM\//)) {
+    return;
+  }
   // 同期的にプラグインの設定を取得する
   const config = await (() => {
     return new Promise((resolve, reject) => {
@@ -22,7 +26,7 @@
           const data = JSON.parse(e.data.SlackMessageData);
           // ボットのメッセージに限定
           if (data.type && data.type === 'message' && data.subtype && data.subtype === 'bot_message') {
-            if (data.text.match(/課題を提出/)) {
+            if (data.text.match(/課題.*(提出し|レビュー中)/)) {
 
               console.debug(Date.now() + ' Send the message to MentorCheckEx.');
               console.debug(data);

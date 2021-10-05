@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.2.5",
+   "version": "0.2.6",
 
    "action": {
       "default_popup": "popup.html"
@@ -36,14 +36,20 @@
          "css": ["css/curriculums.css"]
       },
       {
-         "matches": ["https://techacademy.jp/mentor/all/*"],
+         "matches": ["https://techacademy.jp/mentor/all/reports*"],
          "exclude_matches": [
             "https://techacademy.jp/mentor/all/reports/reviewed*",
-            "https://techacademy.jp/mentor/all/reports/reviewing*"
+            "https://techacademy.jp/mentor/all/reports/reviewing*",
+            "https://techacademy.jp/mentor/all/reports?custom=1"
          ],
          "run_at": "document_end",
          "js": ["js/content.js"],
          "css": ["css/style.css"]
+      },
+      {
+         "matches": ["https://techacademy.jp/mentor/all/reports?custom=1"],
+         "run_at": "document_end",
+         "js": ["js/review.js"]
       },
       {
          "matches": [
