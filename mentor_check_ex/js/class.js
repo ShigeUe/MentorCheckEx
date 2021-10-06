@@ -172,7 +172,7 @@ class MCEElement // MentorCheckExElement
     if (typeof className === 'string') {
       this.#element.classList.add(className);
     }
-    else if (className.constructor.name === 'Array') {
+    else if (className && className.constructor.name === 'Array') {
       className.forEach((c) => this.addClass(c), this);
     }
     return this;
