@@ -18,7 +18,12 @@ if (ME.query('p')) {
 }
 
 ME.get_document().appendChild(
-  MCEElement.create('p').text('このページを開いてSlackをブラウザで開くと、ここに課題レビュー通知が表示されます。\nブックマークしておくと便利です。').get()
+  MCEElement.create('p').text(
+    'このページを開いてSlackをブラウザで開くと、ここに課題レビュー通知が表示されます。\n' +
+    'ブックマークしておくと便利です。\n' +
+    '\n' +
+    'たまにバックグラウンド処理が寝てしまっていると、失敗することがあります。'
+  ).get()
 );
 
 ME.get_document().appendChild(

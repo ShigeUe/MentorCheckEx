@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.2.7",
+   "version": "0.2.8",
 
    "action": {
       "default_popup": "popup.html"
@@ -29,7 +29,8 @@
          "matches": ["https://techacademy.jp/mentor/*"],
          "exclude_matches": [
             "https://techacademy.jp/mentor/login",
-            "https://techacademy.jp/mentor/courses/*/curriculums/*/lessons/*"
+            "https://techacademy.jp/mentor/courses/*/curriculums/*/lessons/*",
+            "https://techacademy.jp/mentor/courses/*/curriculums/*/search*"
          ],
          "run_at": "document_end",
          "js": ["js/curriculums.js"],
