@@ -94,6 +94,12 @@
          "js": ["js/work_shifts.js"]
       },
       {
+         "matches": ["https://techacademy.jp/mentor/reports/*"],
+         "run_at": "document_end",
+         "js": ["js/review_skip2reviewcomment.js"],
+         "css": ["css/review_skip2reviewcomment.css"]
+      },
+      {
          "matches": ["https://techacademy.jp/mentor/courses/*/review_guide"],
          "run_at": "document_end",
          "js": ["js/review_criteria.js"],

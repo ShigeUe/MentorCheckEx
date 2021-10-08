@@ -1,0 +1,14 @@
+.mce-skiplink {
+    display: inline-block;
+    background-color: #0f7378;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    transition: all .5s;
+}
+
+.mce-skiplink:hover {
+    background-color: #78bd78;
+    color: #fff;
+}
