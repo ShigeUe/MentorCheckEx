@@ -1,5 +1,7 @@
 "use strict";
 
+let port = null;
+
 (async () => {
   // 同期的にプラグインの設定を取得する
   const config = await (() => {
@@ -7,6 +9,16 @@
       chrome.storage.local.get({ new_version: false, watchSlack: false, chime: false }, resolve);
     });
   })();
+
+
+  // review.jsから接続を待ち受け
+  if (config.watchSlack) {
+    chrome.runtime.onConnect.addListener((p) => {
+      if (p.name === 'SlackToBg') {
+        port = p;
+      }
+    });
+  }
 
   // 「更新あり」などの通知を表示する
   chrome.runtime.onMessage.addListener((message, sender) => {
@@ -22,7 +34,7 @@
 
     // Slackからのメッセージを受け取る
     if (config.watchSlack && message.type === 'slack') {
-      console.debug(Date.now() + ' Receive the message from Slack.');
+      console.debug((new Date).toLocaleString() + ' Receive the message from Slack.');
       console.debug(message);
 
       const data = message.data;
@@ -31,11 +43,9 @@
       const title = message.title;
 
       // Slackで受けた課題レビューを通知一覧ページに送信する
-      chrome.tabs.query({ url: 'https://techacademy.jp/mentor/all/reports?custom=1' }, (tabs) => {
-        if (tabs.length) {
-          chrome.tabs.sendMessage(tabs[0].id, { type: 'addReview', desc, url, title });
-        }
-      });
+      if (port) {
+        port.postMessage({ type: 'addReview', desc, url, title });
+      }
       if (desc.match(/課題.*レビュー中/)) {
         return;
       }

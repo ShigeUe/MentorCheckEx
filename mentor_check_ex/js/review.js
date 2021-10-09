@@ -20,9 +20,7 @@ if (ME.query('p')) {
 ME.get_document().appendChild(
   MCEElement.create('p').text(
     'このページを開いてSlackをブラウザで開くと、ここに課題レビュー通知が表示されます。\n' +
-    'ブックマークしておくと便利です。\n' +
-    '\n' +
-    'たまにバックグラウンド処理が寝てしまっていると、失敗することがあります。'
+    'ブックマークしておくと便利です。\n'
   ).get()
 );
 
@@ -75,13 +73,23 @@ const removeReview = (url) => {
   }
 };
 
-chrome.runtime.onMessage.addListener((data, sender) => {
-  if (data.type && data.type === 'addReview') {
-    if (data.desc.match(/課題.+提出/)) {
-      addReview(data.url, data.title, data.desc);
+// background.jsとの通信ポートを開く
+let port = null;
+const connectToBg = () => {
+  port = chrome.runtime.connect('', { name: 'SlackToBg' });
+  port.onDisconnect.addListener(() => {
+    console.debug((new Date).toLocaleString() + ' Disconnected from the background.');
+    setTimeout(connectToBg, 1000);
+  });
+  port.onMessage.addListener((data, sender) => {
+    if (sender.name === 'SlackToBg' && data?.type === 'addReview') {
+      if (data.desc.match(/課題.+提出/)) {
+        addReview(data.url, data.title, data.desc);
+      }
+      else {
+        removeReview(data.url);
+      }
     }
-    else {
-      removeReview(data.url);
-    }
-  }
-});
+  });
+};
+connectToBg();

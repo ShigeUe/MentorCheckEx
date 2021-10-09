@@ -36,10 +36,6 @@
               chrome.runtime.sendMessage('', { type: "slack", title, data });
             }
           }
-          else {
-            // service worker を起こしておくためにメッセージを投げる
-            chrome.runtime.sendMessage('', { type: "slack_ping" });
-          }
         }
       }
     }, false);

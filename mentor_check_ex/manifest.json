@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.2.8",
+   "version": "0.2.9",
 
    "action": {
       "default_popup": "popup.html"
@@ -20,7 +20,8 @@
          "matches": ["https://techacademy.jp/mentor/*"],
          "exclude_matches": [
             "https://techacademy.jp/mentor/login",
-            "https://techacademy.jp/mentor/courses/*/curriculums/*/lessons/*"
+            "https://techacademy.jp/mentor/courses/*/curriculums/*/lessons/*",
+            "https://techacademy.jp/mentor/courses/*/curriculums/*/search*"
          ],
          "run_at": "document_start",
          "js": ["js/class.js"]
@@ -53,15 +54,6 @@
          "js": ["js/review.js"]
       },
       {
-         "matches": [
-            "https://techacademy.jp/mentor/reports/*",
-            "https://techacademy.jp/mentor/training/reports/*"
-         ],
-         "run_at": "document_end",
-         "js": ["js/open-cloud9.js"],
-         "css": ["css/override.css"]
-      },
-      {
          "matches": ["https://techacademy.jp/mentor/schedule/*"],
          "exclude_matches": [
             "https://techacademy.jp/mentor/schedule/appointments/*",
@@ -72,13 +64,12 @@
          "css": ["css/schedule.css"]
       },
       {
-         "matches": ["https://techacademy.jp/mentor/users/*"],
-         "run_at": "document_end",
-         "js": ["js/open-cloud9.js"],
-         "css": ["css/override.css"]
-      },
-      {
-         "matches": ["https://techacademy.jp/mentor/appointments/*/mentoring_notes/new"],
+         "matches": [
+            "https://techacademy.jp/mentor/reports/*",
+            "https://techacademy.jp/mentor/training/reports/*",
+            "https://techacademy.jp/mentor/users/*",
+            "https://techacademy.jp/mentor/appointments/*/mentoring_notes/new"
+         ],
          "run_at": "document_end",
          "js": ["js/open-cloud9.js"],
          "css": ["css/override.css"]
@@ -97,7 +88,10 @@
       {
          "matches": ["https://techacademy.jp/mentor/reports/*"],
          "run_at": "document_end",
-         "js": ["js/review_skip2reviewcomment.js"],
+         "js": [
+            "js/review_skip2reviewcomment.js",
+            "js/review_start.js"
+         ],
          "css": ["css/review_skip2reviewcomment.css"]
       },
       {
@@ -105,11 +99,6 @@
          "run_at": "document_end",
          "js": ["js/review_criteria.js"],
          "css": ["css/review_criteria.css"]
-      },
-      {
-         "matches": ["https://techacademy.jp/mentor/reports/*"],
-         "run_at": "document_end",
-         "js": ["js/review_start.js"]
       },
       {
          "matches": [
