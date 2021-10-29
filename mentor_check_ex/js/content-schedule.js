@@ -2,9 +2,28 @@
 
 // MentorCheckExクラスのインスタンス
 const ME = new MentorCheckEx();
+// 他のメンターの予定
+const COURSE_TBODY = ME.query('#otherShift table tbody');
+
+// メンター名取得
+const MENTOR_NAME = Array.from(ME.queryAll('#billy-navbar-collapse .mentor-name')).pop().innerText;
+// 自分のスケジュール
+const MY_SCHEDULE = ME.queryAll('#myShift table tr');
+// 自分のスケジュールを他のメンターの予定にも入れる
+if (MY_SCHEDULE.length) {
+  for (let i = 1; i < MY_SCHEDULE.length; i++) {
+    const tr = MCEElement.create(MY_SCHEDULE[i].cloneNode(true));
+    const td1 = MCEElement.create('td').text(MENTOR_NAME);
+    const td2 = MCEElement.create('td').text('-------------------');
+    tr.insertFirst(td2);
+    tr.insertFirst(td1);
+    console.log(tr.get());
+    COURSE_TBODY.appendChild(tr.get());
+  }
+}
+
 // メンターの並び替え
 const COURSE_TR = Array.from(ME.queryAll('#otherShift table tbody tr'));
-const COURSE_TBODY = ME.query('#otherShift table tbody');
 COURSE_TR.sort((a, b) => {
   const aa = a.children[1].innerText;
   const bb = b.children[1].innerText;

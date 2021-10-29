@@ -6,9 +6,10 @@ document.title = '課題レビューの新着一覧 | TechAcademy mentor';
 
 ME.set_document(ME.query('#page-content-wrapper .container-fluid .row .col-lg-12'));
 ME.query('h2').innerText = '課題レビューの新着一覧';
-ME.query('.breadcrumb').remove();
-ME.query('ul.nav.nav-tabs').remove();
-ME.query('ul.nav.nav-pills').remove();
+ME.query('ul.pagination')?.remove();
+ME.query('.breadcrumb')?.remove();
+ME.query('ul.nav.nav-tabs')?.remove();
+ME.query('ul.nav.nav-pills')?.remove();
 ME.query('div').remove();
 if (ME.query('table')) {
   ME.query('table').remove();
