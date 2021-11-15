@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.3.0",
+   "version": "0.3.1",
 
    "action": {
       "default_popup": "popup.html"
@@ -87,6 +87,9 @@
       },
       {
          "matches": ["https://techacademy.jp/mentor/reports/*"],
+         "exclude_matches": [
+            "https://techacademy.jp/mentor/reports"
+         ],
          "run_at": "document_end",
          "js": [
             "js/review_skip2reviewcomment.js",
