@@ -12,6 +12,8 @@ const result = {};
 /* ----------------------------------------------------------------------- */
 
 if (els.length) {
+
+  // 件数集計
   els.forEach((el) => {
     const [course] = el.children[3].innerText.split('\n');
     result[course] = (result[course] ?? 0) + 1;
@@ -27,8 +29,7 @@ if (els.length) {
   });
   const table = MCEElement
     .create('table')
-    .addClass('table')
-    .addClass('table-striped')
+    .addClass(['table', 'table-striped'])
     .appendChild(tbody);
   const dialog = MCEElement
     .create('div')
@@ -42,24 +43,35 @@ if (els.length) {
   MCEElement.create(ME.query('body')).appendChild(dialog_base);
 
 
+  // ボタンを追加する要素
+  const col = MCEElement.create(
+    ME.query('#page-content-wrapper > div > div > div > div.row > .col-md-6')
+  );
+
+  // カレンダー表示ボタン追加
+  const mentoringCalendar = MCEElement
+    .create('a')
+    .addClass(['btn', 'btn-default', 'add-margin-left-5'])
+    .prop('href', location.pathname + '?calendar=1')
+    .text('カレンダー表示');
+  col.appendChild(mentoringCalendar);
+
+  // 月間集計ボタン追加
   const atag = MCEElement
     .create('a')
-    .addClass('btn')
-    .addClass('btn-default')
-    .addClass('add-margin-left-5')
+    .addClass(['btn', 'btn-default', 'add-margin-left-5'])
     .text('月間集計');
   atag.addEventListener('click', (event) => {
     event.preventDefault();
     dialog_base.style({ display: 'block' });
   });
-  const col = MCEElement.create(
-    ME.query('#page-content-wrapper > div > div > div > div.row > .col-md-6')
-  ).appendChild(atag);
+  col.appendChild(atag);
 
+  // 月間集計ダイアログの閉じるボタン
   ME.query('#mentor-check-ex-dialog i.fa-times-circle').addEventListener('click', () => {
     dialog_base.style({ display: 'none' });
   });
-
+  // エスケープを押しても閉じる
   document.addEventListener('keydown', (key) => {
     if (key.code == 'Escape') {
       dialog_base.style({ display: 'none' });

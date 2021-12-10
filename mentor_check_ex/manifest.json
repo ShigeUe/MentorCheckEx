@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.3.1",
+   "version": "0.3.2",
 
    "action": {
       "default_popup": "popup.html"
@@ -76,6 +76,7 @@
       },
       {
          "matches": ["https://techacademy.jp/mentor/schedule/appointments/*"],
+         "exclude_matches": ["https://techacademy.jp/mentor/schedule/appointments/*?calendar=1"],
          "run_at": "document_end",
          "js": ["js/appointments.js"],
          "css": ["css/appointments.css"]
@@ -102,6 +103,12 @@
          "run_at": "document_end",
          "js": ["js/review_criteria.js"],
          "css": ["css/review_criteria.css"]
+      },
+      {
+         "matches": ["https://techacademy.jp/mentor/schedule/appointments/*?calendar=1"],
+         "run_at": "document_end",
+         "js": ["js/mentoring_calendar.js"],
+         "css": ["css/mentoring_calendar.css"]
       },
       {
          "matches": [
