@@ -123,6 +123,9 @@ const notify = async () => {
 
 // HTML中のタイトルを変更
 const changeTitle = () => {
+  if (!ME.queryId('courseDropdown')) {
+    return;
+  }
   if (location.href.indexOf('[]') > 0) {
     ME.query('.container-fluid h2').innerText = '複数コースのレビュー一覧';
     ME.queryId('courseDropdown').innerText = '複数コース選択中';
