@@ -3,7 +3,7 @@
 // MentorCheckExクラスのインスタンス
 const ME = new MentorCheckEx();
 // 他のメンターの予定
-const COURSE_TBODY = ME.query('#otherShift table tbody');
+const COURSE_TBODY = ME.query('#eachMentors table tbody');
 
 // メンター名取得
 const MENTOR_NAME = Array.from(ME.queryAll('#billy-navbar-collapse .mentor-name')).pop().innerText;
@@ -17,13 +17,12 @@ if (MY_SCHEDULE.length) {
     const td2 = MCEElement.create('td').text('-------------------');
     tr.insertFirst(td2);
     tr.insertFirst(td1);
-    console.log(tr.get());
     COURSE_TBODY.appendChild(tr.get());
   }
 }
 
 // メンターの並び替え
-const COURSE_TR = Array.from(ME.queryAll('#otherShift table tbody tr'));
+const COURSE_TR = Array.from(ME.queryAll('#eachMentors table tbody tr'));
 COURSE_TR.sort((a, b) => {
   const aa = a.children[1].innerText;
   const bb = b.children[1].innerText;
@@ -36,9 +35,9 @@ COURSE_TBODY.innerHTML = '';
 COURSE_TR.forEach(e => COURSE_TBODY.appendChild(e));
 
 // 担当時間のtd一覧
-const TIME_TD   = ME.queryAll('#otherShift table tbody tr td:nth-of-type(3)');
+const TIME_TD   = ME.queryAll('#eachMentors table tbody tr td:nth-of-type(3)');
 // メンターの担当コースの入ったtd一覧
-const COURSE_TD = ME.queryAll('#otherShift table tbody tr td:nth-of-type(4)');
+const COURSE_TD = ME.queryAll('#eachMentors table tbody tr td:nth-of-type(4)');
 
 // コース文字列を取得
 const tmp_courses = {};
@@ -100,7 +99,7 @@ const button_click = e => {
 };
 
 // ボタンを挿入する目標
-const table = ME.query('#otherShift table');
+const table = ME.query('#eachMentors table');
 // ボタンを包むdiv
 let div = MCEElement.create('div').prop({ id: 'plugin-button-area' });
 
@@ -157,7 +156,7 @@ table.before(div.get());
 
 
 // メンターの担当コースの入ったtd一覧
-const TimeZones = ME.queryAll('#otherShift table tr td:nth-of-type(3)');
+const TimeZones = ME.queryAll('#eachMentors table tr td:nth-of-type(3)');
 
 // 時間帯を見やすくする
 TimeZones.forEach(e => {
