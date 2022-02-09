@@ -26,7 +26,7 @@
           const data = JSON.parse(e.data.SlackMessageData);
           // ボットのメッセージに限定
           if (data.type && data.type === 'message' && data.subtype && data.subtype === 'bot_message') {
-            if (data.text.match(/課題.*(提出し|レビュー中)/)) {
+            if (data.text.match(/課題.*(提出|レビュー中)/)) {
 
               console.debug(Date.now() + ' Send the message to MentorCheckEx.');
               console.debug(data);
