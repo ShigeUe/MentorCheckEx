@@ -1,11 +1,8 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.3.5",
+   "version": "0.3.6",
 
-   "action": {
-      "default_popup": "popup.html"
-   },
    "description": "課題レビューのチェックをする拡張機能",
    "icons": {
       "16": "img/icon-16.png",
@@ -40,6 +37,7 @@
       {
          "matches": ["https://techacademy.jp/mentor/all/reports*"],
          "exclude_matches": [
+            "https://techacademy.jp/mentor/all/reports/all*",
             "https://techacademy.jp/mentor/all/reports/reviewed*",
             "https://techacademy.jp/mentor/all/reports/reviewing*",
             "https://techacademy.jp/mentor/all/reports?custom=1"

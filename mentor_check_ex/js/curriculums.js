@@ -64,6 +64,15 @@ class Curriculums
       this.#insertHTML();
       this.#menuClick();
     }
+    else {
+      this.#showHeader();
+    }
+  }
+
+  #showHeader() {
+    document.querySelectorAll('.breadcrumb + h2 + .nav li:not(.active)').forEach((ele) => {
+      ele.style.display = 'block';
+    });
   }
 
   #insertHTML() {

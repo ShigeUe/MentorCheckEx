@@ -75,6 +75,7 @@ let port = null;
 
 
   // アイコンを有効・無効で変化させる
+  /*
   const iconChange = isEnabled => {
     if (isEnabled) {
       chrome.action.enable();
@@ -83,12 +84,13 @@ let port = null;
       chrome.action.disable();
     }
   };
-
+  */
   // バージョン情報
   let version;
   // スリープ関数
   const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+  /*
   //タブが切り替わった時
   chrome.tabs.onActivated.addListener(async obj => {
     // chrome.tabs.get が一度では失敗するので、取得されるまでループする
@@ -129,7 +131,7 @@ let port = null;
       iconChange(!!(tab.url && tab.url.match(/^https:\/\/techacademy\.jp\/mentor/)));
     }
   });
-
+*/
   // バージョン文字列を数字に変換
   const version2num = ver => {
     const vers = ver.split('.');

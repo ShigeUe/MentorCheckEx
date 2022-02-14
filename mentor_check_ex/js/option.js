@@ -31,7 +31,7 @@ const makeCurriculumsList = () => {
 
 const getCurriculumsFromScreen = () => {
   curriculums.forEach(el => {
-    const input = query(`input[name="${el.name}"]`);
+    const input = query(`#curriculums input[name="${el.name}"]`);
     el.visible = (!input) ? true : input.checked;
   });
 };
@@ -45,13 +45,52 @@ const makeCourseList = () => {
 
 const getCourseListFromScreen = () => {
   course_list.forEach(el => {
-    const input = query(`input[name="${el.name}"]`);
+    const input = query(`#courseList input[name="${el.name}"]`);
     el.visible = (!input) ? true : input.checked;
   });
 };
 
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+
+  // 課題レビュー基準を取得
+  const res = await fetch('https://techacademy.jp/mentor/review_guides',
+    { method: 'GET', mode: 'same-origin', credentials: 'include' });
+
+  if (!res.ok) {
+    throw new Error("HTTP error! status: " + res.status);
+  }
+
+  const text = await res.text();
+
+  const doc = document.implementation.createHTMLDocument("").documentElement;
+  doc.innerHTML = text;
+  const review_criterias = doc.querySelectorAll('.breadcrumb + .nav li');
+  review_criterias.forEach((course) => {
+    course_list.push({ name: course.textContent, visible: false });
+  });
+
+  // カリキュラムを取得
+  const res2 = await fetch('https://techacademy.jp/mentor/curriculums',
+    { method: 'GET', mode: 'same-origin', credentials: 'include' });
+
+  if (!res2.ok) {
+    throw new Error("HTTP error! status: " + res2.status);
+  }
+
+  const text2 = await res2.text();
+
+  const doc2 = document.implementation.createHTMLDocument("").documentElement;
+  doc2.innerHTML = text2;
+  const curriculum_list = doc2.querySelectorAll('.breadcrumb + h2 + .nav li a');
+  curriculum_list.forEach((curriculum) => {
+    curriculums.push({ name: curriculum.textContent, url: curriculum.attributes.href.value, visible: false });
+  });
+
+
+  
+
+
   chrome.storage.local.get({
     interval: 30,
     chime: false,
@@ -76,8 +115,20 @@ document.addEventListener('DOMContentLoaded', () => {
     queryId('volume-text').innerText = items.volume;
     queryId('watchSlack').checked = !!(items.watchSlack);
     audio.volume = items.volume * 0.01;
-    curriculums = items.curriculums;
-    course_list = items.course_list;
+    curriculums = curriculums.map((el) => {
+      const target = items.curriculums.filter((e) => e.name == el.name);
+      if (target.length) {
+        el.visible = target[0].visible;
+      }
+      return el;
+    });
+    course_list = course_list.map((el) => {
+      const target = items.course_list.filter((e) => e.name == el.name);
+      if (target.length) {
+        el.visible = target[0].visible;
+      }
+      return el;
+    });
     makeCurriculumsList();
     makeCourseList();
   });

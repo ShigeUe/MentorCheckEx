@@ -121,20 +121,6 @@ const notify = async () => {
   }
 };
 
-// HTML中のタイトルを変更
-const changeTitle = () => {
-  if (!ME.queryId('courseDropdown')) {
-    return;
-  }
-  if (location.href.indexOf('[]') > 0) {
-    ME.query('.container-fluid h2').innerText = '複数コースのレビュー一覧';
-    ME.queryId('courseDropdown').innerText = '複数コース選択中';
-  }
-  else {
-    ME.query('.container-fluid h2').innerText = ME.query('#courseDropdown').innerText + 'レビュー一覧';
-  }
-};
-
 const reloadFunc = async () => {
   // リロードスイッチがONなら
   if (ME.queryId('pluginSwitchButton1').checked) {
@@ -183,8 +169,6 @@ const reloadFunc = async () => {
 
         save_time = time;
         ME.queryId('pluginSwitchMessage').innerText = '更新：' + formatedTime();
-        
-        changeTitle();
       })
       .catch(err => {
         throw err;
@@ -295,7 +279,6 @@ const init = async () => {
   }
 
   getChallengesAndSimplify(false);
-  changeTitle();
 };
 
 // 設定の取得
