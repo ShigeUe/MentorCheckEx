@@ -1,0 +1,3 @@
+.breadcrumb + h2 + .nav li:not(.active) {
+  display: none;
+}

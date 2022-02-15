@@ -22,7 +22,3 @@
 #wrapper.closeSidebar-wrapper #MentorCheckExCurriculums.open {
   left: 2.8rem;
 }
-
-.breadcrumb + h2 + .nav li:not(.active) {
-  display: none;
-}

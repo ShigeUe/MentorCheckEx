@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.3.6",
+   "version": "0.3.7",
 
    "description": "課題レビューのチェックをする拡張機能",
    "icons": {
@@ -33,6 +33,10 @@
          "run_at": "document_end",
          "js": ["js/curriculums.js"],
          "css": ["css/curriculums.css"]
+      },
+      {
+         "matches": ["https://techacademy.jp/mentor/courses/*/curriculums/*/lessons"],
+         "css": ["css/curriculums_header.css"]
       },
       {
          "matches": ["https://techacademy.jp/mentor/all/reports*"],
