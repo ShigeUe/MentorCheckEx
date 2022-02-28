@@ -176,22 +176,6 @@ const reloadFunc = async () => {
   }
 };
 
-// プルダウンリストから自分の受け持ちコースを取得する
-const makeCourseList = () => {
-  const a_list = ME.queryAll('#page-content-wrapper .dropdown .dropdown-menu li a');
-  const course_list = [];
-  for (let i = 1; i < a_list.length; i++) {
-    let search;
-    [, search] = a_list[i].search.split('=');
-
-    const setting = ME.settings.course_list.find(e => e.id == search);
-    const visible = !!(!setting || !('visible' in setting) || setting.visible);
-
-    course_list.push({ id: search, name: a_list[i].innerText, visible });
-  }
-  $chrome.storage.local.set({ course_list: course_list });
-};
-
 /* これ以降初期化部分
 -------------------------------------------------------------------------- */
 const init = async () => {
@@ -230,9 +214,6 @@ const init = async () => {
     });
     sidebarNavMenter.appendChild(li2);
   }
-
-  // プルダウンリストから自分の受け持ちコースを取得する
-  makeCourseList();
 
   // 「チャイム」スイッチの生成
   const li4 = createSwitchElement(4, '　チャイム');
