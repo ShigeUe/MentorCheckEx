@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.3.8",
+   "version": "0.3.9",
 
    "description": "課題レビューのチェックをする拡張機能",
    "icons": {
@@ -115,6 +115,7 @@
       {
          "matches": [
             "https://signin.aws.amazon.com/oauth*",
+            "https://*.signin.aws.amazon.com/oauth*",
             "https://*.console.aws.amazon.com/console/home*"
          ],
          "run_at": "document_end",

@@ -109,11 +109,11 @@ class MentorCheckEx
     window.addEventListener('message', event => {
       // 目的のページがロードされた
       if (
-        event.origin === 'https://signin.aws.amazon.com' ||
+        event.origin.indexOf('signin.aws.amazon.com') > 0 ||
         event.origin.indexOf('console.aws.amazon.com') > 0
       ) {
         // サインイン画面
-        if (event.data === 'loaded' && event.origin === 'https://signin.aws.amazon.com') {
+        if (event.data === 'loaded' && event.origin.indexOf('signin.aws.amazon.com') > 0) {
           // 開いたwindowにメッセージを送信（ユーザー名とパスワード）
           this.win_aws.postMessage({
             username: this.settings.username,

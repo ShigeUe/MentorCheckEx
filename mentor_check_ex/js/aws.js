@@ -18,7 +18,7 @@ if (window.opener && window.name == 'AWSOpenedFromMentorCheckEx') {
 
       setTimeout(() => {
         document.getElementById('signin_button').click();
-      }, 500);
+      }, 200);
     }
   });
 }
