@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.3.9",
+   "version": "0.4.0",
 
    "description": "課題レビューのチェックをする拡張機能",
    "icons": {
@@ -10,6 +10,7 @@
       "48": "img/icon-48.png",
       "128": "img/icon-128.png"
    },
+   "homepage_url": "https://github.com/ShigeUe/MentorCheckEx",
 
    "permissions": ["storage", "tabs", "notifications", "scripting"],
    "content_scripts": [
@@ -17,8 +18,10 @@
          "matches": ["https://techacademy.jp/mentor/*"],
          "exclude_matches": [
             "https://techacademy.jp/mentor/login",
+            "https://techacademy.jp/mentor/courses/*/orientation",
             "https://techacademy.jp/mentor/courses/*/curriculums/*/lessons/*",
-            "https://techacademy.jp/mentor/courses/*/curriculums/*/search*"
+            "https://techacademy.jp/mentor/courses/*/curriculums/*/search*",
+            "https://techacademy.jp/mentor/users/*/curriculums/*/schedules/*"
          ],
          "run_at": "document_start",
          "js": ["js/class.js"]
@@ -27,8 +30,10 @@
          "matches": ["https://techacademy.jp/mentor/*"],
          "exclude_matches": [
             "https://techacademy.jp/mentor/login",
+            "https://techacademy.jp/mentor/courses/*/orientation",
             "https://techacademy.jp/mentor/courses/*/curriculums/*/lessons/*",
-            "https://techacademy.jp/mentor/courses/*/curriculums/*/search*"
+            "https://techacademy.jp/mentor/courses/*/curriculums/*/search*",
+            "https://techacademy.jp/mentor/users/*/curriculums/*/schedules/*"
          ],
          "run_at": "document_end",
          "js": ["js/curriculums.js"],
@@ -72,6 +77,7 @@
             "https://techacademy.jp/mentor/users/*",
             "https://techacademy.jp/mentor/appointments/*/mentoring_notes/new"
          ],
+         "exclude_matches": ["https://techacademy.jp/mentor/users/*/curriculums/*/schedules/*"],
          "run_at": "document_end",
          "js": ["js/open-cloud9.js"],
          "css": ["css/override.css"]
@@ -111,6 +117,12 @@
          "run_at": "document_end",
          "js": ["js/mentoring_calendar.js"],
          "css": ["css/mentoring_calendar.css"]
+      },
+      {
+         "matches": ["https://techacademy.jp/mentor/users/*/progress"],
+         "run_at": "document_end",
+         "js": ["js/user_progress.js"],
+         "css": ["css/user_progress.css"]
       },
       {
          "matches": [
