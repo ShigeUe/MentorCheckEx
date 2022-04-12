@@ -21,7 +21,11 @@
 // -----------------------------------------------------------
 //          console.debug(data);
 // -----------------------------------------------------------
-          window.postMessage({ SlackMessageData: m.data }, "*");
+          if (data.type && data.type === 'message' && data.subtype && data.subtype === 'bot_message') {
+            if (data.text.match(/課題.*([^再]提出|レビュー中)/)) {
+              window.postMessage({ SlackMessageData: m.data }, "*");
+            }
+          }
         }
         // もともとのイベントハンドラを実行
         return func(m);

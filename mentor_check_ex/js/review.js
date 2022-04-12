@@ -59,7 +59,12 @@ const addReview = (url, title, message) => {
   atg.get().addEventListener('click', () => {
     document.getElementById(id).remove();
   });
-  const td1 = MCEElement.create('td').appendChild(atg);
+  const atg2 = MCEElement.create('a')
+    .addClass(['btn', 'btn-default', 'btn-sm', 'add-margin-left-10'])
+    .prop({ target: '_blank' })
+    .prop('href', url)
+    .text('詳細');
+  const td1 = MCEElement.create('td').appendChild(atg).appendChild(atg2);
   const td2 = MCEElement.create('td').text(title);
   const td3 = MCEElement.create('td').text(message);
   const td4 = MCEElement.create('td').text((new Date).toLocaleString());
@@ -77,6 +82,7 @@ const removeReview = (url) => {
 // background.jsとの通信ポートを開く
 let port = null;
 const connectToBg = () => {
+  console.debug((new Date).toLocaleString() + ' Connect to the background.');
   port = chrome.runtime.connect('', { name: 'SlackToBg' });
   port.onDisconnect.addListener(() => {
     console.debug((new Date).toLocaleString() + ' Disconnected from the background.');

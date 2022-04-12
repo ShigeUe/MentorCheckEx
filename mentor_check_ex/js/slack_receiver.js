@@ -25,17 +25,17 @@
         if (e.data.SlackMessageData) {
           const data = JSON.parse(e.data.SlackMessageData);
           // ボットのメッセージに限定
-          if (data.type && data.type === 'message' && data.subtype && data.subtype === 'bot_message') {
-            if (data.text.match(/課題.*(提出|レビュー中)/)) {
+          // if (data.type && data.type === 'message' && data.subtype && data.subtype === 'bot_message') {
+          //   if (data.text.match(/課題.*([^再]提出|レビュー中)/)) {
 
-              console.debug(Date.now() + ' Send the message to MentorCheckEx.');
-              console.debug(data);
+          console.debug(Date.now() + ' Send the message to MentorCheckEx.');
+          console.debug(data);
 
-              // タイトルからワークスペース名を取得
-              const title = document.title.split(' | ').pop();
-              chrome.runtime.sendMessage('', { type: "slack", title, data });
-            }
-          }
+          // タイトルからワークスペース名を取得
+          const title = document.title.split(' | ').pop();
+          chrome.runtime.sendMessage('', { type: "slack", title, data }).then(()=>{},()=>{});
+          //   }
+          // }
         }
       }
     }, false);

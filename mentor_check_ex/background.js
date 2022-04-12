@@ -21,7 +21,9 @@ let port = null;
   }
 
   // 「更新あり」などの通知を表示する
-  chrome.runtime.onMessage.addListener((message, sender) => {
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    sendResponse();
+    
     if (message.type === 'notification') {
       chrome.notifications.create({
         title: message.title,
