@@ -1,0 +1,11 @@
+#metor-check-ex-button {
+  display: inline-block;
+  margin-top: 1em;
+}
+#metor-check-ex-memo {
+  display: none;
+  background-color: #f8e6f7;
+}
+#metor-check-ex-memo.opened {
+  display: block;
+}

@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.4.1",
+   "version": "0.4.2",
 
    "description": "課題レビューのチェックをする拡張機能",
    "icons": {
@@ -12,7 +12,7 @@
    },
    "homepage_url": "https://github.com/ShigeUe/MentorCheckEx",
 
-   "permissions": ["storage", "tabs", "notifications", "scripting"],
+   "permissions": ["storage", "tabs", "notifications", "scripting", "fontSettings"],
    "content_scripts": [
       {
          "matches": ["https://techacademy.jp/mentor/*"],
@@ -101,10 +101,14 @@
          ],
          "run_at": "document_end",
          "js": [
+            "js/review_memo.js",
             "js/review_skip2reviewcomment.js",
             "js/review_start.js"
          ],
-         "css": ["css/review_skip2reviewcomment.css"]
+         "css": [
+            "css/review_memo.css",
+            "css/review_skip2reviewcomment.css"
+         ]
       },
       {
          "matches": ["https://techacademy.jp/mentor/courses/*/review_guide"],
