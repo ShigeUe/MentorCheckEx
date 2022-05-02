@@ -31,9 +31,13 @@
   }
 
   const contents = ME2.query('#page-content-wrapper .col-lg-12').children;
-  const target = MCEElement.create(
-    ME.query('#page-content-wrapper .col-sm-4 > div > div:nth-child(2) > ul > li:nth-child(1)')
-  );
+  // メモボタンの先祖要素のliを取得する
+  const target_li = ME.query('a[href$="/memos"]')?.closest('li');
+  if (!target_li) {
+    // なければ終了
+    return;
+  }
+  const target = MCEElement.create(target_li);
   const div = MCEElement.create('div').prop('id', 'metor-check-ex-memo');
 
   // 最初にhrを入れておく
