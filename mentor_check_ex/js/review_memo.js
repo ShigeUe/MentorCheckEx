@@ -2,8 +2,9 @@
 
 (async () => {
   const ME = new MentorCheckEx();
-  const memo = ME.query('#page-content-wrapper .col-sm-4 [href^="/mentor/users/"]');
-  if (!memo) {
+  const memo = ME.query('#page-content-wrapper .list-inline li a[href$="/memos"]');
+  if (!memo || (memo.innerText.substr(0,1) - 0) === 0) {
+    ME.queryId('page-content-wrapper').style.opacity = 1;
     return;
   }
   const href = memo.attributes.href.value;
@@ -27,6 +28,7 @@
   
   // メモが存在しなければ終了
   if (!ME2.query('#page-content-wrapper .col-lg-12 .button-bar + div')) {
+    ME.queryId('page-content-wrapper').style.opacity = 1;
     return;
   }
 
@@ -35,8 +37,10 @@
   const target_li = ME.query('a[href$="/memos"]')?.closest('li');
   if (!target_li) {
     // なければ終了
+    ME.queryId('page-content-wrapper').style.opacity = 1;
     return;
   }
+  target_li.style.display = 'block';
   const target = MCEElement.create(target_li);
   const div = MCEElement.create('div').prop('id', 'metor-check-ex-memo');
 
@@ -77,5 +81,5 @@
   });
   target.appendChild(h4);
   target.appendChild(div);
-
+  ME.queryId('page-content-wrapper').style.opacity = 1;
 })();
