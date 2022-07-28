@@ -44,10 +44,17 @@ const style = `
 </style>
 `;
 
+// 設定をクラスに読み込む
+const __getSettings = () => {
+  return new Promise((resolve, reject) => {
+    // デフォルト値を付けて設定を所得する
+    chrome.storage.local.get({ darkmode: false }, resolve);
+  });
+}
+
 (async () => {
-  const ME = new MentorCheckEx();
-  await ME.getSettings();
-  if (ME.settings.darkmode) {
+  const settings = await __getSettings();
+  if (settings.darkmode) {
     document.querySelector('head').insertAdjacentHTML('beforeend', style);
   }
 })();
