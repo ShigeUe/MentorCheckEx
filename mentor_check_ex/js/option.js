@@ -103,6 +103,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     password: '',
     volume: 50,
     watchSlack: false,
+    darkmode: false,
   }, items => {
     queryId('interval').value = items.interval;
     queryId('chime').checked = !!(items.chime);
@@ -114,6 +115,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     queryId('volume').value = items.volume;
     queryId('volume-text').innerText = items.volume;
     queryId('watchSlack').checked = !!(items.watchSlack);
+    queryId('darkmode').checked = !!(items.darkmode);
     audio.volume = items.volume * 0.01;
     curriculums = curriculums.map((el) => {
       const target = items.curriculums.filter((e) => e.name == el.name);
@@ -143,6 +145,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const password = queryId('password').value;
     const volume = queryId('volume').value;
     const watchSlack = queryId('watchSlack').checked;
+    const darkmode = queryId('darkmode').checked;
     getCurriculumsFromScreen();
     getCourseListFromScreen();
     
@@ -162,7 +165,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       username,
       password,
       volume,
-      watchSlack
+      watchSlack,
+      darkmode
     }, () => {
       queryId('message').innerText = '保存しました';
     });

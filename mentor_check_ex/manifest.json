@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.4.4",
+   "version": "0.4.5",
 
    "description": "課題レビューのチェックをする拡張機能",
    "icons": {
@@ -19,7 +19,6 @@
          "exclude_matches": [
             "https://techacademy.jp/mentor/login",
             "https://techacademy.jp/mentor/courses/*/orientation",
-            "https://techacademy.jp/mentor/courses/*/curriculums/*/lessons/*",
             "https://techacademy.jp/mentor/courses/*/curriculums/*/search*",
             "https://techacademy.jp/mentor/users/*/curriculums/*/schedules/*"
          ],
@@ -42,6 +41,11 @@
       {
          "matches": ["https://techacademy.jp/mentor/courses/*/curriculums/*/lessons"],
          "css": ["css/curriculums_header.css"]
+      },
+      {
+         "matches": ["https://techacademy.jp/mentor/courses/*/curriculums/*/lessons/*"],
+         "run_at": "document_start",
+         "js": ["js/curriculums_pages.js"]
       },
       {
          "matches": ["https://techacademy.jp/mentor/all/reports*"],

@@ -1,0 +1,37 @@
+@media (prefers-color-scheme: dark) {
+  .container-fluid {
+    color: #fff;
+    background-color: #222;
+  }
+  .note.markdown {
+    color: #fff;
+    background-color: rgba(0,0,0,0);
+  }
+  .billy_mentor .container-fluid .billy_lesson .btn-default {
+    color: #fff !important;
+    background-color: rgba(0,0,0,0);
+  }
+  .billy_lesson .note-index-wrap .note-index .note-index-content {
+    background-color: rgba(0,0,0,0) !important;
+  }
+  .billy_mentor .container-fluid .billy_lesson pre {
+    background-color: rgba(0,0,0,0);
+  }
+  .container-fluid a {
+    color: #15a1a8;
+  }
+  input[type="search"] {
+    background-color: rgba(0,0,0,0);
+  }
+  .billy_mentor .container-fluid .billy_lesson code {
+    background-color: rgba(0,0,0,0);
+  }
+  /* .billy_mentor .container-fluid .billy_lesson .markdown table>thead>tr>th, */
+  .billy_mentor .container-fluid .billy_lesson .markdown table>thead>tr>td,
+  .billy_mentor .container-fluid .billy_lesson .markdown table>tbody>tr>th,
+  .billy_mentor .container-fluid .billy_lesson .markdown table>tbody>tr>td,
+  .billy_mentor .container-fluid .billy_lesson .markdown table>tfoot>tr>th,
+  .billy_mentor .container-fluid .billy_lesson .markdown table>tfoot>tr>td {
+    background-color: rgba(0,0,0,0);
+  }
+}

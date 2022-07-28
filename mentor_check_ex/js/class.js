@@ -25,6 +25,7 @@ class MentorCheckEx
     volume:        50,
     course_list:   [],
     watchSlack:    false,
+    darkmode:      false,
   };
 
   constructor() {
