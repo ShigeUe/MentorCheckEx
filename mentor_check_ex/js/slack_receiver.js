@@ -32,7 +32,7 @@
           console.debug(data);
 
           // タイトルからワークスペース名を取得
-          const title = document.title.split(' | ').pop();
+          const title = document.querySelector('.p-ia__sidebar_header__team_name_text').innerText;
           chrome.runtime.sendMessage('', { type: "slack", title, data }).then(()=>{},()=>{});
           //   }
           // }
