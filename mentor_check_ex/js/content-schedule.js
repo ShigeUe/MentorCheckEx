@@ -55,6 +55,7 @@ courses.sort().push('すべて');
 const showOrHiddenSchedule = (type, value) => {
   // コースボタンが押された場合
   if (type === 'course') {
+    ME.queryId('plugin-time-mo').classList.remove('selected');
     ME.queryId('plugin-time-am').classList.remove('selected');
     ME.queryId('plugin-time-pm').classList.remove('selected');
     COURSE_TD.forEach(ele => {
@@ -125,12 +126,29 @@ div.appendChild(br);
 button = MCEElement
   .create('button')
   .prop({
+    id: 'plugin-time-mo',
+    type: 'button',
+    innerText: "午前",
+  })
+  .addEventListener('click', e => {
+    e.target.classList.add('selected');
+    ME.queryId('plugin-time-am').classList.remove('selected');
+    ME.queryId('plugin-time-pm').classList.remove('selected');
+    showOrHiddenSchedule('ampm', '午前');
+  });
+div.appendChild(button);
+
+// 時間帯絞り込みボタン前半
+button = MCEElement
+  .create('button')
+  .prop({
     id: 'plugin-time-am',
     type: 'button',
     innerText: "前半",
   })
   .addEventListener('click', e => {
     e.target.classList.add('selected');
+    ME.queryId('plugin-time-mo').classList.remove('selected');
     ME.queryId('plugin-time-pm').classList.remove('selected');
     showOrHiddenSchedule('ampm', '前半');
   });
@@ -146,6 +164,7 @@ button = MCEElement
   })
   .addEventListener('click', e => {
     e.target.classList.add('selected');
+    ME.queryId('plugin-time-mo').classList.remove('selected');
     ME.queryId('plugin-time-am').classList.remove('selected');
     showOrHiddenSchedule('ampm', '後半');
   });
@@ -162,6 +181,13 @@ const TimeZones = ME.queryAll('#eachMentors table tr td:nth-of-type(3)');
 TimeZones.forEach(e => {
   const times = e.innerText.split('〜');
 
+  if (times[0] == '11:00' || times[1] == '15:00') {
+    const AM = MCEElement
+      .create('span')
+      .prop({ innerText: '午前' })
+      .addClass('plugin-time-mo');
+    e.appendChild(AM.get());
+  }
   if (times[0] == '15:00' || times[1] == '19:00') {
     const AM = MCEElement
       .create('span')

@@ -11,6 +11,7 @@
   background-color: #0f7378;
   color: white;
 }
+#otherShift table td .plugin-time-mo,
 #otherShift table td .plugin-time-am,
 #otherShift table td .plugin-time-pm {
   display: inline-block;
@@ -19,6 +20,10 @@
   border-radius: .25em;
 }
 
+#otherShift table td .plugin-time-mo {
+  background-color: #0ff;
+  border: 1px solid #0cc;
+}
 #otherShift table td .plugin-time-am {
   background-color: #ff0;
   border: 1px solid #cc0;
@@ -29,17 +34,26 @@
   color: white;
 }
 
+#otherShift #plugin-time-mo,
 #otherShift #plugin-time-am,
 #otherShift #plugin-time-pm {
   width: 80px;
   background-color: rgba(0,0,0,0);
 }
 
+#otherShift #plugin-time-mo{
+  border: 1px solid #0cc;
+}
 #otherShift #plugin-time-am{
   border: 1px solid #cc0;
 }
 #otherShift #plugin-time-pm {
   border: 1px solid #888;
+}
+#otherShift #plugin-time-mo:hover,
+#otherShift #plugin-time-mo.selected {
+  background-color: #0ff;
+  color: #333;
 }
 #otherShift #plugin-time-am:hover,
 #otherShift #plugin-time-am.selected {
