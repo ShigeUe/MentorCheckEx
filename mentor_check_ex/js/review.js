@@ -4,6 +4,9 @@ const ME = new MentorCheckEx;
 
 document.title = '課題レビューの新着一覧 | TechAcademy mentor';
 
+ME.query('#sidebar-wrapper')?.remove();
+ME.query('#wrapper').style.padding = '0';
+
 ME.set_document(ME.query('#page-content-wrapper .container-fluid .row .col-lg-12'));
 ME.query('h2').innerText = '課題レビューの新着一覧';
 ME.query('ul.pagination')?.remove();
