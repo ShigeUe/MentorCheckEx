@@ -26,6 +26,7 @@ class MentorCheckEx
     course_list:   [],
     watchSlack:    false,
     darkmode:      false,
+    rclone:        '.\\review.bat',
   };
 
   constructor() {

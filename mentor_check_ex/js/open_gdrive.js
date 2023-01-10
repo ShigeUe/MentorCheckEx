@@ -1,6 +1,6 @@
 "use strict";
 
-(function () {
+(async () => {
   const selectors = [
     {
       url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/html-basic#kadai-html-1",
@@ -97,26 +97,35 @@
   if (!link) {
     return;
   }
+
+  // 設定を同期的に読み込み
+  await ME.getSettings();
+  console.log(ME.settings.rclone);
   
   const f_id = link.href.split('/').at(-1).replace(/\?[-a-z=_]*/, "");
-  const w_command = `.\\review.bat ${f_id} ${target}`;
-  const m_command = `./review.sh ${f_id} ${target}`;
+  const command = ME.settings.rclone + ` ${f_id} ${target}`;
 
   const div = document.createElement('div');
-  const input1 = document.createElement('input');
-  const input2 = document.createElement('input');
-  input1.type = 'text';
-  input2.type = 'text';
-  input1.value = w_command;
-  input2.value = m_command;
-  input1.style.width = '100%';
-  input2.style.width = '100%';
-  input1.style.display = 'block';
-  input2.style.display = 'block';
 
-  div.append('【Win】');
-  div.append(input1);
-  div.append('【Mac】');
-  div.append(input2);
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.value = command;
+  input.id = 'rclone-command';
+  input.style.width = '100%';
+  input.style.display = 'block';
+  input.onfocus = function () { this.select(); };
+
+  const label = document.createElement('label');
+  label.htmlFor = 'rclone-command';
+  label.style.display = 'block';
+  label.style.marginTop = '.5em';
+  label.append('rcloneコマンド');
+
+  const small = document.createElement('small');
+  small.append('コマンドはオプションで変更できます。');
+
+  div.append(label);
+  div.append(input);
+  div.append(small);
   link.parentElement.append(div);
 })();
