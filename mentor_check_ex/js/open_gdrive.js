@@ -2,6 +2,7 @@
 
 (async () => {
   const selectors = [
+    // はじ副2
     {
       url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/html-basic#kadai-html-1",
       folder: "kadai-html",
@@ -76,6 +77,84 @@
     },
     {
       url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/final-exam#kadai-final-exam",
+      folder: "final-exam",
+    },
+
+    // ここから「はじ副2-rd」
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/html-basic#kadai-html-1",
+      folder: "kadai-html",
+    },
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/css-basic#kadai-html-2",
+      folder: "kadai-html",
+    },
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/css-basic#kadai-css",
+      folder: "kadai-css",
+    },
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/html-css-tutorial1#kadai-portfolio-1",
+      folder: "portfolio",
+    },
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/html-css-tutorial1#kadai-portfolio-2",
+      folder: "portfolio",
+    },
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/html-css-tutorial2#kadai-portfolio-3",
+      folder: "kadai-portfolio",
+    },
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/jquery1#kadai-jquery1",
+      folder: "kadai-jquery1",
+    },
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/jquery2#kadai-jquery2",
+      folder: "kadai-jquery2",
+    },
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/jquery2#kadai-jquery3",
+      folder: "kadai-jquery3",
+    },
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/smartphone#kadai-smartphone-1",
+      folder: "smartphone",
+    },
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/smartphone#kadai-smartphone-2",
+      folder: "smartphone",
+    },
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/webpage-practice1#kadai-recipe-1",
+      folder: "recipe",
+    },
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/webpage-practice1#kadai-recipe-2",
+      folder: "recipe",
+    },
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/webpage-practice1#kadai-recipe-3",
+      folder: "recipe",
+    },
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/webpage-practice2#kadai-corporate-site-1",
+      folder: "corporate-site",
+    },
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/webpage-practice2#kadai-corporate-site-2",
+      folder: "corporate-site",
+    },
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/webpage-practice2#kadai-corporate-site-3",
+      folder: "corporate-site",
+    },
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/webpage-practice2#kadai-corporate-site-4",
+      folder: "corporate-site",
+    },
+    {
+      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/final-exam#kadai-final-exam",
       folder: "final-exam",
     },
   ];
