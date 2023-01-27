@@ -1,0 +1,3 @@
+.p-channel_sidebar__channel[data-qa-channel-sidebar-channel-id] {
+  transition: background-color .3s;
+}

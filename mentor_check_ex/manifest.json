@@ -154,7 +154,8 @@
             "https://app.slack.com/client/*"
          ],
          "run_at": "document_start",
-         "js": ["js/slack_receiver.js"]
+         "js": ["js/slack_receiver.js"],
+         "css": ["css/slack.css"]
       },
       {
          "matches": [
