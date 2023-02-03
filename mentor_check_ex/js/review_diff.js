@@ -31,6 +31,8 @@
 </div>
 `;
 
+  document.title = '課題レビューDIFF';
+  
   const addScript = (path) => {
     const source = chrome.runtime.getURL(path);
     const script = document.createElement('script');
