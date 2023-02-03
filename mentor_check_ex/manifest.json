@@ -170,6 +170,20 @@
          ],
          "run_at": "document_end",
          "js": ["js/modifying_the_curriculum.js"]
+      },
+      {
+         "matches": [
+            "https://techacademy.jp/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons?diff"
+         ],
+         "run_at": "document_end",
+         "css": [
+            "css/review_diff/codemirror.min.css",
+            "css/review_diff/mergely.min.css",
+            "css/review_diff/style.css"
+         ],
+         "js": [
+            "js/review_diff.js"
+         ]
       }
    ],
    "background": {
@@ -179,7 +193,12 @@
    "host_permissions": ["https://app.slack.com/client/*"],
    "web_accessible_resources": [
       {
-         "resources": ["resources/chime.mp3"],
+         "resources": [
+            "resources/chime.mp3",
+            "js/review_diff/codes.js",
+            "js/review_diff/libraries.js",
+            "js/review_diff/main.js"
+         ],
          "matches": ["https://techacademy.jp/*"]
       },
       {

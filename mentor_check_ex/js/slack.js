@@ -8,51 +8,6 @@
   window.onmessagegetter = Object.getOwnPropertyDescriptor(window.WebSocket.prototype, 'onmessage').get;
   window.onmessagesetter = Object.getOwnPropertyDescriptor(window.WebSocket.prototype, 'onmessage').set;
 
-  /*
-  const hajifuku_id = 'T02CXU5S59P';
-  let hajifuku = false;
-  let u_id = null;
-
-  // はじ副かどうか
-  // Techacademy Mentorは除外する
-  if (window.location.href.match(/https:\/\/app.slack.com\/client\/T02CXU5S59P\//)) {
-    hajifuku = true;
-  }
-
-  if (hajifuku) {
-    // slackのindexeddbからデータを取得する
-    window.indexedDB.open("reduxPersistence").onsuccess = (event) => {
-      let db = event.target.result;
-      let tr = db.transaction('reduxPersistenceStore', 'readonly');
-      let st = tr.objectStore('reduxPersistenceStore');
-      console.debug(st);
-  
-      st.getAllKeys().onsuccess = (e) => {
-        if (e.target.result.length) {
-          console.debug(e.target.result);
-
-          let key = null;
-          e.target.result.forEach((k) => {
-            if (k.indexOf(hajifuku_id) < 0) {
-              return;
-            }
-            key = k;
-          });
-          if (!key) {
-            return;
-          }
-          console.debug(key);
-          st.get(key).onsuccess = (e) => {
-            console.debug(e.target.result.bootData);
-            u_id = e.target.result.bootData.user_id;
-          };
-        }
-      }
-      db.close();
-    };
-  }
-  */
-
   Object.defineProperty(window.WebSocket.prototype, 'onmessage', {
     get() {
       return window.onmessagegetter.apply(this);

@@ -203,8 +203,9 @@
   label.style.marginTop = '.5em';
   label.append('rcloneコマンド');
 
-  const small = document.createElement('small');
-  small.append('コマンドはオプションで変更できます。');
+  const small = document.createElement('p');
+  small.innerHTML = '<small>コマンドはオプションで変更できます。</small><br>' +
+    '<a href="/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons?diff" target="_blank">レビュー比較ツール</a>';
 
   div.append(label);
   div.append(input);
