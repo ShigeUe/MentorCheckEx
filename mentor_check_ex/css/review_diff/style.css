@@ -23,6 +23,7 @@ body {
   top: -5px;
   z-index: 99999;
   color: white;
+  background-color: #0f7378;
 }
 
 #page-content-wrapper > .container-fluid > .row > .col-lg-12 .header {
