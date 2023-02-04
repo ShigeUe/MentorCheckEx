@@ -13,6 +13,10 @@ body {
   height: auto !important;
 }
 
+.CodeMirror-code {
+  color: #222 !important;
+}
+
 #page-content-wrapper {
   padding-bottom: 0 !important;
 }
