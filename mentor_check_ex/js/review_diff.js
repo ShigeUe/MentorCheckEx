@@ -12,6 +12,9 @@
     <button type="button" id="strip-emptyline">空行を削除する</button>
   </div>
   <div class="align-self-center">
+    <button type="button" id="css-sort">CSSのプロパティを並べ替える</button>
+  </div>
+  <div class="align-self-center">
     <select id="review-code">
       <option value="">比較するコードを選択してください</option>
     </select>
@@ -37,14 +40,17 @@
     const source = chrome.runtime.getURL(path);
     const script = document.createElement('script');
     script.src = source;
-    document.body.appendChild(script);  
+    document.body.appendChild(script);
   };
 
   addScript("js/review_diff/codes.js");
   setTimeout(() => {
     addScript("js/review_diff/libraries.js");
     setTimeout(() => {
-      addScript("js/review_diff/main.js");
-    }, 1000);
+      addScript("js/review_diff/css_sorter.js");
+      setTimeout(() => {
+        addScript("js/review_diff/main.js");
+      }, 1000);
+    }, 100);
   }, 100);
 })();

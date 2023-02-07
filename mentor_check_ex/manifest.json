@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.5.4",
+   "version": "0.5.5",
 
    "description": "課題レビューのチェックをする拡張機能",
    "icons": {
@@ -197,6 +197,7 @@
             "resources/chime.mp3",
             "js/review_diff/codes.js",
             "js/review_diff/libraries.js",
+            "js/review_diff/css_sorter.js",
             "js/review_diff/main.js"
          ],
          "matches": ["https://techacademy.jp/*"]

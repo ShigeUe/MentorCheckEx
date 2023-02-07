@@ -84,6 +84,12 @@
     set_text(s_code, c_code);
   });
 
+  $('#css-sort').on('click', async () => {
+    let { s_code, c_code } = get_text();
+
+    set_text(await CSSSorter(s_code), await CSSSorter(c_code));
+  });
+
   $('input[type="checkbox"]').on('change', (e) => {
     const options = {};
     options[e.target.id] = e.target.checked;
