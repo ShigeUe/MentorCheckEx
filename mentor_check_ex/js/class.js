@@ -147,13 +147,6 @@ class MentorCheckEx
     }, this);
   }
 
-  copyClipboard(text) {
-    const blob = new Blob([text], { type: 'text/plain' });
-    const item = [new ClipboardItem({ ['text/plain']: blob })];
-    navigator.clipboard.write(item);
-  }
-
-
   static notify(title, body) {
     MentorCheckEx._chrome.runtime.sendMessage({ type: 'notification', title: title, body: body });
   }

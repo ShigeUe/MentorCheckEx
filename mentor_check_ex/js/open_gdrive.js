@@ -194,7 +194,6 @@
   input.style.display = 'block';
   input.onfocus = function () {
     this.select();
-    ME.copyClipboard(this.value);
   };
 
   const label = document.createElement('label');
