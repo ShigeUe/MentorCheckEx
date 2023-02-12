@@ -50,7 +50,14 @@ const th4 = MCEElement.create('th').text('通知日時');
 htr.appendChild(th1).appendChild(th2).appendChild(th3).appendChild(th4);
 thead.appendChild(htr.get());
 
-const addReview = (url, title, message) => {
+const addReview = async (url, title, message) => {
+  // レビューページを取得し、タイトルを得る
+  const response = await fetch(url);
+  const review = await response.text();
+  const doc = document.implementation.createHTMLDocument("").documentElement;
+  doc.innerHTML = review;
+  const [reviewTitle,] = doc.querySelector('title').innerText.split('|');
+
   const id = 'review' + Date.now();
   const tbody = ME.query('table tbody');
   const btr = MCEElement.create('tr').prop('id', id);
@@ -69,7 +76,7 @@ const addReview = (url, title, message) => {
     .text('詳細');
   const td1 = MCEElement.create('td').appendChild(atg).appendChild(atg2);
   const td2 = MCEElement.create('td').text(title);
-  const td3 = MCEElement.create('td').text(message);
+  const td3 = MCEElement.create('td').text(reviewTitle);
   const td4 = MCEElement.create('td').text((new Date).toLocaleString());
   btr.appendChild(td1).appendChild(td2).appendChild(td3).appendChild(td4);
   tbody.appendChild(btr.get());
