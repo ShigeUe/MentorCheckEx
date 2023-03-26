@@ -172,7 +172,7 @@
     return;
   }
 
-  const link = ME.query('[href^="https://drive.google.com/drive/"]');
+  const link = ME.query('[href^="https://drive.google.com/drive/"]:has(i)');
   if (!link) {
     return;
   }
