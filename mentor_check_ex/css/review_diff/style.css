@@ -31,11 +31,74 @@ body {
 }
 
 #page-content-wrapper > .container-fluid > .row > .col-lg-12 .header {
+  position: relative;
   padding-top: 50px;
   height: 130px;
   line-height: 1.6;
-  opacity: 0;
-  transition: opacity 0.3s;
+  visibility: hidden;
+}
+
+#page-content-wrapper > .container-fluid > .row > .col-lg-12 .header .controller {
+  position: absolute;
+  left: calc(50% - 160px);
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  column-gap: 10px;
+  width: 300px;
+}
+
+#page-content-wrapper > .container-fluid > .row > .col-lg-12 .header .controller .numChanges {
+  width: 60px;
+  text-align: center;
+}
+
+#page-content-wrapper > .container-fluid > .row > .col-lg-12 .header .labels > div {
+  position: absolute;
+  bottom: 0;
+  width: 300px;
+  text-align: center;
+  font-weight: bold;
+}
+
+#page-content-wrapper > .container-fluid > .row > .col-lg-12 .header .labels .student {
+  left: calc(25% - 150px);
+  background-color: #fcc;
+}
+
+#page-content-wrapper > .container-fluid > .row > .col-lg-12 .header .labels .student a{
+  color: red;
+}
+
+#page-content-wrapper > .container-fluid > .row > .col-lg-12 .header .labels .review {
+  left: calc(75% - 150px);
+  color: blue;
+  background-color: #ccf;
+}
+
+#page-content-wrapper > .container-fluid > .row > .col-lg-12 .header .message_area {
+  position: absolute;
+  left: calc(50% - 200px);
+  top: 35px;
+  width: 400px;
+  height: 60px;
+  padding: 0 5px;
+
+  background-color: white;
+  z-index: 99;
+  border: 1px solid #888;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-y: scroll;
+}
+
+#page-content-wrapper > .container-fluid > .row > .col-lg-12 .header .message_area button {
+  padding: 0;
+  line-height: 1;
+  border: 0;
+  background: none;
+  color: #f00;
+  text-decoration: underline;
 }
 
 #page-content-wrapper > .container-fluid > .row > .col-lg-12 .header label {
@@ -77,8 +140,8 @@ body {
   position: relative;
   width: 100%;
   height: calc(100vh - 150px);
-  font-size: 16px;
-  line-height: 1.4;
+  font-size: 13px;
+  line-height: 1.3;
 }
 
 #page-content-wrapper > .container-fluid > .row > .col-lg-12 .CodeMirror {

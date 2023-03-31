@@ -1,187 +1,51 @@
 "use strict";
 
 (async () => {
-  const selectors = [
-    // はじ副2
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/html-basic#kadai-html-1",
-      folder: "kadai-html",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/css-basic#kadai-html-2",
-      folder: "kadai-html",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/css-basic#kadai-css",
-      folder: "kadai-css",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/html-css-tutorial1#kadai-portfolio-1",
-      folder: "portfolio",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/html-css-tutorial1#kadai-portfolio-2",
-      folder: "portfolio",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/html-css-tutorial2#kadai-portfolio-3",
-      folder: "kadai-portfolio",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/jquery1#kadai-jquery1",
-      folder: "kadai-jquery1",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/jquery2#kadai-jquery2",
-      folder: "kadai-jquery2",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/jquery2#kadai-jquery3",
-      folder: "kadai-jquery3",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/smartphone#kadai-smartphone-1",
-      folder: "smartphone",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/smartphone#kadai-smartphone-2",
-      folder: "smartphone",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/webpage-practice1#kadai-recipe-1",
-      folder: "recipe",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/webpage-practice1#kadai-recipe-2",
-      folder: "recipe",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/webpage-practice1#kadai-recipe-3",
-      folder: "recipe",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/webpage-practice2#kadai-corporate-site-1",
-      folder: "corporate-site",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/webpage-practice2#kadai-corporate-site-2",
-      folder: "corporate-site",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/webpage-practice2#kadai-corporate-site-3",
-      folder: "corporate-site",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/webpage-practice2#kadai-corporate-site-4",
-      folder: "corporate-site",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons/final-exam#kadai-final-exam",
-      folder: "final-exam",
-    },
-
-    // ここから「はじ副2-rd」
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/html-basic#kadai-html-1",
-      folder: "kadai-html",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/css-basic#kadai-html-2",
-      folder: "kadai-html",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/css-basic#kadai-css",
-      folder: "kadai-css",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/html-css-tutorial1#kadai-portfolio-1",
-      folder: "portfolio",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/html-css-tutorial1#kadai-portfolio-2",
-      folder: "portfolio",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/html-css-tutorial2#kadai-portfolio-3",
-      folder: "kadai-portfolio",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/jquery1#kadai-jquery1",
-      folder: "kadai-jquery1",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/jquery2#kadai-jquery2",
-      folder: "kadai-jquery2",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/jquery2#kadai-jquery3",
-      folder: "kadai-jquery3",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/smartphone#kadai-smartphone-1",
-      folder: "smartphone",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/smartphone#kadai-smartphone-2",
-      folder: "smartphone",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/webpage-practice1#kadai-recipe-1",
-      folder: "recipe",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/webpage-practice1#kadai-recipe-2",
-      folder: "recipe",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/webpage-practice1#kadai-recipe-3",
-      folder: "recipe",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/webpage-practice2#kadai-corporate-site-1",
-      folder: "corporate-site",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/webpage-practice2#kadai-corporate-site-2",
-      folder: "corporate-site",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/webpage-practice2#kadai-corporate-site-3",
-      folder: "corporate-site",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/webpage-practice2#kadai-corporate-site-4",
-      folder: "corporate-site",
-    },
-    {
-      url: "/mentor/courses/first-sidejob/curriculums/first-sidejob-2-rd/lessons/final-exam#kadai-final-exam",
-      folder: "final-exam",
-    },
-  ];
 
   const ME = new MentorCheckEx();
-
-  let target = "";
-  selectors.forEach((e) => {
-    if (ME.query(`#page-content-wrapper .col-sm-8 a[href="${e.url}"]`)) {
-      target = e.folder;
-    }
-  });
-
-  if (!target) {
-    return;
-  }
 
   const link = ME.query('[href^="https://drive.google.com/drive/"]:has(i)');
   if (!link) {
     return;
   }
+  // GoogleフォルダID
+  const f_id = link.href.split('/').at(-1).replace(/\?[-a-z=_]*/, "");
+
+  const kadai_link = ME.query(`#page-content-wrapper .col-sm-8 table td a[href*="#kadai-"]`);
+  if (!kadai_link) { // 課題のリンクがない＝ユーザーページ
+    const user = location.href.split('/').pop();
+
+    const div = document.createElement('div');
+    Object.keys(CurriculumIdToData).forEach((id) => {
+      const a_tag = document.createElement('a');
+      a_tag.target = '_blank';
+      a_tag.href = `/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons?diff=1&id=${f_id}` +
+        `&folder=${CurriculumIdToData[id].folder}&c_id=${id}&user=${user}`;
+      a_tag.classList.add('btn', 'btn-primary', 'btn-sm', 'font-size-x-small');
+      a_tag.style = "margin:3px 3px 0 0"
+      a_tag.innerText = id;
+      div.append(a_tag);
+    });
+    link.parentElement.append(div);
+    return;
+  }
+  const curriculum_id = kadai_link.href.split('#').pop();
+  if (!CurriculumIdToData[curriculum_id]) {
+    return;
+  }
+  const target = CurriculumIdToData[curriculum_id].folder;
+  if (!target) {
+    return;
+  }
+
+
+
+
+  const user = ME.query('[href^="/mentor/users/').href.split('/').pop();
 
   // 設定を同期的に読み込み
   await ME.getSettings();
-  console.log(ME.settings.rclone);
   
-  const f_id = link.href.split('/').at(-1).replace(/\?[-a-z=_]*/, "");
   const command = ME.settings.rclone + ` ${f_id} ${target}`;
 
   const div = document.createElement('div');
@@ -203,8 +67,9 @@
   label.append('rcloneコマンド');
 
   const small = document.createElement('p');
-  small.innerHTML = '<small>コマンドはオプションで変更できます。</small><br>' +
-    '<a href="/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons?diff" target="_blank">レビュー比較ツール</a>';
+  small.classList.add('add-margin-0');
+  small.innerHTML = `<p><small>コマンドはオプションで変更できます。</small></p>\n` +
+    (CurriculumIdToData[curriculum_id] ? `<a href="/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons?diff=1&id=${f_id}&folder=${target}&c_id=${curriculum_id}&user=${user}" target="_blank" class="btn btn-success btn-sm font-size-x-small">レビュー比較ツール</a><br><small>（初回BASIC認証が求められます）</small>\n` : '');
 
   div.append(label);
   div.append(input);

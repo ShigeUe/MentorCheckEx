@@ -77,10 +77,11 @@
       {
          "matches": [
             "https://techacademy.jp/mentor/reports/*",
-            "https://techacademy.jp/mentor/training/reports/*"
+            "https://techacademy.jp/mentor/training/reports/*",
+            "https://techacademy.jp/mentor/users/*"
          ],
          "run_at": "document_end",
-         "js": ["js/open_gdrive.js"]
+         "js": ["js/review_diff/codes.js", "js/open_gdrive.js"]
       },
       {
          "matches": [
@@ -159,7 +160,7 @@
       },
       {
          "matches": [
-            "https://techacademy.jp/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons?diff"
+            "https://techacademy.jp/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons?diff*"
          ],
          "run_at": "document_end",
          "css": [
