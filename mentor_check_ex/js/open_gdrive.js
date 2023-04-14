@@ -9,7 +9,7 @@
     return;
   }
   // GoogleフォルダID
-  const f_id = link.href.split('/').at(-1).replace(/\?[-a-z=_]*/, "");
+  const f_id = (new URL(link.href)).pathname.split('/').pop();
 
   const kadai_link = ME.query(`#page-content-wrapper .col-sm-8 table td a[href*="#kadai-"]`);
   if (!kadai_link) { // 課題のリンクがない＝ユーザーページ
