@@ -134,11 +134,12 @@
 
    
   // ユーザー情報取得
+  let userName;
   let gdrivelink = await (async () => {
     const userRes = await fetch('/mentor/users/' + this_url.searchParams.get('user'));
     const userHTML = await userRes.text();
     const $user = $(userHTML);
-    const userName = $user.find('h2.heading-users').text();
+    userName = $user.find('h2.heading-users').text();
     $('.labels .student').html(`<a href="${previewBase}" target="_blank" title="プレビュー">${userName}さんのコード</a>`)  
     return $user.find('[href^="https://drive.google.com/drive/"]:has(i)').get(0).href;
   })();
@@ -151,7 +152,7 @@
   });
   const syncResult = await syncRes.json();
   if (syncResult.code == '404') {
-    $('#mergely').html(`<p style="font-size:2rem;color:red">"${drive_id}/${folder}" is not found.`);
+    $('#mergely').html(`<p style="color:red;font-weight:bold">${userName}さんの"${drive_id}/${folder}"フォルダがありません。`);
     return;
   }
   console.log('ProcessingTime:' + syncResult.processingTime);
@@ -187,8 +188,8 @@
     }
     if (!re) {
       $('#mergely').html(
-        '<p>読み込みエラーが発生しました。<br>\n' +
-        `受講生の<a href="${gdrivelink}" target="_blank">Google Drive</a>を確認してみてください。</p>`
+        `<p>${fileName}の読み込みエラーが発生しました。<br>
+        ${userName}さんの<a href="${gdrivelink}" target="_blank">Google Drive</a>を確認してみてください。</p>`
       );
       return;
     }
@@ -215,7 +216,9 @@
 
 
   if (!ReviewCodes.codes[curriculum_id]) {
-    $('#mergely').html(`<p>この課題はコードの比較は出来ません。<br>直接プレビューしましょう。</p>
+    $('#mergely').html(`<h3>${userName}さんの課題</h3>
+      <p><code>/${drive_id}/${folder}</code></p>
+      <p>この課題はコードの比較は出来ません。<br>直接プレビューしましょう。</p>
       <ul>
       <li><a href="${previewBase}${CurriculumIdToData[curriculum_id]?.files[0]}" target="_blank">プレビューを開く</a></li>
       <li><a href="javascript:$('#VALIDATOR-LINK').click()">バリデータを開く</a></li>
