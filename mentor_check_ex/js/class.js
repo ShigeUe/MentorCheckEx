@@ -27,6 +27,7 @@ class MentorCheckEx
     watchSlack:    false,
     darkmode:      false,
     rclone:        '.\\review.bat',
+    diff:          true,
   };
 
   constructor() {
