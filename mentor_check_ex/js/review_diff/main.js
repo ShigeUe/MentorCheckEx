@@ -216,7 +216,7 @@
 
 
   if (!ReviewCodes.codes[curriculum_id]) {
-    $('#mergely').html(`<h3>${userName}さんの課題</h3>
+    $('#mergely').html(`<h3>${userName}さんの課題</h3><p><strong>「${CurriculumIdToData[curriculum_id].title}」</strong></p>
       <p><code>/${drive_id}/${folder}</code></p>
       <p>この課題はコードの比較は出来ません。<br>直接プレビューしましょう。</p>
       <ul>
@@ -228,6 +228,8 @@
       (curriculum_id.match(/jquery/) ? `<li><a href="${previewBase}main.js" target="_blank">main.jsを開く</a></li>` : '') +
       (CurriculumIdToData[curriculum_id].demo ?
         `<li><a href="${CurriculumIdToData[curriculum_id].demo}" target="_blank">デモページ</a></li>` : '') +
+      (CurriculumIdToData[curriculum_id].description ?
+        `<li>${CurriculumIdToData[curriculum_id].description}</li>` : '') +
       `</ul>`
     );
     if (curriculum_id == 'kadai-final-exam') {
