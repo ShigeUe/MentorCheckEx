@@ -62,7 +62,7 @@ const CurriculumIdToData = {
   },
   'kadai-smartphone-2': {
     title: '',
-    files:['css/style.css'],
+    files:['index.html', 'css/style.css', 'js/hamburger.js', 'js/carousel.js'],
     folder: 'smartphone', 
     description: '',
   },
