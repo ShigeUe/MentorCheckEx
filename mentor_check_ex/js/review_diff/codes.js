@@ -1,81 +1,3 @@
-const ReviewCodes = {
-  codes: {},
-  getCodes: async () => {
-    const rs = await fetch('https://techacademy.jp/mentor/courses/first-sidejob/review_guide');
-    const tx = await rs.text();
-    const elements = $(tx).find('h1').siblings('h2,p,.highlighter-coderay');
-  
-    const addElement = (elements, title, index, file) => {
-      const url = new URL(elements[title].querySelector('a').href);
-      const id = url.hash.substring(1);
-      if (!ReviewCodes.codes[id]) {
-        ReviewCodes.codes[id] = [];
-      }
-      ReviewCodes.codes[id].push({
-        title: elements[title].innerText, 
-        file: file ? file : elements[index].innerText,
-        code: elements[index + 1].innerText.trim(),
-      });
-    };
-  
-    for (let i = 0; i < elements.length; i++) {
-      if (elements[i].innerText.indexOf('課題2：') !== -1) {
-        addElement(elements, i, i + 1, 'index.html');
-        i += 3;
-      }
-      if (elements[i].innerText.indexOf('課題3：') !== -1) {
-        addElement(elements, i, i + 2);
-        i += 4;
-      }
-      if (elements[i].innerText.indexOf('課題7：') !== -1) {
-        addElement(elements, i, i + 3);
-        addElement(elements, i, i + 5);
-        i += 6;
-      }
-      if (elements[i].innerText.indexOf('課題8：') !== -1) {
-        addElement(elements, i, i + 3);
-        addElement(elements, i, i + 5);
-        i += 6;
-      }
-      if (elements[i].innerText.indexOf('課題13：') !== -1) {
-        addElement(elements, i, i + 3);
-        addElement(elements, i, i + 5);
-        addElement(elements, i, i + 7);
-        addElement(elements, i, i + 9);
-        i += 10;
-      }
-      if (elements[i].innerText.indexOf('課題14：') !== -1) {
-        addElement(elements, i, i + 4);
-        i += 5;
-      }
-      if (elements[i].innerText.indexOf('課題16：') !== -1) {
-        addElement(elements, i, i + 4);
-        addElement(elements, i, i + 6);
-        addElement(elements, i, i + 8);
-        i += 9;
-      }
-      if (elements[i].innerText.indexOf('課題17：') !== -1) {
-        addElement(elements, i, i + 4);
-        addElement(elements, i, i + 6);
-        addElement(elements, i, i + 8);
-        i += 9;
-      }
-      if (elements[i].innerText.indexOf('課題19：') !== -1) {
-        addElement(elements, i, i + 4);
-        addElement(elements, i, i + 6);
-        addElement(elements, i, i + 8);
-        i += 9;
-      }
-      if (elements[i].innerText.indexOf('課題20：') !== -1) {
-        addElement(elements, i, i + 4);
-        addElement(elements, i, i + 6);
-        addElement(elements, i, i + 8);
-        i += 9;
-      }
-    }  
-  },
-};
-
 const CurriculumIdToData = {
   'kadai-html-1': {
     title: '',
@@ -195,5 +117,113 @@ const CurriculumIdToData = {
     folder: 'final-exam', 
     demo: 'https://demo.techacademy.jp/first-sidejob/final-exam/index.html',
     description: 'PC版は1536px、SP版は390px(iPhone 12 Pro)でご確認ください。',
+  },
+};
+
+const ReviewCodes = {
+  /*
+  // カリキュラムから直接取る場合はこちら
+  getCodes: async () => {
+    const rs = await fetch('https://techacademy.jp/mentor/courses/first-sidejob/review_guide');
+    const tx = await rs.text();
+    const elements = $(tx).find('h1').siblings('h2,p,.highlighter-coderay');
+  
+    const addElement = (elements, title, index, file) => {
+      const url = new URL(elements[title].querySelector('a').href);
+      const id = url.hash.substring(1);
+      if (!ReviewCodes.codes[id]) {
+        ReviewCodes.codes[id] = [];
+      }
+      ReviewCodes.codes[id].push({
+        title: elements[title].innerText, 
+        file: file ? file : elements[index].innerText,
+        code: elements[index + 1].innerText.trim(),
+      });
+    };
+  
+    for (let i = 0; i < elements.length; i++) {
+      if (elements[i].innerText.indexOf('課題2：') !== -1) {
+        addElement(elements, i, i + 1, 'index.html');
+        i += 3;
+      }
+      if (elements[i].innerText.indexOf('課題3：') !== -1) {
+        addElement(elements, i, i + 2);
+        i += 4;
+      }
+      if (elements[i].innerText.indexOf('課題7：') !== -1) {
+        addElement(elements, i, i + 3);
+        addElement(elements, i, i + 5);
+        i += 6;
+      }
+      if (elements[i].innerText.indexOf('課題8：') !== -1) {
+        addElement(elements, i, i + 3);
+        addElement(elements, i, i + 5);
+        i += 6;
+      }
+      if (elements[i].innerText.indexOf('課題13：') !== -1) {
+        addElement(elements, i, i + 3);
+        addElement(elements, i, i + 5);
+        addElement(elements, i, i + 7);
+        addElement(elements, i, i + 9);
+        i += 10;
+      }
+      if (elements[i].innerText.indexOf('課題14：') !== -1) {
+        addElement(elements, i, i + 4);
+        i += 5;
+      }
+      if (elements[i].innerText.indexOf('課題16：') !== -1) {
+        addElement(elements, i, i + 4);
+        addElement(elements, i, i + 6);
+        addElement(elements, i, i + 8);
+        i += 9;
+      }
+      if (elements[i].innerText.indexOf('課題17：') !== -1) {
+        addElement(elements, i, i + 4);
+        addElement(elements, i, i + 6);
+        addElement(elements, i, i + 8);
+        i += 9;
+      }
+      if (elements[i].innerText.indexOf('課題19：') !== -1) {
+        addElement(elements, i, i + 4);
+        addElement(elements, i, i + 6);
+        addElement(elements, i, i + 8);
+        i += 9;
+      }
+      if (elements[i].innerText.indexOf('課題20：') !== -1) {
+        addElement(elements, i, i + 4);
+        addElement(elements, i, i + 6);
+        addElement(elements, i, i + 8);
+        i += 9;
+      }
+    }
+  },
+  */
+  codes: {
+    "kadai-html-1": [],
+    "kadai-html-2": [],
+    "kadai-portfolio-1": [],
+    "kadai-portfolio-2": [],
+    "kadai-smartphone-1": [],
+    "kadai-smartphone-2": [],
+    "kadai-recipe-1": [],
+    "kadai-recipe-2": [],
+    "kadai-corporate-site-1": [],
+    "kadai-corporate-site-2": []
+  },
+  getCodes: async () => {
+    console.log(ReviewCodes.codes);
+    for (let id in ReviewCodes.codes) {
+      for (let file of CurriculumIdToData[id].files) {
+        console.log(`https://a7.sakuratan.com/gdrive/curriculum-codes/${id}/${file}`);
+        const rs = await fetch(`https://a7.sakuratan.com/gdrive/curriculum-codes/${id}/${file}`, {
+          credentials: 'include',
+          cache: 'no-cache',
+          mode: 'cors',
+        });
+        const code = await rs.text();
+        file = file.split('/').pop();
+        ReviewCodes.codes[id].push({ file, code });
+      }
+    }
   },
 };
