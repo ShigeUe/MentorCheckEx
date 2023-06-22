@@ -30,6 +30,9 @@ input[type="range"]{width:200px;}
 #all-reset{background-color:red;color:white;font-weight:bold;}
 #save{background-color:#0003bb;color:white;font-weight:bold;}
 
+#warningChannel{width:100%;resize:vertical;}
+p small{line-height:1;display:block;}
+
 @media screen and (max-width:1199px) {
   #config{display:block;}
 }
@@ -55,7 +58,7 @@ input[type="range"]{width:200px;}
     <p><input type="checkbox" id="notify" value="1"> <label for="notify">通知</label>　<a href="#" id="notify_test">デスクトップ通知テスト</a></p>
     <p><input type="checkbox" id="smartIfSimple" value="1"> <label for="smartIfSimple">シンプル化時に課題レビューをすぐに開始する</label></p>
     <p><input type="checkbox" id="curriculumSubMenu" value="1"> <label for="curriculumSubMenu">カリキュラムのサブメニューを表示する</label></p>
-    <p><input type="checkbox" id="watchSlack" value="1"> <label for="watchSlack">Slackの課題レビューチャンネルを監視する</label></p>
+    <p><input type="checkbox" id="watchSlack" value="1"> <label for="watchSlack">Slack用機能を利用する</label></p>
     <p><input type="checkbox" id="darkmode" value="1"> <label for="darkmode">カリキュラムのダークモード適用</label></p>
     <p><input type="checkbox" id="diff" value="1"> <label for="diff">課題DIFFを利用する</label></p>
     <p><label for="rclone">rclone用スクリプトファイルのコマンド</label>：<input type="text" id="rclone" value=""></p>
@@ -65,6 +68,11 @@ input[type="range"]{width:200px;}
     <div><label for="password">パスワード</label>：<input type="text" id="password" size="20" value=""></div>
     <p><button type="button" id="save">保存</button>　<button type="button" id="close">閉じる</button>　<button type="button" id="all-reset">設定全削除</button></p>
     <p id="message">&nbsp;</p>
+    <hr>
+    <p>slackの要注意チャンネルID<br><small>（チャンネルの背景が赤くなります）</small></p>
+    <p><textarea id="warningChannel" cols="30" rows="10"></textarea></p>
+
+    <hr>
     <p>新しいバージョンは以下のURLから確認してください。<br>
     <a href="https://github.com/ShigeUe/MentorCheckEx" target="_blank" rel="noopener noreferrer">https://github.com/ShigeUe/MentorCheckEx</a>
     </p>

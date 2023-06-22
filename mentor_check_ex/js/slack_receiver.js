@@ -8,7 +8,7 @@
   // 同期的にプラグインの設定を取得する
   const config = await (() => {
     return new Promise((resolve, reject) => {
-      chrome.storage.local.get({ chime: false, volume: 50, watchSlack: false }, resolve);
+      chrome.storage.local.get({ chime: false, volume: 50, watchSlack: false, warningChannel: '' }, resolve);
     });
   })();
 
@@ -39,5 +39,18 @@
         }
       }
     }, false);
+
+    if (config.warningChannel) {
+      setTimeout(() => {
+        const list = config.warningChannel.split('\n');
+        list.map((item) => {
+          console.debug(item);
+          const e = document.getElementById(item.trim());
+          if (e) {
+            e.style.backgroundColor = '#ff000033';
+          }
+        });
+      }, 5000);
+    }
   }
 })();
