@@ -1,11 +1,13 @@
 "use strict";
 
-const cources = [];
+const courses = [];
 
-const toggleCource = (index, flag) => {
+const toggleCourse = (index, flag) => {
+  const nextCourse = ((index + 1) >= courses.length) ? null : courses[index + 1];
+
   for (
-    let ele = cources[index];
-    !ele.classList.contains('modal') && !ele.classList.contains('fade');
+    let ele = courses[index];
+    ele != nextCourse;
     ele = ele.nextSibling
   ) {
     if (flag === 'hide') {
@@ -28,11 +30,11 @@ const list = ME.queryAll('h3 + h4');
 // 上記要素が2個以上ある＝絞り込める
 if (list.length > 1) {
   list.forEach((ele) => {
-    // courcesにh4の前のh3を入れていく
-    cources.push(ele.previousSibling);
+    // coursesにh4の前のh3を入れていく
+    courses.push(ele.previousSibling);
   });
 
-  if (cources.length) {
+  if (courses.length) {
     // コースをON・OFFするチェックボックスを設置する
     const div = MCEElement.create('div').addClass('add-margin-top-15');
     const label = MCEElement.create('label').addClass(['add-margin-wide-15']);
@@ -40,22 +42,22 @@ if (list.length > 1) {
     const select = MCEElement.create('select').addClass(['font-weight-normal', 'add-padding-5']);
     select.addEventListener('change', (e) => {
       if (!e.target.selectedIndex) {
-        for (let i = 0; i < cources.length; i++) {
-          toggleCource(i, 'show');
+        for (let i = 0; i < courses.length; i++) {
+          toggleCourse(i, 'show');
         }
       }
       else {
-        for (let i = 0; i < cources.length; i++) {
+        for (let i = 0; i < courses.length; i++) {
           if (i !== e.target.selectedIndex - 1) {
-            toggleCource(i, 'hide');
+            toggleCourse(i, 'hide');
           }
         }
-        toggleCource(e.target.selectedIndex - 1, 'show');
+        toggleCourse(e.target.selectedIndex - 1, 'show');
       }
     });
 
     select.appendChild(MCEElement.create('option').prop('value', 0).text('全表示'));
-    cources.forEach((ele, i) => {
+    courses.forEach((ele, i) => {
       const option = MCEElement.create('option').prop('value', i + 1).text(ele.innerText);
       select.appendChild(option);
     });
@@ -64,7 +66,7 @@ if (list.length > 1) {
     div.appendChild(label);
 
     const parent = ME.query('.container-fluid .row .col-lg-12');
-    parent.insertBefore(div.get(), cources[0]);
+    parent.insertBefore(div.get(), courses[0]);
   }
 
 }
