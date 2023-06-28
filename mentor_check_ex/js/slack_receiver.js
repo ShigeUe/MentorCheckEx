@@ -41,16 +41,17 @@
     }, false);
 
     if (config.warningChannel) {
-      setTimeout(() => {
-        const list = config.warningChannel.split('\n');
-        list.map((item) => {
-          console.debug(item);
-          const e = document.getElementById(item.trim());
-          if (e) {
-            e.style.backgroundColor = '#ff000033';
-          }
-        });
-      }, 5000);
+      const list = config.warningChannel.split('\n');
+      let html = '';
+      list.map((item) => {
+        const i = item.trim();
+        html += `#${i}{background-color:#ff000033;}\n`;
+      });
+      if (html) {
+        const style = document.createElement('style');
+        style.innerHTML = html;
+        document.head.appendChild(style);
+      }
     }
   }
 })();
