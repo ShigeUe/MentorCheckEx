@@ -20,6 +20,7 @@
     <div>
       <label><input type="checkbox" id="ignorews" checked> 空白を無視する</label>
       <label><input type="checkbox" id="wrap_lines"> 折り返す</label>
+      <label><input type="checkbox" id="line_numbers"> 行番号</label>
     </div>
     <div>
       <a href="#" id="VALIDATOR-LINK" style="display: none">Validator</a>
