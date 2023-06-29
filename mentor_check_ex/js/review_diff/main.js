@@ -247,6 +247,7 @@
   $('#mergely').mergely({
     ignorews: true,
     sidebar: false,
+    line_numbers: false,
     loaded: () => {
       // 両方のコードをセット
       set_text(studentCode, reviewCode);
