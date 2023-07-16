@@ -186,17 +186,25 @@
     catch (e) {
       console.log(e);
     }
-    if (!re) {
-      $('#mergely').html(
-        `<p>${fileName}の読み込みエラーが発生しました。<br>
-        ${userName}さんの<a href="${gdrivelink}" target="_blank">Google Drive</a>を確認してみてください。</p>`
-      );
-      return;
-    }
+
     const filename = fetchUrl.split('/').pop();
-    let tx = await re.text();
+
+    let tx;
+    if (!re) {
+      // $('#mergely').html(
+      //   `<p>${fileName}の読み込みエラーが発生しました。<br>
+      //   ${userName}さんの<a href="${gdrivelink}" target="_blank">Google Drive</a>を確認してみてください。</p>`
+      // );
+      // return;
+      tx = '';
+    }
+    else {
+      tx = await re.text();
+    }
     code_backup[get_type(filename)] = tx;
-    tx = strip_emptyline(comment_strip(tx.trim()));
+    for (let i = 0; i < 5; i++) {
+      tx = strip_emptyline(comment_strip(tx.trim()));
+    }
     studentCode += `### ${filename}\n${tx}\n\n\n\n\n`;
   }
   
