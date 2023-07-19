@@ -221,7 +221,7 @@
     $('#VALIDATOR-LINK').show();
   }
 
-
+  document.title = `${userName}さんの課題レビュー`;
 
   if (!ReviewCodes.codes[curriculum_id]) {
     $('#mergely').html(`<h3>${userName}さんの課題</h3><p><strong>「${CurriculumIdToData[curriculum_id].title}」</strong></p>
