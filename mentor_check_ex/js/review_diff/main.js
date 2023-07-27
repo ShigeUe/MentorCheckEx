@@ -11,7 +11,7 @@
         const lines = s.split('\n').length - 1;
         return '\n'.repeat(lines);
       })
-      .replace(/(?<!https*:)\/\/.+\n/g, '\n')
+      .replace(/(?<!https*:)\/\/.+(\r\n|\n|\r})/g, '\n')
       .replace(/\n +\n/g, '\n\n');
   };
 
@@ -202,9 +202,7 @@
       tx = await re.text();
     }
     code_backup[get_type(filename)] = tx;
-    for (let i = 0; i < 5; i++) {
-      tx = strip_emptyline(comment_strip(tx.trim()));
-    }
+    tx = strip_emptyline(comment_strip(tx.trim()));
     studentCode += `### ${filename}\n${tx}\n\n\n\n\n`;
   }
   
