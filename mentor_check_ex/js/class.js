@@ -28,6 +28,7 @@ class MentorCheckEx
     darkmode:      false,
     rclone:        '.\\review.bat',
     diff:          true,
+    diffFromGit:   false,
   };
 
   constructor() {

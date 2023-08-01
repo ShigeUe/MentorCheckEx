@@ -105,6 +105,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     watchSlack: false,
     darkmode: false,
     diff: true,
+    diffFromGit: false,
     rclone: '.\\review.bat',
   }, items => {
     queryId('interval').value = items.interval;
@@ -119,6 +120,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     queryId('watchSlack').checked = !!(items.watchSlack);
     queryId('darkmode').checked = !!(items.darkmode);
     queryId('diff').checked = !!(items.diff);
+    queryId('diffFromGit').checked = !!(items.diffFromGit);
     queryId('rclone').value = items.rclone;
     audio.volume = items.volume * 0.01;
     curriculums = curriculums.map((el) => {
@@ -151,6 +153,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const watchSlack = queryId('watchSlack').checked;
     const darkmode = queryId('darkmode').checked;
     const diff = queryId('diff').checked;
+    const diffFromGit = queryId('diffFromGit').checked;
     const rclone = queryId('rclone').value;
     getCurriculumsFromScreen();
     getCourseListFromScreen();
@@ -174,6 +177,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       watchSlack,
       darkmode,
       diff,
+      diffFromGit,
       rclone,
     }, () => {
       queryId('message').innerText = '保存しました';

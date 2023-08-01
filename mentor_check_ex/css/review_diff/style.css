@@ -21,13 +21,10 @@ body {
   padding-bottom: 0 !important;
 }
 
-#review-diff-title {
-  position: absolute;
-  left: 20px;
-  top: -5px;
-  z-index: 99999;
-  color: white;
-  background-color: #0f7378;
+#whenDiffFromGit {
+  color: #888;
+  font-size: 10px;
+  font-weight: bold;
 }
 
 #page-content-wrapper > .container-fluid > .row > .col-lg-12 .header {

@@ -1,26 +1,19 @@
 "use strict";
 
 (async () => {
+  const ME = new MentorCheckEx();
+  await ME.getSettings();
+
   // ステージを作る
   document.querySelector('#page-content-wrapper > .container-fluid > .row > .col-lg-12').innerHTML =
-    `<div id="review-diff-title"></div>
+    `
 <div class="header flex column-gap-20">
-<!--
-  <div class="align-self-center">
-    <button type="button" id="remove-comments">コメントを削除する</button>
-  </div>
-  <div class="align-self-center">
-    <button type="button" id="strip-emptyline">空行を削除する</button>
-  </div>
-  <div class="align-self-center">
-    <button type="button" id="css-sort">CSSのプロパティを並べ替える</button>
-  </div>
--->
   <div class="height-full">
     <div>
       <label><input type="checkbox" id="ignorews" checked> 空白を無視する</label>
       <label><input type="checkbox" id="wrap_lines"> 折り返す</label>
       <label><input type="checkbox" id="line_numbers"> 行番号</label>
+      <small id="whenDiffFromGit"></small>
     </div>
     <div>
       <a href="#" id="VALIDATOR-LINK" style="display: none">Validator</a>
@@ -68,6 +61,7 @@
     <textarea name="css"></textarea>
     <textarea name="js"></textarea>
   </form>
+  <input type="hidden" id="diffFromGit" value="${ME.settings.diffFromGit ? 1 : 0}">
 </div>
 `;
 

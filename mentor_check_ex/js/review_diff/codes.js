@@ -121,7 +121,19 @@ const CurriculumIdToData = {
 };
 
 const ReviewCodes = {
-  /*
+  codes: {
+    "kadai-html-1": [],
+    "kadai-html-2": [],
+    "kadai-portfolio-1": [],
+    "kadai-portfolio-2": [],
+    "kadai-smartphone-1": [],
+    "kadai-smartphone-2": [],
+    "kadai-recipe-1": [],
+    "kadai-recipe-2": [],
+    "kadai-corporate-site-1": [],
+    "kadai-corporate-site-2": []
+  },
+
   // カリキュラムから直接取る場合はこちら
   getCodes: async () => {
     const rs = await fetch('https://techacademy.jp/mentor/courses/first-sidejob/review_guide');
@@ -197,20 +209,8 @@ const ReviewCodes = {
       }
     }
   },
-  */
-  codes: {
-    "kadai-html-1": [],
-    "kadai-html-2": [],
-    "kadai-portfolio-1": [],
-    "kadai-portfolio-2": [],
-    "kadai-smartphone-1": [],
-    "kadai-smartphone-2": [],
-    "kadai-recipe-1": [],
-    "kadai-recipe-2": [],
-    "kadai-corporate-site-1": [],
-    "kadai-corporate-site-2": []
-  },
-  getCodes: async () => {
+
+  getCodesFromGit: async () => {
     console.log(ReviewCodes.codes);
     for (let id in ReviewCodes.codes) {
       for (let file of CurriculumIdToData[id].files) {
