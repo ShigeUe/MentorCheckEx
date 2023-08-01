@@ -132,7 +132,7 @@
   const curriculum_id = this_url.searchParams.get('c_id');
   const previewBase = `https://a7.sakuratan.com/gdrive/${drive_id}/${folder}/`;
 
-   
+
   // ユーザー情報取得
   let userName;
   let gdrivelink = await (async () => {
@@ -161,8 +161,17 @@
   // 後ほど使う時用のバックアップ
   const code_backup = {};
 
+  // コードの取得元が課題レビュー基準かGitHubか
+  const diffFromGit = document.getElementById('diffFromGit').value - 0;
+
   // レビュー用コードの取得
-  await ReviewCodes.getCodes();
+  if (diffFromGit) {
+    document.getElementById('whenDiffFromGit').innerText = '　from GitHub';
+    await ReviewCodes.getCodesFromGit();
+  }
+  else {
+    await ReviewCodes.getCodes();
+  }
   let reviewCode = '';
   if (ReviewCodes.codes[curriculum_id]) {
     for (let code of ReviewCodes.codes[curriculum_id]) {
