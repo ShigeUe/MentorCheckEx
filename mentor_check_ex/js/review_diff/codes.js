@@ -180,7 +180,10 @@ const ReviewCodes = {
         i += 10;
       }
       if (elements[i].innerText.indexOf('課題14：') !== -1) {
+        ReviewCodes.codes['kadai-smartphone-2'].push(ReviewCodes.codes['kadai-smartphone-1'][0]);
         addElement(elements, i, i + 4);
+        ReviewCodes.codes['kadai-smartphone-2'].push(ReviewCodes.codes['kadai-smartphone-1'][2]);
+        ReviewCodes.codes['kadai-smartphone-2'].push(ReviewCodes.codes['kadai-smartphone-1'][3]);
         i += 5;
       }
       if (elements[i].innerText.indexOf('課題16：') !== -1) {
@@ -211,10 +214,8 @@ const ReviewCodes = {
   },
 
   getCodesFromGit: async () => {
-    console.log(ReviewCodes.codes);
     for (let id in ReviewCodes.codes) {
       for (let file of CurriculumIdToData[id].files) {
-        console.log(`https://a7.sakuratan.com/gdrive/curriculum-codes/${id}/${file}`);
         const rs = await fetch(`https://a7.sakuratan.com/gdrive/curriculum-codes/${id}/${file}`, {
           credentials: 'include',
           cache: 'no-cache',
