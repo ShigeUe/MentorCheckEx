@@ -136,7 +136,7 @@ const ReviewCodes = {
 
   // カリキュラムから直接取る場合はこちら
   getCodes: async () => {
-    const rs = await fetch('https://techacademy.jp/mentor/courses/first-sidejob/review_guide');
+    const rs = await fetch('https://techacademy.jp/mentor/courses/first-sidejob/curriculums/first-sidejob-2/review_guide');
     const tx = await rs.text();
     const elements = $(tx).find('h1').siblings('h2,p,.highlighter-coderay');
   
