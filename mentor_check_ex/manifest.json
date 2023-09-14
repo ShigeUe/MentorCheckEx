@@ -124,12 +124,6 @@
          ]
       },
       {
-         "matches": ["https://techacademy.jp/mentor/courses/*/review_guide"],
-         "run_at": "document_end",
-         "js": ["js/review_criteria.js"],
-         "css": ["css/review_criteria.css"]
-      },
-      {
          "matches": ["https://techacademy.jp/mentor/schedule/appointments/*?calendar=1"],
          "run_at": "document_end",
          "js": ["js/mentoring_calendar.js"],

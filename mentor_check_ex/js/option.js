@@ -7,7 +7,6 @@ audio.addEventListener('ended', () => {
   queryId('volume').disabled = false;
 });
 let curriculums = [];
-let course_list = [];
 
 const makeListElement = (el) => {
   const label = document.createElement('label');
@@ -36,39 +35,8 @@ const getCurriculumsFromScreen = () => {
   });
 };
 
-const makeCourseList = () => {
-  const base = queryId('courseList');
-  course_list.forEach(el => {
-    base.appendChild(makeListElement(el));
-  });
-};
-
-const getCourseListFromScreen = () => {
-  course_list.forEach(el => {
-    const input = query(`#courseList input[name="${el.name}"]`);
-    el.visible = (!input) ? true : input.checked;
-  });
-};
-
 
 document.addEventListener('DOMContentLoaded', async () => {
-
-  // 課題レビュー基準を取得
-  const res = await fetch('https://techacademy.jp/mentor/review_guides',
-    { method: 'GET', mode: 'same-origin', credentials: 'include' });
-
-  if (!res.ok) {
-    throw new Error("HTTP error! status: " + res.status);
-  }
-
-  const text = await res.text();
-
-  const doc = document.implementation.createHTMLDocument("").documentElement;
-  doc.innerHTML = text;
-  const review_criterias = doc.querySelectorAll('.breadcrumb + .nav li');
-  review_criterias.forEach((course) => {
-    course_list.push({ name: course.textContent, visible: false });
-  });
 
   // カリキュラムを取得
   const res2 = await fetch('https://techacademy.jp/mentor/curriculums',
@@ -98,7 +66,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     smartIfSimple: false,
     curriculumSubMenu: false,
     curriculums: [],
-    course_list: [],
     username: '',
     password: '',
     volume: 50,
@@ -130,15 +97,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
       return el;
     });
-    course_list = course_list.map((el) => {
-      const target = items.course_list.filter((e) => e.name == el.name);
-      if (target.length) {
-        el.visible = target[0].visible;
-      }
-      return el;
-    });
     makeCurriculumsList();
-    makeCourseList();
   });
 
   queryId('save').addEventListener('click', () => {
@@ -156,7 +115,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const diffFromGit = queryId('diffFromGit').checked;
     const rclone = queryId('rclone').value;
     getCurriculumsFromScreen();
-    getCourseListFromScreen();
     
     if (isNaN(interval) || interval < 30 || interval > 300) {
       alert('リロード間隔が範囲外です');
@@ -170,7 +128,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       smartIfSimple,
       curriculumSubMenu,
       curriculums,
-      course_list,
       username,
       password,
       volume,
