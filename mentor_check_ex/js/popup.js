@@ -15,8 +15,9 @@ document.getElementById('FONT_CHECK_BUTTON').addEventListener('click', async (ev
   catch (e) {
     console.error(e);
   }
-  const { root } = await chrome.debugger.sendCommand(debuggee, 'DOM.getDocument', { depth: -1 });
+  await chrome.debugger.sendCommand(debuggee, 'DOM.enable');
   await chrome.debugger.sendCommand(debuggee, 'CSS.enable');
+  const { root } = await chrome.debugger.sendCommand(debuggee, 'DOM.getDocument', { depth: -1 });
   
   const allFonts = {};
   const findNodesThatContainText = async (node) => {
