@@ -13,6 +13,7 @@
       <label><input type="checkbox" id="ignorews" checked> 空白を無視する</label>
       <label><input type="checkbox" id="wrap_lines"> 折り返す</label>
       <label><input type="checkbox" id="line_numbers"> 行番号</label>
+      <label><input type="checkbox" id="sidebar"> サイドバー</label>
       <small id="whenDiffFromGit"></small>
     </div>
     <div>
