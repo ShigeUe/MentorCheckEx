@@ -131,6 +131,7 @@
   const folder = this_url.searchParams.get('folder');
   const curriculum_id = this_url.searchParams.get('c_id');
   const previewBase = `https://a7.sakuratan.com/gdrive/${drive_id}/${folder}/`;
+  const fetchBase = `https://a7.sakuratan.com/gdrive/get.php?p=${drive_id}/${folder}/`;
 
 
   // ユーザー情報取得
@@ -183,7 +184,7 @@
   // 受講生コードの取得
   let studentCode = '';
   for (let fileName of CurriculumIdToData[curriculum_id].files) {
-    const fetchUrl = `${previewBase}${fileName}`;
+    const fetchUrl = `${fetchBase}${fileName}`;
     let re;
     try {
       re = await fetch(fetchUrl, {
