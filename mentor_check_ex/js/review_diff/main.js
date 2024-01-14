@@ -131,7 +131,7 @@
   const folder = this_url.searchParams.get('folder');
   const curriculum_id = this_url.searchParams.get('c_id');
   const previewBase = `https://a7.sakuratan.com/gdrive/${drive_id}/${folder}/`;
-  const fetchBase = `https://a7.sakuratan.com/gdrive/get.php?p=${drive_id}/${folder}/`;
+  const fetchBase = `https://a7.sakuratan.com/7e9a64a25f27ee0397c8b11131328e9b/get.php?p=${drive_id}/${folder}/`;
 
 
   // ユーザー情報取得
@@ -146,7 +146,7 @@
   })();
 
   // 同期
-  const syncRes = await fetch(`https://a7.sakuratan.com/gdrive/sync.php?id=${drive_id}&f=${folder}`, {
+  const syncRes = await fetch(`https://a7.sakuratan.com/7e9a64a25f27ee0397c8b11131328e9b/sync.php?id=${drive_id}&f=${folder}`, {
     credentials: 'include',
     cache: 'no-cache',
     mode: 'cors',
