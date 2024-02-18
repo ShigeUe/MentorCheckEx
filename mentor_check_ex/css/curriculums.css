@@ -22,3 +22,8 @@
 #wrapper.closeSidebar-wrapper #MentorCheckExCurriculums.open {
   left: 2.8rem;
 }
+
+.sidebar-nav-mentor [href="/mentor/curriculums"].add-right-arrow::after {
+  content: "\f054";
+  font-family: 'FontAwesome';
+}

@@ -106,6 +106,9 @@ class Curriculums
         target.classList.toggle('open');
         el.dispatchEvent(new Event('blur'));
       });
+      if (el.classList.contains('sidebar-icon')) {
+        el.classList.add('add-right-arrow');
+      }
     });
     target.addEventListener('click', (ev) => {
       ev.stopPropagation();
