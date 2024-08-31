@@ -1,8 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "0.7.2",
-
+   "version": "0.7.3",
    "description": "課題レビューのチェックをする拡張機能",
    "icons": {
       "16": "img/icon-16.png",
@@ -11,6 +10,7 @@
       "128": "img/icon-128.png"
    },
    "homepage_url": "https://github.com/ShigeUe/MentorCheckEx",
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAscmwT3s93IpTbJPOqRNJVdLXk0fF9U4RbiIpJkS4t17P8WzLhK59ZJFIdAYvvfBaf71GqylrZug/SeuVPgACMZAlfnLjHXYWzWBGOp3WJoJhcdIUcQnSfZ6KSC9PKY606C7eVU5ygzXZp2CarhXLz1GC4uljoVz/+WYhVnSLRolT5uP7Vm/cDbXgtd3JcV0SRSQdnZfg+vmyGsax+CO6a8/pAiOyfpGxuEPsGnw1/w1gVFyxpZ+VD05J+1Ktd/ltuNubX++U9CQOrg10o98J8zAoAnHKhObjCZqv9Jzwfqqf7UvIJzWJEUALa6P0n9wp9hQcgGaNlkdWT5a3HXgOHQIDAQAB",
 
    "permissions": ["storage", "tabs", "notifications", "scripting", "clipboardWrite", "debugger"],
    "content_scripts": [
