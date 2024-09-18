@@ -141,7 +141,7 @@
     const userHTML = await userRes.text();
     const $user = $(userHTML);
     userName = $user.find('h2.heading-users').text();
-    $('.labels .student').html(`<a href="${previewBase}" target="_blank" title="プレビュー">${userName}さんのコード</a>`)  
+    $('.labels .student').html(`<a href="${previewBase}" target="_blank" title="プレビュー">${userName}さんのプレビュー</a>`)  
     return $user.find('[href^="https://drive.google.com/drive/"]:has(i)').get(0).href;
   })();
 
@@ -233,7 +233,7 @@
 
   if (!ReviewCodes.codes[curriculum_id]) {
     $('#mergely').html(`<h3>${userName}さんの課題</h3><p><strong>「${CurriculumIdToData[curriculum_id].title}」</strong></p>
-      <p><code>/${drive_id}/${folder}</code></p>
+      <p><code><a href="https://drive.google.com/drive/folders/${drive_id}?usp=drive_link" target="_blank">/${drive_id}</a>/${folder}</code></p>
       <p>この課題はコードの比較は出来ません。<br>直接プレビューしましょう。</p>
       <ul>
       <li><a href="${previewBase}${CurriculumIdToData[curriculum_id]?.files[0]}" target="_blank">プレビューを開く</a></li>
