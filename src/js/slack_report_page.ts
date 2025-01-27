@@ -10,17 +10,13 @@ UTL.query('#wrapper').style.padding = '0';
 
 UTL.set_document(UTL.query('#page-content-wrapper .container-fluid .row .col-lg-12'));
 UTL.query('h2').innerText = '課題レビューの新着一覧';
-UTL.query('ul.pagination').remove();
-UTL.query('.breadcrumb').remove();
-UTL.query('ul.nav.nav-tabs').remove();
-UTL.query('ul.nav.nav-pills').remove();
+UTL.query('ul.pagination', true) && UTL.query('ul.pagination').remove();
+UTL.query('.breadcrumb', true) && UTL.query('.breadcrumb').remove();
+UTL.query('ul.nav.nav-tabs', true) && UTL.query('ul.nav.nav-tabs').remove();
+UTL.query('ul.nav.nav-pills', true) && UTL.query('ul.nav.nav-pills').remove();
 UTL.query('div').remove();
-if (UTL.query('table')) {
-  UTL.query('table').remove();
-}
-if (UTL.query('p')) {
-  UTL.query('p').remove();
-}
+UTL.query('table', true) && UTL.query('table').remove();
+UTL.query('p', true) && UTL.query('p').remove();
 
 UTL.get_document().appendChild(
   MCEElement.create('p').text(
@@ -82,7 +78,7 @@ const addReview = async (url: string, title: string) => {
   const td4 = MCEElement.create('td').text((new Date).toLocaleString());
   btr.appendChild(td1).appendChild(td2).appendChild(td3).appendChild(td4);
   if (tbody) {
-    tbody.appendChild(btr.get() as HTMLElement);
+    tbody.appendChild(btr.get());
   }
 };
 
