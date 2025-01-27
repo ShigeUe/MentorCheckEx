@@ -1,0 +1,21 @@
+#page-content-wrapper {
+  opacity: 0;
+  transition:opacity .5s;
+}
+#metor-check-ex-button {
+  display: inline-block;
+  margin-top: 1em;
+  font-weight: bold;
+  display: inline-block;
+  color: white;
+  background-color: rgb(15, 115, 120);
+  padding: 0px 5px;
+  margin: 0px 5px;
+}
+#metor-check-ex-memo {
+  display: none;
+  background-color: #f8e6f7;
+}
+#metor-check-ex-memo.opened {
+  display: block;
+}

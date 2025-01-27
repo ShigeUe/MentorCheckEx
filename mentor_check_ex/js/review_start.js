@@ -1,5 +1,1 @@
-"use strict";
-
-if (window.location.search === '?open=1') {
-  document.querySelector('a[href$="/start_review"]').click();
-}
+"use strict";"?open=1"===window.location.search&&document.querySelector('a[href$="/start_review"]').click();

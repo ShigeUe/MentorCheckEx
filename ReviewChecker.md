@@ -5,7 +5,7 @@
 ### ①
 
 課題レビュー時にサイドバーに下記のような緑のボタンが追加されます。  
-[![](https://i.gyazo.com/3aec00f120fe202ff395ed4d194e5cba.png)](https://gyazo.com/3aec00f120fe202ff395ed4d194e5cba)
+[![](https://i.gyazo.com/ca32c7979908dc366a3d0940583faca0.png)](https://gyazo.com/ca32c7979908dc366a3d0940583faca0)
 
 ※BASIC認証のID・パスワードはメンター用チャンネルでお知らせします。
 

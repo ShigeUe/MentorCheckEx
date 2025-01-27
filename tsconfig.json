@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "rootDir": "./src",
+    "outDir": "./mentor_check_ex",
+    "moduleResolution": "Bundler",
+    "baseUrl": "src",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "checkJs": true,
+    "removeComments": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "skipLibCheck": true,
+    "noEmit": false,
+    "isolatedModules": true
+  },
+  "include": ["src", "src/js"],
+  "exclude": ["node_modules", "mentor_check_ex", "./tsconfig.json"]
+}
