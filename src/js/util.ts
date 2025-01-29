@@ -42,12 +42,14 @@ export class Util
   query<E extends HTMLElement = HTMLElement>(selector: string, nullable: boolean): E | null;
   query<E extends HTMLElement = HTMLElement>(selector: string): E;
   query<E extends HTMLElement = HTMLElement>(selector: string, nullable?: boolean): E | null{
-    if (typeof nullable === 'undefined') {
-      return Util.query<E>(selector);
+    const ret: E | null = this.#doc.querySelector<E>(selector);
+    if (ret === null) {
+      if (typeof nullable === 'undefined' || (typeof nullable !== 'undefined' && !nullable)) {
+        throw new Error(`要素が取得できませんでした。Selector:${selector}`);
+      }
+      return null;
     }
-    else {
-      return Util.query<E>(selector, nullable);
-    }
+    return ret;
   }
 
   get_document(): HTMLElement {

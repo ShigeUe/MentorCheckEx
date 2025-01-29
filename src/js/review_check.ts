@@ -152,7 +152,7 @@ const reloadFunc = async () => {
           time = time < el.innerText ? el.innerText : time;
         });
 
-        getChallengesAndSimplify(checkSimple())
+        getChallengesAndSimplify(checkSimple());
 
         if ((!save_time && time) || save_time && time && save_time < time) {
           // チャイムの有無スイッチがONなら

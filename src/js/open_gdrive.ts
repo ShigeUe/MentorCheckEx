@@ -15,7 +15,7 @@ import { CurriculumIdToData } from "./curriculum_codes";
   // GoogleフォルダID
   const f_id = (new URL(link.href)).pathname.split('/').pop();
 
-  const kadai_link = Util.query<HTMLAnchorElement>(`#page-content-wrapper .col-sm-8 table td a[href*="#kadai-"]`);
+  const kadai_link = Util.query<HTMLAnchorElement>(`#page-content-wrapper .col-sm-8 table td a[href*="#kadai-"]`, true);
   if (!kadai_link) { // 課題のリンクがない＝ユーザーページ
     if (settings.diff) {
       const user = location.href.split('/').pop();
