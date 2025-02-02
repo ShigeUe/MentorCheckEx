@@ -1,8 +1,8 @@
 #MentorCheckExCurriculums {
   position: fixed;
   top: 300px;
-  left: -300px;
-  width: 300px;
+  left: -1000px;
+  width: fit-content;
   height: 400px;
   overflow-y: scroll;
   padding: 0.5em 1em 0 0;

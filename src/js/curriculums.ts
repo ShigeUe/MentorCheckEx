@@ -75,6 +75,12 @@ class Curriculums
     const ul = MCEElement.create('ul');
     div.appendChild(ul);
 
+    // カリキュラム名でソート
+    this._curriculums.sort((a: CurriculumType, b: CurriculumType) => {
+      if (a.name == b.name) return 0;
+      return (a.name < b.name) ? -1 : 1;
+    });
+
     this._curriculums.forEach((el) => {
       if (!el.visible) {
         return;

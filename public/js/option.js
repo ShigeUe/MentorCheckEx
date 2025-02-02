@@ -23,6 +23,11 @@ const makeListElement = (el) => {
 
 const makeCurriculumsList = () => {
   const base = queryId('curriculums');
+    // カリキュラム名でソート
+  curriculums.sort((a, b) => {
+    if (a.name == b.name) return 0;
+    return (a.name < b.name) ? -1 : 1;
+  });
   curriculums.forEach(el => {
     base.appendChild(makeListElement(el));
   });
