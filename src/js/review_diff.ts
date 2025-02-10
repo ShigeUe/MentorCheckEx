@@ -10,7 +10,6 @@ if (stage) {
   stage.innerHTML =
   `
 <div class="header flex column-gap-20">
-  <button type="button" id="mergeCurrentChange" title="カレントの差異を右から左にマージ">◀</button>
   <div class="height-full">
     <div>
       <label><input type="checkbox" id="ignorews" checked> 空白を無視する</label>
@@ -83,9 +82,7 @@ if (stage) {
   };
 
   // 順番にスクリプトを読み込ませる
-  addScript("js/review_diff/libraries.js", () => {
-    addScript("js/review_diff/css_sorter.js", () => {
-      addScript("js/review_diff/main.js", () => {}, true);
-    });
+  addScript("js/review_diff/mergely.min.js", () => {
+    addScript("js/review_diff/main.js", () => {}, true);
   });
 }

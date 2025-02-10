@@ -145,7 +145,6 @@
          ],
          "run_at": "document_end",
          "css": [
-            "css/review_diff/codemirror.min.css",
             "css/review_diff/mergely.min.css",
             "css/review_diff/style.css"
          ],
@@ -164,8 +163,7 @@
          "resources": [
             "resources/chime.mp3",
             "js/curriculum_codes.js",
-            "js/review_diff/libraries.js",
-            "js/review_diff/css_sorter.js",
+            "js/review_diff/mergely.min.js",
             "js/review_diff/main.js"
          ],
          "matches": ["https://techacademy.jp/*"]

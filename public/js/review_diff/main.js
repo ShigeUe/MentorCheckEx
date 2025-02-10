@@ -2,7 +2,10 @@
 
 import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
 
+
 (async () => {
+  let mergely;
+
   const comment_strip = (code) => {
     return code
       .replace(/\/\*[\s\S]+?\*\//g, (s) => {
@@ -26,17 +29,17 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
   };
 
   const get_text = () => {
-    let s_code = $('#mergely').mergely('get', 'lhs');
-    let c_code = $('#mergely').mergely('get', 'rhs');
+    let s_code = mergely.get('lhs');
+    let c_code = mergely.get('rhs');
 
     return { s_code, c_code };
   };
 
   const set_text = (s_code, c_code) => {
     if (s_code) {
-      $('#mergely').mergely('lhs', s_code);
+      mergely.lhs(s_code);
     }
-    $('#mergely').mergely('rhs', c_code);
+    mergely.rhs(c_code);
   };
 
   const get_type = (name) => {
@@ -44,14 +47,18 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
   }
 
   const add_suggest = (message, func) => {
-    let div = $('<div>');
-    div.html(message.replace(/#(\d+)#/g, "<a href='#'>$1</a>").replace(/#do#/,"<button>実行</button>"));
-    $('.header .message_area').append(div);
-    $(div).find("a").on("click", (e) => {
-      e.preventDefault();
-      $('#mergely').mergely('scrollTo', "lhs", parseInt(e.currentTarget.textContent));
+    let div = document.createElement('div');
+    div.innerHTML = message.replace(/#(\d+)#/g, "<a href='#'>$1</a>").replace(/#do#/,"<button>実行</button>");
+    document.querySelector('.header .message_area').append(div);
+    div.querySelectorAll("a").forEach((el) => {
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        mergely.scrollTo("lhs", parseInt(e.currentTarget.textContent));
+      });
     });
-    $(div).find("button").on("click", func);
+    div.querySelectorAll("button").forEach((el) => {
+      el.addEventListener("click", func);
+    });
   };
 
   const diff2text = (diff) => {
@@ -70,19 +77,19 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
   }
   const make_suggest = () => {
 
-    const diff = $('#mergely').mergely('diff').trim();
+    const diff = mergely.diff().trim();
 
-    $('.header .message_area').html('');
+    document.querySelector('.header .message_area').innerHTML = '';
     if (!diff) {
       return;
     }
 
-    let codeL = $('#mergely').mergely("get", 'lhs');
-    let codeR = $('#mergely').mergely("get", 'rhs');
+    let codeL = mergely.get('lhs');
+    let codeR = mergely.get('rhs');
     
     if(codeL.includes("　")) {
       add_suggest("全角スペースを「□」に置き換える #do#", () => {
-        $('#mergely').mergely('lhs',codeL.replace(/　/g,"□"));
+        mergely.lhs(codeL.replace(/　/g,"□"));
       });
     }
 
@@ -108,17 +115,17 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
   };
 
   const open_HTML_validator = (html) => {
-    const form = $('#HTML-VALIDATOR-FORM').get(0);
+    const form = document.getElementById('HTML-VALIDATOR-FORM');
     form.content.value = html;
     form.submit();
   };
   const open_css_validator = (css) => {
-    const form = $('#CSS-VALIDATOR-FORM').get(0);
+    const form = document.getElementById('CSS-VALIDATOR-FORM');
     form.text.value = css;
     form.submit();
   }
   const open_finalexam_checker = (html, css, js) => {
-    const form = $('#FINAL-EXAM-CHECKER').get(0);
+    const form = document.getElementById('FINAL-EXAM-CHECKER');
     form.html.value = html;
     form.css.value = css;
     form.js.value = js;
@@ -141,10 +148,10 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
   let gdrivelink = await (async () => {
     const userRes = await fetch('/mentor/users/' + this_url.searchParams.get('user'));
     const userHTML = await userRes.text();
-    const $user = $(userHTML);
-    userName = $user.find('h2.heading-users').text();
-    $('.labels .student').html(`<a href="${previewBase}" target="_blank" title="プレビュー">${userName}さんのプレビュー</a>`)  
-    return $user.find('[href^="https://drive.google.com/drive/"]:has(i)').get(0).href;
+    const $user = (new DOMParser).parseFromString(userHTML, 'text/html');
+    userName = $user.querySelector('h2.heading-users').innerText;
+    document.querySelector('.labels .student').innerHTML = `<a href="${previewBase}" target="_blank" title="プレビュー">${userName}さんのプレビュー</a>`;
+    return $user.querySelector('[href^="https://drive.google.com/drive/"]:has(i)').href;
   })();
 
   // 同期
@@ -155,7 +162,7 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
   });
   const syncResult = await syncRes.json();
   if (syncResult.code == '404') {
-    $('#mergely').html(`<p style="color:red;font-weight:bold">${userName}さんの"${drive_id}/${folder}"フォルダがありません。`);
+    document.getElementById('mergely').innerHTML = `<p style="color:red;font-weight:bold">${userName}さんの"${drive_id}/${folder}"フォルダがありません。`;
     return;
   }
   console.log('ProcessingTime:' + syncResult.processingTime);
@@ -219,7 +226,7 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
   }
   
   if (code_backup.html || code_backup.css) {
-    $('#VALIDATOR-LINK').on('click', (e) => {
+    document.getElementById('VALIDATOR-LINK').addEventListener('click', (e) => {
       e.preventDefault();
       if (code_backup.html) {
         open_HTML_validator(code_backup.html);
@@ -228,18 +235,18 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
         open_css_validator(code_backup.css);
       }
     });
-    $('#VALIDATOR-LINK').show();
+    document.getElementById('VALIDATOR-LINK').style.display = 'block';
   }
 
   document.title = `${userName}さんの課題レビュー`;
 
   if (!ReviewCodes.codes[curriculum_id]) {
-    $('#mergely').html(`<h3>${userName}さんの課題</h3><p><strong>「${CurriculumIdToData[curriculum_id].title}」</strong></p>
+    document.getElementById('mergely').innerHTML = `<h3>${userName}さんの課題</h3><p><strong>「${CurriculumIdToData[curriculum_id].title}」</strong></p>
       <p><code><a href="https://drive.google.com/drive/folders/${drive_id}?usp=drive_link" target="_blank">/${drive_id}</a>/${folder}</code></p>
       <p>この課題はコードの比較は出来ません。<br>直接プレビューしましょう。</p>
       <ul>
       <li><a href="${previewBase}${CurriculumIdToData[curriculum_id]?.files[0]}" target="_blank">プレビューを開く</a></li>
-      <li><a href="javascript:$('#VALIDATOR-LINK').click()">バリデータを開く</a></li>
+      <li><a href="javascript:document.getElementById('VALIDATOR-LINK').click()">バリデータを開く</a></li>
       ` +
       (curriculum_id == 'kadai-final-exam' ? '<li><a href="#" id="FINAL-EXAM-CHECK-LINK">最終課題チェッカー</a></li>' : '') +
       (curriculum_id == 'kadai-css' ? `<li><a href="${previewBase}style.css" target="_blank">style.cssを開く</a></li>` : '') +
@@ -248,10 +255,10 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
         `<li><a href="${CurriculumIdToData[curriculum_id].demo}" target="_blank">デモページ</a></li>` : '') +
       (CurriculumIdToData[curriculum_id].description ?
         `<li>${CurriculumIdToData[curriculum_id].description}</li>` : '') +
-      `</ul>`
-    );
+      `</ul>`;
+
     if (curriculum_id == 'kadai-final-exam') {
-      $('#FINAL-EXAM-CHECK-LINK').on('click', (e) => {
+      document.getElementById('FINAL-EXAM-CHECK-LINK').addEventListener('click', (e) => {
         e.preventDefault();
         open_finalexam_checker(code_backup?.html,code_backup?.css,code_backup?.js)
       });
@@ -259,75 +266,49 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
     return;
   }
 
-  $('#NOW-LOADING').remove();
-  $('#page-content-wrapper > .container-fluid > .row > .col-lg-12 .header').css('visibility', 'visible')
+  document.getElementById('NOW-LOADING').remove();
+  document.querySelector('#page-content-wrapper > .container-fluid > .row > .col-lg-12 .header').style.visibility = 'visible';
 
-  $('#mergely').mergely({
+  mergely = new Mergely('#mergely', {
     ignorews: true,
-    sidebar: false,
-    line_numbers: false,
-    loaded: () => {
-      // 両方のコードをセット
-      set_text(studentCode, reviewCode);
-      setTimeout(() => {
-        make_suggest();
-      }, 500);
-    },
   });
-
-  $('#mergeCurrentChange').on('click', () => {
-    $('#mergely').mergely('mergeCurrentChange', 'lhs');
-    console.log('mergeCurrentChange');
+  
+  mergely.once('updated', () => {
+    set_text(studentCode, reviewCode);
+    setTimeout(() => {
+      make_suggest();
+      mergely.options({line_numbers: false, sidebar: false})
+    }, 500);
   });
 
   setTimeout(() => {
-    $('#mergely-splash').click();
+    document.querySelector('.mergely-splash')?.click();
   }, 2000);
   
-  $('#mergely').on('updated', () => {
-    const summary = $('#mergely').mergely('summary');
-    $('.header .controller .numChanges').text(summary.numChanges ? summary.numChanges + ' diffs' : 'No diffs');
+  mergely.on('updated', () => {
+    const summary = mergely.summary();
+    document.querySelector('.header .controller .numChanges').innerText = summary.numChanges ? summary.numChanges + ' diffs' : 'No diffs';
     make_suggest();
   });
 
-  $('.header .controller .prev,.header .controller .next').on('click', (e) => {
-    e.preventDefault();
-    if (e.target.classList.contains('next')) {
-      $('#mergely').mergely('scrollToDiff', 'next');
-    }
-    else {
-      $('#mergely').mergely('scrollToDiff', 'prev');
-    }
-    return false;
+  document.querySelectorAll('.header .controller .prev,.header .controller .next').forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (e.target.classList.contains('next')) {
+        mergely.scrollToDiff('next');
+      }
+      else {
+        mergely.scrollToDiff('prev');
+      }
+      return false;
+    });
   });
-
-  $('#remove-comments').on('click', () => {
-    let { s_code, c_code } = get_text();
-
-    s_code = comment_strip(s_code);
-    c_code = comment_strip(c_code);
-
-    set_text(s_code, c_code);
-  });
-
-  $('#strip-emptyline').on('click', () => {
-    let { s_code, c_code } = get_text();
-
-    s_code = strip_emptyline(s_code);
-    c_code = strip_emptyline(c_code);
-
-    set_text(s_code, c_code);
-  });
-
-  $('#css-sort').on('click', async () => {
-    let { s_code, c_code } = get_text();
-
-    set_text(await CSSSorter(s_code), await CSSSorter(c_code));
-  });
-
-  $('input[type="checkbox"]').on('change', (e) => {
-    const options = {};
-    options[e.target.id] = e.target.checked;
-    $('#mergely').mergely('options', options);
+  
+  document.querySelectorAll('input[type="checkbox"]').forEach((el) => {
+    el.addEventListener('change', (e) => {
+      const options = {};
+      options[e.target.id] = e.target.checked;
+      mergely.options(options);
+    });
   });
 })();
