@@ -54,4 +54,7 @@ export class Util
     return this;
   }
 
+  static notify(title: string, body: string) {
+    chrome.runtime.sendMessage({ type: 'notification', title, body });
+  }
 }

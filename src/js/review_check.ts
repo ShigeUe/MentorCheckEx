@@ -1,6 +1,5 @@
 "use strict";
 
-import { MentorCheckEx } from "./mentorcheckex";
 import { Settings } from "./settings";
 import { MCEElement } from "./mceelement";
 import { Util } from "./util";
@@ -162,7 +161,7 @@ const reloadFunc = async () => {
           }
           // 通知の有無スイッチがONなら
           if (Util.queryId<HTMLInputElement>('pluginSwitchButton5').checked) {
-            MentorCheckEx.notify('課題レビュー', '更新があります。');
+            Util.notify('課題レビュー', '更新があります。');
             document.title = '!!変更あり!! ' + title;
             notify();
           }
