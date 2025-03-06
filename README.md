@@ -238,6 +238,24 @@ npm install --save-dev typescript ts-loader
 npx webpack --mode production
 ```
 
+## テスト方法
+
+追加でJestをインストールします。
+
+### Jestのインストール
+
+```bash
+npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom
+```
+
+※jestがdeprecatedなパッケージを使っていますが、今のところそれしかないようです。
+
+### テスト
+
+```bash
+npm test
+```
+
 ## 免責事項・注意事項など
 - このプラグインを利用したいかなる損害に対して、当方は一切責任を負いません。  
 ご自身の責任においてご利用ください。

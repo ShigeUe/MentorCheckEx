@@ -1,7 +1,7 @@
+// HTMLElementの中のプロパティで書き換え可能なものだけに限定する
 type Writable<T> = {
   -readonly [P in keyof T]: T[P];
 };
-
 interface CHTMLElement extends Writable<HTMLElement> {
   [key: string]: any;
 }
@@ -13,14 +13,18 @@ export class MCEElement
   private _element: HTMLElement;
 
   constructor(tagNameOrElement: string | HTMLElement) {
+    this._element = this.initialize(tagNameOrElement);
+  }
+
+  private initialize(tagNameOrElement: string | HTMLElement): HTMLElement {
     if (typeof tagNameOrElement === 'string') {
-      this._element = document.createElement(tagNameOrElement);
+      return document.createElement(tagNameOrElement);
     }
     else if (typeof tagNameOrElement === 'object') {
-      this._element = tagNameOrElement;
+      return tagNameOrElement;
     }
     else {
-      this._element = document.createElement('s');
+      return document.createElement('s');
     }
   }
 
@@ -80,15 +84,16 @@ export class MCEElement
 
   // エレメントのプロパティをセットする
   // オブジェクトで複数のプロパティがあれば再帰的にセットしていく
-  private _setObjectProp(target: HTMLElement , obj: {[key: string]: any}): void {
+  // { style: { color: 'white' } } のようなプロパティがさらにオブジェクトになるような
+  // ものもセットできる
+  private _setObjectProp(target: any , obj: {[key: string]: any}): void {
     Object.keys(obj).forEach(key => {
       const value = obj[key];
-      const el: CHTMLElement = target as CHTMLElement;
       if (typeof value === 'object') {
-        this._setObjectProp(el[key], value);
+        this._setObjectProp(target[key], value);
       }
       else {
-        el[key] = value;
+        target[key] = value;
       }
     }, this);
   }
@@ -100,7 +105,7 @@ export class MCEElement
   
   // 指定のタグで作り直すか、エレメントをセットする
   set(tagNameOrElement: string | HTMLElement): MCEElement {
-    this.constructor(tagNameOrElement);
+    this._element = this.initialize(tagNameOrElement);
     return this;
   }
 
@@ -141,6 +146,7 @@ export class MCEElement
   // スタイルを設定する
   style(styles: {[key: string]: any}): MCEElement {
     Object.keys(styles).forEach(key => {
+      console.log(key, styles[key]);
       this._element.style.setProperty(key, styles[key]);
     }, this);
     return this;

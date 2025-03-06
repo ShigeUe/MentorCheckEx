@@ -43,9 +43,6 @@ export class Settings {
   };
   private props: SettingsType = Settings.DEFAULT;
 
-  constructor() {
-  }
-
   // 設定をクラスに読み込む
   async getSettings() {
     this.props = await chrome.storage.local.get(Settings.DEFAULT) as SettingsType;
