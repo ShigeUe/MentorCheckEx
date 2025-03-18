@@ -157,3 +157,7 @@ body {
 #mergely {
   height: calc(100vh - 150px);
 }
+
+.mergely-editor .mergely.ch.ind.lhs {
+  text-decoration: none;
+}

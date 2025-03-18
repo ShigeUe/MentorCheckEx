@@ -24,8 +24,14 @@ input[type="range"]{width:200px;}
 #curriculums label input,
 #courseList label input{margin-right:0.5em;}
 
-#config{display:flex;max-width:1200px;}
+#config{display:flex;}
 #config > div{width:500px;padding: 0 50px;}
+@media (min-width: 1800px) {
+  #config > #area02 { width:1100px; }
+  #curriculums {height:1300px;display:flex;flex-flow:column wrap;column-gap:1rem;}
+  #curriculums label {flex:none;}
+}
+
 
 #all-reset{background-color:red;color:white;font-weight:bold;}
 #save{background-color:#0003bb;color:white;font-weight:bold;}

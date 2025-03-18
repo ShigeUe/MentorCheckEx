@@ -40,6 +40,14 @@ const getCurriculumsFromScreen = () => {
   });
 };
 
+const getCurriculumFromHTML = (html) => {
+  const doc = document.implementation.createHTMLDocument("").documentElement;
+  doc.innerHTML = html;
+  const curriculum_list = doc.querySelectorAll('.breadcrumb + h2 + .nav li a');
+  curriculum_list.forEach((curriculum) => {
+    curriculums.push({ name: curriculum.textContent, url: curriculum.attributes.href.value, visible: false });
+  });
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -53,12 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const text2 = await res2.text();
 
-  const doc2 = document.implementation.createHTMLDocument("").documentElement;
-  doc2.innerHTML = text2;
-  const curriculum_list = doc2.querySelectorAll('.breadcrumb + h2 + .nav li a');
-  curriculum_list.forEach((curriculum) => {
-    curriculums.push({ name: curriculum.textContent, url: curriculum.attributes.href.value, visible: false });
-  });
+  getCurriculumFromHTML(text2);
 
 
   
