@@ -161,3 +161,7 @@ body {
 .mergely-editor .mergely.ch.ind.lhs {
   text-decoration: none;
 }
+
+.mergely-editor .mergely.ch.ina.rhs {
+  background-color: #00f3;
+}
