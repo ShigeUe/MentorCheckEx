@@ -2,7 +2,7 @@ import { Settings } from "./settings";
 import { Util } from "./util";
 import { CurriculumIdToData } from "./curriculum_codes";
 
-(async () => {
+async function makeOpenGdriveButton() {
   // 課題のリンクが存在すれば課題レビューページ、存在しなければユーザーページ
   const kadai_link = Util.query<HTMLAnchorElement>(`#page-content-wrapper .col-sm-8 table td a[href*="#kadai-"]`, true);
   let link: HTMLAnchorElement | null = null;
@@ -21,6 +21,25 @@ import { CurriculumIdToData } from "./curriculum_codes";
     links.forEach((el) => {
       if (el.innerText.includes('はじめての副業')) {
         link = el;
+      }
+      else {
+        if (el.querySelector('.fa-cloud')) {
+          return;
+        }
+        // はじ副に強制するボタンを設置
+        const button = document.createElement('button');
+        button.innerText = '　←はじ副にする';
+        button.classList.add('force-hajifuku', 'font-size-x-small');
+        button.title = 'はじ副に強制し、課題レビューボタンを表示します';
+        button.addEventListener('click', () => {
+          if (button.previousElementSibling) {
+            (button.previousElementSibling as HTMLAnchorElement).innerHTML = '<i class="fa fa-cloud fa-l"></i>【強制】はじめての副業';
+          }
+          // 課題レビュー用ボタンを設置するため、本体を再呼び出し
+          setTimeout(makeOpenGdriveButton, 100);
+          button.remove();
+        });
+        el.after(button);
       }
     });
   }
@@ -77,5 +96,7 @@ import { CurriculumIdToData } from "./curriculum_codes";
       });
       link.parentElement && link.parentElement.append(div);
     }
-  }  
-})();
+  }
+}
+
+makeOpenGdriveButton();

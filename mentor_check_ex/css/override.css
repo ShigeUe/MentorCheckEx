@@ -18,3 +18,11 @@
   padding: 0 10px;
   margin-left:1em;
 }
+
+.table.table-users:first-of-type th {
+  white-space: nowrap;
+}
+.table.table-users:first-of-type .force-hajifuku {
+  border: 0;
+  background: none;
+}
