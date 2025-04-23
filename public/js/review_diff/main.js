@@ -235,8 +235,25 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
         open_css_validator(code_backup.css);
       }
     });
-    document.getElementById('VALIDATOR-LINK').style.display = 'block';
+    document.getElementById('VALIDATOR-LINK').style.display = 'inline';
   }
+
+  // mergelyの高さを30000pxにする（キャプチャ用）
+  document.getElementById('MAX-SCREEN').addEventListener('click', (e) => {
+    e.preventDefault();
+
+    const lhs_lastLine = mergely.cm('lhs').lastLine();
+    const rhs_lastLine = mergely.cm('rhs').lastLine();
+
+    const lastLine = lhs_lastLine > rhs_lastLine ? lhs_lastLine : rhs_lastLine;
+    const maxPixel = (lastLine + 10) * 18; // 念のため10行余分に取る
+
+    const element = document.getElementById('mergely');
+    e.currentTarget.innerText = (element.style.height) ? 'mergelyの高さを最大化' : 'mergelyの高さを戻す';
+    element.style.height = (element.style.height) ? '' : maxPixel + 'px';
+    mergely.resize();
+    return false;
+  });
 
   document.title = `${userName}さんの課題レビュー`;
 

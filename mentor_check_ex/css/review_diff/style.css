@@ -165,3 +165,18 @@ body {
 .mergely-editor .mergely.ch.ina.rhs {
   background-color: #00f3;
 }
+
+.header-buttons > a {
+  padding: 3px 10px;
+  border: 1px solid #0f7378;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: none;
+}
+
+.header-buttons > a:hover {
+  text-decoration: none;
+  background-color: #0f7378;
+  color: #fff;
+  transition: none;
+}

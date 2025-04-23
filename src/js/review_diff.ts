@@ -12,14 +12,15 @@ if (stage) {
 <div class="header flex column-gap-20">
   <div class="height-full">
     <div>
-      <label><input type="checkbox" id="ignorews" checked> 空白を無視する</label>
+      <label><input type="checkbox" id="ignorews" checked> 空白を無視</label>
       <label><input type="checkbox" id="wrap_lines"> 折り返す</label>
       <label><input type="checkbox" id="line_numbers"> 行番号</label>
       <label><input type="checkbox" id="sidebar"> サイドバー</label>
       <small id="whenDiffFromGit"></small>
     </div>
-    <div>
-      <a href="#" id="VALIDATOR-LINK" style="display: none">Validator</a>
+    <div class="header-buttons">
+      <a href="#" id="VALIDATOR-LINK" style="display: none">Validator</a>&nbsp;&nbsp;
+      <a href="#" id="MAX-SCREEN" title="キャプチャ用にmergelyの高さを最大化します">mergelyの高さを最大化</a>
     </div>
   </div>
   <div class="controller">
