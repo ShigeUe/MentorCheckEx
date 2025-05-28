@@ -2,7 +2,6 @@
 
 import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
 
-
 (async () => {
   let mergely;
 
@@ -75,6 +74,28 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
   const combZero = (s) => {
     return s.replace(/(?<= )\.(?=\d)/g, "0.");
   }
+  const left2right = (diff) => {
+    const [diff_l, diff_r] = diff.trim().split('c');
+    const lhss = mergely.get('lhs').split('\n');
+    const rhss = mergely.get('rhs').split('\n');
+
+    let [l_s, l_e] = diff_l.split(',');
+    let [r_s, r_e] = diff_r.split(',');
+    l_e = (l_e) ?? l_s;
+    r_e = (r_e) ?? r_s;
+    
+    let replaceText = '';
+    for (let i = l_s - 1; i < l_e; i++) {
+      replaceText += lhss[i] + '\n';
+    }
+    rhss.splice(r_s - 1, r_e - r_s + 1, replaceText.trimEnd());
+
+    mergely.once('updated', () => {
+      mergely.scrollTo('rhs', parseInt(r_s));
+      mergely.scrollTo('lhs', parseInt(l_s));
+    });
+    mergely.rhs(rhss.join('\n'));
+  }
   const make_suggest = () => {
 
     const diff = mergely.diff().trim();
@@ -103,11 +124,15 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
         rh = removeSpaceButword(diff2text(rh.trim()));
 
         if (lh == rh) {
-          add_suggest(`#${num}#: 1行にすると一致。`);
+          add_suggest(`#${num}#: 1行にすると一致 #do#`, () => {
+            left2right(diffs[i]);
+          });
         }
         if (lh.match(/ \.\d+/) || rh.match(/ \.\d+/)) {
           if (combZero(lh.trim()) == combZero(rh.trim())) {
-            add_suggest(`#${num}#: 値に0を付けると一致。`);
+            add_suggest(`#${num}#: 値に0を付けると一致 #do#`, () => {
+              left2right(diffs[i]);
+            });
           }
         }
       }
@@ -290,6 +315,8 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
     ignorews: true,
   });
   
+  window.G_MERGELY = mergely;
+
   mergely.once('updated', () => {
     set_text(studentCode, reviewCode);
     setTimeout(() => {
