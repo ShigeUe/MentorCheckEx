@@ -166,6 +166,19 @@ body {
   background-color: #00f3;
 }
 
+.mergely-options {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  margin-bottom: 5px;
+  line-height: 1;
+  font-size: 14px;
+}
+
+.mergely-options input[type="checkbox"] {
+  margin: 0;
+}
+
 .header-buttons > a {
   padding: 3px 10px;
   border: 1px solid #0f7378;

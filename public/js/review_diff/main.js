@@ -76,8 +76,9 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
   }
   const left2right = (diff) => {
     const [diff_l, diff_r] = diff.trim().split('c');
-    const lhss = mergely.get('lhs').split('\n');
-    const rhss = mergely.get('rhs').split('\n');
+    const { s_code, c_code } = get_text();
+    const lhss = s_code.split('\n');
+    const rhss = c_code.split('\n');
 
     let [l_s, l_e] = diff_l.split(',');
     let [r_s, r_e] = diff_r.split(',');
@@ -105,12 +106,11 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
       return;
     }
 
-    let codeL = mergely.get('lhs');
-    let codeR = mergely.get('rhs');
+    let { s_code,  } = get_text();
     
-    if(codeL.includes("　")) {
+    if(s_code.includes("　")) {
       add_suggest("全角スペースを「□」に置き換える #do#", () => {
-        mergely.lhs(codeL.replace(/　/g,"□"));
+        mergely.lhs(s_code.replace(/　/g,"□"));
       });
     }
 
@@ -123,7 +123,12 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
         lh = removeSpaceButword(diff2text(lh.trim()));
         rh = removeSpaceButword(diff2text(rh.trim()));
 
-        if (lh == rh) {
+        const [diff_l, diff_r] = diffs[i].split('c');
+        // どちらか一方が1行 かつ 改行をとっても一致する
+        if (
+          lh == rh &&
+          (!diff_l.includes(',') && diff_r.includes(',') || diff_l.includes(',') && !diff_r.includes(','))
+        ) {
           add_suggest(`#${num}#: 1行にすると一致 #do#`, () => {
             left2right(diffs[i]);
           });
@@ -351,8 +356,26 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
   document.querySelectorAll('input[type="checkbox"]').forEach((el) => {
     el.addEventListener('change', (e) => {
       const options = {};
-      options[e.target.id] = e.target.checked;
+      document.querySelectorAll('input[type="checkbox"]').forEach((cb) => options[cb.id] = cb.checked);
       mergely.options(options);
     });
+  });
+
+  // インデントを削除する
+  document.getElementById('REMOVE-INDENT').addEventListener('click', (e) => {
+    e.preventDefault();
+    const { s_code, c_code } = get_text();
+    const s_lines = s_code.split('\n');
+    const c_lines = c_code.split('\n');
+
+    s_lines.forEach((line, i) => s_lines[i] = line.trimStart());
+    c_lines.forEach((line, i) => c_lines[i] = line.trimStart());
+
+    set_text(s_lines.join('\n'), c_lines.join('\n'));
+    window.setTimeout(() => {
+      const ignorews = document.getElementById('ignorews');
+      ignorews.checked = false;
+      ignorews.dispatchEvent(new Event('change'));
+    }, 100);
   });
 })();
