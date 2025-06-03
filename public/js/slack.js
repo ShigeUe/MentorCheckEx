@@ -24,10 +24,15 @@
             // console.debug(data.channel);
             setTimeout(() => {
               const e = document.querySelector('.p-channel_sidebar__channel[data-qa-channel-sidebar-channel-id="' + data.channel + '"]');
+              const sw = document.querySelector('.p-ia4_top_nav__native_ui_spacer');
+              sw.style.transition = 'background-color 0.3s';
+
               if (e) {
                 e.style.backgroundColor = 'rgba(0,255,0,0.2)';
+                sw.style.backgroundColor = 'rgba(0,255,0,0.2)';
                 setTimeout(() => {
                   e.style.backgroundColor = '';
+                  sw.style.backgroundColor = '';
                 }, 500);
               }
             }, 0);
