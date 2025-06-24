@@ -6,7 +6,15 @@ async function makeOpenGdriveButton() {
   // 課題のリンクが存在すれば課題レビューページ、存在しなければユーザーページ
   const kadai_link = Util.query<HTMLAnchorElement>(`#page-content-wrapper .col-sm-8 table td a[href*="#kadai-"]`, true);
   let link: HTMLAnchorElement | null = null;
-    
+
+  // 表示している「はじ副」のカリキュラムのURLを得る
+  const curriculum_url = Util.query<HTMLAnchorElement>('[href*="first-sidejob"][href*="lessons"]', true);
+  if (!curriculum_url) {
+    return;
+  }
+  let [curriculum_path,] = curriculum_url.href.split('lessons');
+  curriculum_path += 'lessons';
+
   if (kadai_link) {
     // 課題レビューはGoogleドライブのリンクはひとつ
     link = Util.query<HTMLAnchorElement>('[href^="https://drive.google.com/drive/"]:has(i)', true);
@@ -73,7 +81,10 @@ async function makeOpenGdriveButton() {
       const user = Util.query<HTMLAnchorElement>('[href^="/mentor/users/').href.split('/').pop();
       small.classList.add('add-margin-0');
       small.innerHTML = small.innerHTML +
-        (CurriculumIdToData[curriculum_id] ? `<a href="/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons?diff=1&id=${f_id}&folder=${target}&c_id=${curriculum_id}&user=${user}" target="_blank" class="btn btn-success btn-sm font-size-x-small">レビュー比較ツール</a><br><small>（初回BASIC認証が求められます）</small>\n` : '');
+        (CurriculumIdToData[curriculum_id] ? `<a href="${curriculum_path}?diff=1&id=${f_id}&` +
+          `folder=${target}&c_id=${curriculum_id}&user=${user}" target="_blank" ` +
+          `class="btn btn-success btn-sm font-size-x-small">` +
+          `レビュー比較ツール</a><br><small>（初回BASIC認証が求められます）</small>\n` : '');
       div.append(small);
     }
     link.parentElement && link.parentElement.append(div);
@@ -87,8 +98,7 @@ async function makeOpenGdriveButton() {
       Object.keys(CurriculumIdToData).forEach((id) => {
         const a_tag = document.createElement('a');
         a_tag.target = '_blank';
-        a_tag.href = `/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons?diff=1&id=${f_id}` +
-          `&folder=${CurriculumIdToData[id].folder}&c_id=${id}&user=${user}`;
+        a_tag.href = `${curriculum_path}?diff=1&id=${f_id}&folder=${CurriculumIdToData[id].folder}&c_id=${id}&user=${user}`;
         a_tag.classList.add('btn', 'btn-primary', 'btn-sm', 'font-size-x-small');
         a_tag.style.cssText = "margin:3px 3px 0 0"
         a_tag.innerText = id;

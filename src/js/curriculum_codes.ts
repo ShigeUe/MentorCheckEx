@@ -159,7 +159,8 @@ export class ReviewCodes {
 
   // カリキュラムから直接取る場合はこちら
   static async getCodes() {
-    const rs = await fetch('https://techacademy.jp/mentor/courses/first-sidejob/curriculums/first-sidejob-2-r/review_guide');
+    const [path,] = location.href.split('lessons');
+    const rs = await fetch(path + '/review_guide');
     const tx = await rs.text();
     const doc: HTMLElement = document.implementation.createHTMLDocument("").documentElement;
     doc.innerHTML = tx;

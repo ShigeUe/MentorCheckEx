@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "1.0.5",
+   "version": "1.0.6",
    "description": "課題レビューのチェックをする拡張機能",
    "icons": {
       "16": "img/icon-16.png",
@@ -141,7 +141,7 @@
       },
       {
          "matches": [
-            "https://techacademy.jp/mentor/courses/first-sidejob/curriculums/first-sidejob-2/lessons?diff*"
+            "https://techacademy.jp/mentor/courses/*/lessons?diff*"
          ],
          "run_at": "document_end",
          "css": [
