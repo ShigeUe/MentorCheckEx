@@ -175,21 +175,21 @@ export class ReviewCodes {
     for (let i = 0; i < elements.length; i++) {
       if (elements[i].innerText.indexOf('課題2：') !== -1) {
         ReviewCodes.addElement(elements, i, i + 1, 'index.html');
-        i += 3;
+        // i += 3;
       }
       if (elements[i].innerText.indexOf('課題3：') !== -1) {
         ReviewCodes.addElement(elements, i, i + 2);
-        i += 4;
+        // i += 4;
       }
       if (elements[i].innerText.indexOf('課題7：') !== -1) {
         ReviewCodes.addElement(elements, i, i + 3);
         ReviewCodes.addElement(elements, i, i + 5);
-        i += 6;
+        // i += 6;
       }
       if (elements[i].innerText.indexOf('課題8：') !== -1) {
         ReviewCodes.addElement(elements, i, i + 3);
         ReviewCodes.addElement(elements, i, i + 5);
-        i += 6;
+        // i += 6;
       }
       if (elements[i].innerText.indexOf('課題13：') !== -1) {
         ReviewCodes.addElement(elements, i, i + 3);
@@ -197,8 +197,9 @@ export class ReviewCodes {
         ReviewCodes.addElement(elements, i, i + 7);
         if (c_ver < 3) {
           ReviewCodes.addElement(elements, i, i + 9);
+          // i -= 2;
         }
-        i += 10;
+        // i += 10;
       }
       if (elements[i].innerText.indexOf('課題14：') !== -1) {
         ReviewCodes.codes['kadai-smartphone-2'].push(ReviewCodes.codes['kadai-smartphone-1'][0]);
@@ -207,31 +208,31 @@ export class ReviewCodes {
         if (c_ver < 3) {
           ReviewCodes.codes['kadai-smartphone-2'].push(ReviewCodes.codes['kadai-smartphone-1'][3]);
         }
-        i += 5;
+        // i += 5;
       }
       if (elements[i].innerText.indexOf('課題16：') !== -1) {
         ReviewCodes.addElement(elements, i, i + 4);
         ReviewCodes.addElement(elements, i, i + 6);
         ReviewCodes.addElement(elements, i, i + 8);
-        i += 9;
+        // i += 9;
       }
       if (elements[i].innerText.indexOf('課題17：') !== -1) {
         ReviewCodes.addElement(elements, i, i + 4);
         ReviewCodes.addElement(elements, i, i + 6);
         ReviewCodes.addElement(elements, i, i + 8);
-        i += 9;
+        // i += 9;
       }
       if (elements[i].innerText.indexOf('課題19：') !== -1) {
         ReviewCodes.addElement(elements, i, i + 4);
         ReviewCodes.addElement(elements, i, i + 6);
         ReviewCodes.addElement(elements, i, i + 8);
-        i += 9;
+        // i += 9;
       }
       if (elements[i].innerText.indexOf('課題20：') !== -1) {
         ReviewCodes.addElement(elements, i, i + 4);
         ReviewCodes.addElement(elements, i, i + 6);
         ReviewCodes.addElement(elements, i, i + 8);
-        i += 9;
+        // i += 9;
       }
     }
   }
