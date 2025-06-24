@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "MentorCheckEx",
-   "version": "1.0.6",
+   "version": "1.0.7",
    "description": "課題レビューのチェックをする拡張機能",
    "icons": {
       "16": "img/icon-16.png",

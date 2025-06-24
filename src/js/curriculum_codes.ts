@@ -160,6 +160,12 @@ export class ReviewCodes {
   // カリキュラムから直接取る場合はこちら
   static async getCodes() {
     const [path,] = location.href.split('lessons');
+    const c_ver_str = path.match(/first-sidejob-(\d+?)/);
+    if (!c_ver_str) {
+      return;
+    }
+    const c_ver = Number(c_ver_str[1]);
+
     const rs = await fetch(path + '/review_guide');
     const tx = await rs.text();
     const doc: HTMLElement = document.implementation.createHTMLDocument("").documentElement;
@@ -189,14 +195,18 @@ export class ReviewCodes {
         ReviewCodes.addElement(elements, i, i + 3);
         ReviewCodes.addElement(elements, i, i + 5);
         ReviewCodes.addElement(elements, i, i + 7);
-        ReviewCodes.addElement(elements, i, i + 9);
+        if (c_ver < 3) {
+          ReviewCodes.addElement(elements, i, i + 9);
+        }
         i += 10;
       }
       if (elements[i].innerText.indexOf('課題14：') !== -1) {
         ReviewCodes.codes['kadai-smartphone-2'].push(ReviewCodes.codes['kadai-smartphone-1'][0]);
         ReviewCodes.addElement(elements, i, i + 4);
         ReviewCodes.codes['kadai-smartphone-2'].push(ReviewCodes.codes['kadai-smartphone-1'][2]);
-        ReviewCodes.codes['kadai-smartphone-2'].push(ReviewCodes.codes['kadai-smartphone-1'][3]);
+        if (c_ver < 3) {
+          ReviewCodes.codes['kadai-smartphone-2'].push(ReviewCodes.codes['kadai-smartphone-1'][3]);
+        }
         i += 5;
       }
       if (elements[i].innerText.indexOf('課題16：') !== -1) {

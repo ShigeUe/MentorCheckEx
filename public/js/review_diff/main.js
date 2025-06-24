@@ -3,6 +3,17 @@
 import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
 
 (async () => {
+  // はじ副3以降の調整
+  const c_ver_str = location.href.match(/first-sidejob-(\d+?)/);
+  if (!c_ver_str) {
+    return;
+  }
+  const c_ver = Number(c_ver_str[1]);
+  if (c_ver > 2) {
+    CurriculumIdToData['kadai-smartphone-1'].files = ['index.html', 'css/style.css', 'js/main.js'];
+    CurriculumIdToData['kadai-smartphone-2'].files = ['index.html', 'css/style.css', 'js/main.js'];
+  }
+
   let mergely;
 
   const comment_strip = (code) => {
