@@ -12,6 +12,10 @@ async function makeOpenGdriveButton() {
   if (!curriculum_url) {
     return;
   }
+  const [course_id,] = curriculum_url.href.match(/first-sidejob-\d+?/) ?? [null, null];
+  if (!course_id) {
+    return;
+  }
   let [curriculum_path,] = curriculum_url.href.split('lessons');
   curriculum_path += 'lessons';
 
@@ -66,10 +70,10 @@ async function makeOpenGdriveButton() {
   if (kadai_link) {
     // 課題レビュー
     const curriculum_id = kadai_link.href.split('#').pop() as string;
-    if (!CurriculumIdToData[curriculum_id]) {
+    if (!CurriculumIdToData[course_id][curriculum_id]) {
       return;
     }
-    const target = CurriculumIdToData[curriculum_id].folder;
+    const target = CurriculumIdToData[course_id][curriculum_id].folder;
     if (!target) {
       return;
     }
@@ -81,7 +85,7 @@ async function makeOpenGdriveButton() {
       const user = Util.query<HTMLAnchorElement>('[href^="/mentor/users/').href.split('/').pop();
       small.classList.add('add-margin-0');
       small.innerHTML = small.innerHTML +
-        (CurriculumIdToData[curriculum_id] ? `<a href="${curriculum_path}?diff=1&id=${f_id}&` +
+        (CurriculumIdToData[course_id][curriculum_id] ? `<a href="${curriculum_path}?diff=1&id=${f_id}&` +
           `folder=${target}&c_id=${curriculum_id}&user=${user}" target="_blank" ` +
           `class="btn btn-success btn-sm font-size-x-small">` +
           `レビュー比較ツール</a><br><small>（初回BASIC認証が求められます）</small>\n` : '');
@@ -95,10 +99,10 @@ async function makeOpenGdriveButton() {
       const user = location.href.split('/').pop();
 
       const div = document.createElement('div');
-      Object.keys(CurriculumIdToData).forEach((id) => {
+      Object.keys(CurriculumIdToData[course_id]).forEach((id) => {
         const a_tag = document.createElement('a');
         a_tag.target = '_blank';
-        a_tag.href = `${curriculum_path}?diff=1&id=${f_id}&folder=${CurriculumIdToData[id].folder}&c_id=${id}&user=${user}`;
+        a_tag.href = `${curriculum_path}?diff=1&id=${f_id}&folder=${CurriculumIdToData[course_id][id].folder}&c_id=${id}&user=${user}`;
         a_tag.classList.add('btn', 'btn-primary', 'btn-sm', 'font-size-x-small');
         a_tag.style.cssText = "margin:3px 3px 0 0"
         a_tag.innerText = id;

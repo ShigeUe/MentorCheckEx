@@ -8,11 +8,7 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
   if (!c_ver_str) {
     return;
   }
-  const c_ver = Number(c_ver_str[1]);
-  if (c_ver > 2) {
-    CurriculumIdToData['kadai-smartphone-1'].files = ['index.html', 'css/style.css', 'js/main.js'];
-    CurriculumIdToData['kadai-smartphone-2'].files = ['index.html', 'css/style.css', 'js/main.js'];
-  }
+  const course_id = c_ver_str[0];
 
   let mergely;
 
@@ -233,7 +229,7 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
   
   // 受講生コードの取得
   let studentCode = '';
-  for (let fileName of CurriculumIdToData[curriculum_id].files) {
+  for (let fileName of CurriculumIdToData[course_id][curriculum_id].files) {
     const fetchUrl = `${fetchBase}${fileName}`;
     let re;
     try {
@@ -299,20 +295,20 @@ import { CurriculumIdToData, ReviewCodes } from '../curriculum_codes.js';
   document.title = `${userName}さんの課題レビュー`;
 
   if (!ReviewCodes.codes[curriculum_id]) {
-    document.getElementById('mergely').innerHTML = `<h3>${userName}さんの課題</h3><p><strong>「${CurriculumIdToData[curriculum_id].title}」</strong></p>
+    document.getElementById('mergely').innerHTML = `<h3>${userName}さんの課題</h3><p><strong>「${CurriculumIdToData[course_id][curriculum_id].title}」</strong></p>
       <p><code><a href="https://drive.google.com/drive/folders/${drive_id}?usp=drive_link" target="_blank">/${drive_id}</a>/${folder}</code></p>
       <p>この課題はコードの比較は出来ません。<br>直接プレビューしましょう。</p>
       <ul>
-      <li><a href="${previewBase}${CurriculumIdToData[curriculum_id]?.files[0]}" target="_blank">プレビューを開く</a></li>
+      <li><a href="${previewBase}${CurriculumIdToData[course_id][curriculum_id]?.files[0]}" target="_blank">プレビューを開く</a></li>
       <li><a href="javascript:document.getElementById('VALIDATOR-LINK').click()">バリデータを開く</a></li>
       ` +
       (curriculum_id == 'kadai-final-exam' ? '<li><a href="#" id="FINAL-EXAM-CHECK-LINK">最終課題チェッカー</a></li>' : '') +
       (curriculum_id == 'kadai-css' ? `<li><a href="${previewBase}style.css" target="_blank">style.cssを開く</a></li>` : '') +
       (curriculum_id.match(/jquery/) ? `<li><a href="${previewBase}main.js" target="_blank">main.jsを開く</a></li>` : '') +
-      (CurriculumIdToData[curriculum_id].demo ?
-        `<li><a href="${CurriculumIdToData[curriculum_id].demo}" target="_blank">デモページ</a></li>` : '') +
-      (CurriculumIdToData[curriculum_id].description ?
-        `<li>${CurriculumIdToData[curriculum_id].description}</li>` : '') +
+      (CurriculumIdToData[course_id][curriculum_id].demo ?
+        `<li><a href="${CurriculumIdToData[course_id][curriculum_id].demo}" target="_blank">デモページ</a></li>` : '') +
+      (CurriculumIdToData[course_id][curriculum_id].description ?
+        `<li>${CurriculumIdToData[course_id][curriculum_id].description}</li>` : '') +
       `</ul>`;
 
     if (curriculum_id == 'kadai-final-exam') {
